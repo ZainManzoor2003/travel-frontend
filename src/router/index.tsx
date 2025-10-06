@@ -1,23 +1,20 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
 import MainLayout from '../layouts/MainLayout';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ProtectedRoute from '../components/ProtectedRoute';
-
-// Lazy load all pages
-const LandingPage = lazy(() => import('../pages/LandingPage'));
-const AboutPage = lazy(() => import('../pages/AboutPage'));
-const ContactPage = lazy(() => import('../pages/ContactPage'));
-const BlogPage = lazy(() => import('../pages/BlogPage'));
-const BlogDetailPage = lazy(() => import('../pages/BlogDetailPage'));
-const GalleryPage = lazy(() => import('../pages/GalleryPage'));
-const PaymentPage = lazy(() => import('../pages/PaymentPage'));
-const PackagesPage = lazy(() => import('../pages/PackagesPage'));
-const TourDetailPage = lazy(() => import('../pages/TourDetailPage'));
-const SignUpPage = lazy(() => import('../pages/SignupPage'));
-const LoginPage = lazy(() => import('../pages/LoginPage'));
-const DashboardPage = lazy(() => import('../pages/DashboardPage'));
-const UserDashboard = lazy(() => import('../pages/UserDashboard'));
+import LandingPage from '../pages/LandingPage';
+import AboutPage from '../pages/AboutPage';
+import ContactPage from '../pages/ContactPage';
+import BlogPage from '../pages/BlogPage';
+import BlogDetailPage from '../pages/BlogDetailPage';
+import GalleryPage from '../pages/GalleryPage';
+import PaymentPage from '../pages/PaymentPage';
+import PackagesPage from '../pages/PackagesPage';
+import TourDetailPage from '../pages/TourDetailPage';
+import SignUpPage from '../pages/SignupPage';
+import LoginPage from '../pages/LoginPage';
+import DashboardPage from '../pages/DashboardPage';
+import UserDashboard from '../pages/UserDashboard';
 
 const router = createBrowserRouter([
   {
@@ -26,83 +23,45 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <LandingPage />
-          </Suspense>
-        ),
+        element: <LandingPage />,
       },
       {
         path: 'about',
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <AboutPage />
-          </Suspense>
-        ),
+        element: <AboutPage />,
       },
       {
         path: 'contact',
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <ContactPage />
-          </Suspense>
-        ),
+        element: <ContactPage />,
       },
       {
         path: 'blog',
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <BlogPage />
-          </Suspense>
-        ),
+        element: <BlogPage />,
       },
       {
         path: 'blog/:id',
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <BlogDetailPage />
-          </Suspense>
-        ),
+        element: <BlogDetailPage />,
       },
       {
         path: 'gallery',
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <GalleryPage />
-          </Suspense>
-        ),
+        element: <GalleryPage />,
       },
       {
         path: 'payment',
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <PaymentPage />
-          </Suspense>
-        ),
+        element: <PaymentPage />,
       },
       {
         path: 'packages',
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <PackagesPage />
-          </Suspense>
-        ),
+        element: <PackagesPage />,
       },
       {
         path: 'tour/:id',
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <TourDetailPage />
-          </Suspense>
-        ),
+        element: <TourDetailPage />,
       },
       {
         path: 'my-dashboard',
         element: (
           <ProtectedRoute requireAdmin={false}>
-            <Suspense fallback={<LoadingSpinner />}>
-              <UserDashboard />
-            </Suspense>
+            <UserDashboard />
           </ProtectedRoute>
         ),
       },
@@ -110,27 +69,17 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: (
-      <Suspense fallback={<LoadingSpinner />}>
-        <LoginPage />
-      </Suspense>
-    ),
+    element: <LoginPage />,
   },
   {
     path: '/signup',
-    element: (
-      <Suspense fallback={<LoadingSpinner />}>
-        <SignUpPage />
-      </Suspense>
-    ),
+    element: <SignUpPage />,
   },
   {
     path: '/dashboard',
     element: (
       <ProtectedRoute requireAdmin={true}>
-        <Suspense fallback={<LoadingSpinner />}>
-          <DashboardPage />
-        </Suspense>
+        <DashboardPage />
       </ProtectedRoute>
     ),
   },
