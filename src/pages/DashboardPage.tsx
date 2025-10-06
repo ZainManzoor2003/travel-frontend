@@ -27,23 +27,28 @@ const DashboardPage = () => {
 
   // Load dashboard counts
   useEffect(() => {
+    const controller = new AbortController();
     const loadCounts = async () => {
       try {
         setStatsLoading(true);
         if (!token) return; // counts endpoint requires admin auth
         const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || 'https://travel-backend-psi.vercel.app';
         const res = await fetch(`${API_BASE}/dashboard/counts`, {
-          headers: { 'Authorization': `Bearer ${token}` }
+          headers: { 'Authorization': `Bearer ${token}` },
+          signal: controller.signal
         });
         const data = await res.json();
         if (data.success) {
           setStats(data.data);
         }
+      } catch (e: any) {
+        if (e?.name === 'AbortError') return;
       } finally {
         setStatsLoading(false);
       }
     };
     loadCounts();
+    return () => controller.abort();
   }, [token]);
 
   useEffect(() => {

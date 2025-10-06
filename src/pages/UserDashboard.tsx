@@ -57,20 +57,23 @@ const UserDashboard: React.FC = () => {
   const [reviewBooking, setReviewBooking] = useState<Booking | null>(null);
 
   useEffect(() => {
+    const controller = new AbortController();
     if (!user) {
       navigate('/login');
       return;
     }
-    fetchBookings();
+    fetchBookings(controller.signal);
+    return () => controller.abort();
   }, [user, navigate]);
 
-  const fetchBookings = async () => {
+  const fetchBookings = async (signal?: AbortSignal) => {
     try {
       setLoading(true);
       const response = await fetch(`${API_BASE}/bookings/my-bookings`, {
         headers: {
           'Authorization': `Bearer ${token}`
-        }
+        },
+        signal
       });
 
       const data = await response.json();
@@ -88,7 +91,8 @@ const UserDashboard: React.FC = () => {
               const reviewResponse = await fetch(`${API_BASE}/reviews/can-review/${booking.tour._id}`, {
                 headers: {
                   'Authorization': `Bearer ${token}`
-                }
+                },
+                signal
               });
               const reviewData = await reviewResponse.json();
               return {
@@ -106,7 +110,8 @@ const UserDashboard: React.FC = () => {
       } else {
         setError(data.message);
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.name === 'AbortError') return;
       console.error('Error fetching bookings:', error);
       setError('Failed to fetch bookings');
     } finally {

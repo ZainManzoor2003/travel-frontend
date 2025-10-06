@@ -86,6 +86,7 @@ const Login = () => {
     }
 
     setLoading(true);
+    const controller = new AbortController();
 
     try {
       const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || 'https://travel-backend-psi.vercel.app';
@@ -98,6 +99,7 @@ const Login = () => {
           email,
           password,
         }),
+        signal: controller.signal
       });
 
       const data = await response.json();
@@ -131,7 +133,8 @@ const Login = () => {
           confirmButtonColor: '#EF4444'
         });
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.name === 'AbortError') return;
       console.error('Login error:', error);
       setError('Network error. Please try again.');
       

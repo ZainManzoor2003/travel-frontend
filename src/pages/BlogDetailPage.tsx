@@ -45,11 +45,12 @@ const BlogDetailPage = () => {
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const controller = new AbortController();
     const fetchBlog = async () => {
       try {
         setLoading(true);
         const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || 'https://travel-backend-psi.vercel.app';
-        const response = await fetch(`${API_BASE}/blogs/${id}`);
+        const response = await fetch(`${API_BASE}/blogs/${id}`, { signal: controller.signal });
         
         if (!response.ok) {
           throw new Error('Blog not found');
@@ -60,14 +61,15 @@ const BlogDetailPage = () => {
 
         // Fetch related blogs
         if (data.data.category) {
-          const relatedResponse = await fetch(`${API_BASE}/blogs?category=${data.data.category}&limit=3`);
+          const relatedResponse = await fetch(`${API_BASE}/blogs?category=${data.data.category}&limit=3`, { signal: controller.signal });
           if (relatedResponse.ok) {
             const relatedData = await relatedResponse.json();
             const filtered = relatedData.data.blogs.filter((b: Blog) => b._id !== id).slice(0, 3);
             setRelatedBlogs(filtered);
           }
         }
-      } catch (err) {
+      } catch (err: any) {
+        if (err?.name === 'AbortError') return;
         setError(err instanceof Error ? err.message : 'Failed to load blog');
       } finally {
         setLoading(false);
@@ -77,6 +79,7 @@ const BlogDetailPage = () => {
     if (id) {
       fetchBlog();
     }
+    return () => controller.abort();
   }, [id]);
 
   useEffect(() => {

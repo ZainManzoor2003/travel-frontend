@@ -67,6 +67,7 @@ const BlogPage = () => {
 
   // Fetch blogs and categories from backend
   useEffect(() => {
+    const controller = new AbortController();
     const load = async () => {
       try {
         setLoading(true);
@@ -74,13 +75,13 @@ const BlogPage = () => {
         const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || 'https://travel-backend-psi.vercel.app';
         
         // Fetch blogs
-        const blogsRes = await fetch(`${API_BASE}/blogs?status=published`);
+        const blogsRes = await fetch(`${API_BASE}/blogs?status=published`, { signal: controller.signal });
         if (!blogsRes.ok) throw new Error(`Failed to load blogs (${blogsRes.status})`);
         const blogsJson = await blogsRes.json();
         const blogsList: BackendBlog[] = blogsJson?.data?.blogs || [];
         
         // Fetch categories
-        const categoriesRes = await fetch(`${API_BASE}/blogs/categories`);
+        const categoriesRes = await fetch(`${API_BASE}/blogs/categories`, { signal: controller.signal });
         if (!categoriesRes.ok) throw new Error(`Failed to load categories (${categoriesRes.status})`);
         const categoriesJson = await categoriesRes.json();
         const categoriesList: string[] = categoriesJson?.data || [];
@@ -115,12 +116,14 @@ const BlogPage = () => {
           }))
         ]);
       } catch (e: any) {
+        if (e?.name === 'AbortError') return;
         setError(e?.message || 'Failed to load blogs');
       } finally {
         setLoading(false);
       }
     };
     load();
+    return () => controller.abort();
   }, []);
 
   // Enhanced animation for blog cards with ScrollTrigger

@@ -124,6 +124,7 @@ const GalleryPage = () => {
 
   // Fetch gallery items and categories from backend
   useEffect(() => {
+    const controller = new AbortController();
     const load = async () => {
       try {
         setLoading(true);
@@ -131,13 +132,13 @@ const GalleryPage = () => {
         const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || 'https://travel-backend-psi.vercel.app';
         
         // Fetch gallery items
-        const galleryRes = await fetch(`${API_BASE}/gallery?status=active`);
+        const galleryRes = await fetch(`${API_BASE}/gallery?status=active`, { signal: controller.signal });
         if (!galleryRes.ok) throw new Error(`Failed to load gallery (${galleryRes.status})`);
         const galleryJson = await galleryRes.json();
         const galleryList: BackendGalleryItem[] = galleryJson?.data?.galleryItems || [];
         
         // Fetch categories
-        const categoriesRes = await fetch(`${API_BASE}/gallery/categories`);
+        const categoriesRes = await fetch(`${API_BASE}/gallery/categories`, { signal: controller.signal });
         if (!categoriesRes.ok) throw new Error(`Failed to load categories (${categoriesRes.status})`);
         const categoriesJson = await categoriesRes.json();
         const categoriesList: string[] = categoriesJson?.data || [];
@@ -165,6 +166,7 @@ const GalleryPage = () => {
           }))
         ]);
       } catch (e: any) {
+        if (e?.name === 'AbortError') return;
         setError(e?.message || 'Failed to load gallery');
       } finally {
         setLoading(false);
@@ -173,18 +175,21 @@ const GalleryPage = () => {
 
     const fetchStats = async () => {
       try {
-        const response = await fetch(`${API_BASE}/gallery/stats`);
+        const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || 'https://travel-backend-psi.vercel.app';
+        const response = await fetch(`${API_BASE}/gallery/stats`, { signal: controller.signal });
         const data = await response.json();
         if (data.success) {
           setStats(data.stats);
         }
-      } catch (error) {
+      } catch (error: any) {
+        if (error?.name === 'AbortError') return;
         console.error('Failed to fetch stats:', error);
       }
     };
 
     load();
     fetchStats();
+    return () => controller.abort();
   }, []);
 
   // Filter images based on active filter

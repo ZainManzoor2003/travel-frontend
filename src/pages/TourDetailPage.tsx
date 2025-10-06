@@ -49,6 +49,7 @@ const TourDetailPage = () => {
 
   // Fetch tour data
   useEffect(() => {
+    const controller = new AbortController();
     const fetchTour = async () => {
       if (!id) {
         setError('Tour ID not provided');
@@ -58,7 +59,7 @@ const TourDetailPage = () => {
 
       try {
         const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || 'https://travel-backend-psi.vercel.app';
-        const response = await fetch(`${API_BASE}/tours/${id}`);
+        const response = await fetch(`${API_BASE}/tours/${id}`, { signal: controller.signal });
         const data = await response.json();
         
         if (data.success) {
@@ -67,7 +68,8 @@ const TourDetailPage = () => {
         } else {
           setError(data.message || 'Failed to load tour');
         }
-      } catch (err) {
+      } catch (err: any) {
+        if (err?.name === 'AbortError') return;
         setError('Failed to load tour details');
         console.error('Error fetching tour:', err);
       } finally {
@@ -76,6 +78,7 @@ const TourDetailPage = () => {
     };
 
     fetchTour();
+    return () => controller.abort();
   }, [id]);
 
   useEffect(() => {

@@ -63,12 +63,13 @@ const PackagesPage = () => {
 
   // Fetch tours from backend
   useEffect(() => {
+    const controller = new AbortController();
     const load = async () => {
       try {
         setLoading(true);
         setError(null);
         const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || 'https://travel-backend-psi.vercel.app';
-        const res = await fetch(`${API_BASE}/tours`);
+        const res = await fetch(`${API_BASE}/tours`, { signal: controller.signal });
         if (!res.ok) throw new Error(`Failed to load tours (${res.status})`);
         const json = await res.json();
         const list: BackendTour[] = json?.data?.tours || [];
@@ -91,12 +92,14 @@ const PackagesPage = () => {
           ...unique.map(c => ({ value: c, label: c.charAt(0).toUpperCase() + c.slice(1) }))
         ]);
       } catch (e: any) {
+        if (e?.name === 'AbortError') return;
         setError(e?.message || 'Failed to load tours');
       } finally {
         setLoading(false);
       }
     };
     load();
+    return () => controller.abort();
   }, []);
 
   // Enhanced animation for tour cards with ScrollTrigger
