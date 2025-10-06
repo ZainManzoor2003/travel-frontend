@@ -30,6 +30,7 @@ interface Tour {
 
 const LandingPage = () => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const fetchControllerRef = useRef<AbortController | null>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
   const destinationsRef = useRef<HTMLDivElement>(null);
@@ -84,12 +85,18 @@ const LandingPage = () => {
 
   // Function to fetch featured tours from backend
   const fetchFeaturedTours = async () => {
+    // Abort any in-flight request before starting a new one
+    if (fetchControllerRef.current) {
+      fetchControllerRef.current.abort();
+    }
+    const controller = new AbortController();
+    fetchControllerRef.current = controller;
     try {
       setLoading(true);
       setError(null);
       
       // Fetch tours with featured=true
-      const response = await fetch(`${API_BASE_URL}/tours?featured=true`);
+      const response = await fetch(`${API_BASE_URL}/tours?featured=true`, { signal: controller.signal });
       const data = await response.json();
       
       if (data.success) {
@@ -100,7 +107,11 @@ const LandingPage = () => {
       } else {
         setError(data.message || 'Failed to fetch tours');
       }
-    } catch (err) {
+    } catch (err: any) {
+      if (err?.name === 'AbortError') {
+        // Swallow abort errors to avoid noisy logs on navigation
+        return;
+      }
       setError('Failed to fetch tours. Please try again later.');
       console.error('Error fetching tours:', err);
     } finally {
@@ -125,6 +136,12 @@ const LandingPage = () => {
   useEffect(() => {
     // Fetch featured tours on component mount
     fetchFeaturedTours();
+    // Cleanup: abort in-flight request on unmount or route change
+    return () => {
+      if (fetchControllerRef.current) {
+        fetchControllerRef.current.abort();
+      }
+    };
     // fetchGalleryPreview(); // Commented out as gallery preview is not currently used
   }, []);
 
