@@ -1,10 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
+import { 
+  FiClock, 
+  FiMapPin,
+  FiStar,
+  FiZap,
+  FiArrowLeft
+} from 'react-icons/fi';
 import LoadingSpinner from '../components/LoadingSpinner';
 import BookingForm from '../components/BookingForm';
 import TourReviews from '../components/TourReviews';
 import LazyImage from '../components/LazyImage';
+import Menu from './homepage/components/Menu';
 
 interface Tour {
   _id: string;
@@ -40,6 +48,7 @@ const TourDetailPage = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [lightboxImageIndex, setLightboxImageIndex] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const sectionRefs = {
     hero: useRef<HTMLDivElement>(null),
@@ -60,18 +69,35 @@ const TourDetailPage = () => {
       try {
         const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || 'https://travel-backend-psi.vercel.app';
         const response = await fetch(`${API_BASE}/tours/${id}`, { signal: controller.signal });
+        
+        if (response.status === 404) {
+          setError('Tour not found');
+          return;
+        }
+        
+        if (!response.ok) {
+          setError(`Failed to load tour: ${response.status} ${response.statusText}`);
+          return;
+        }
+        
         const data = await response.json();
         
+        // Handle different possible API response formats
         if (data.success) {
+          // Format: { success: true, data: { ...tour } }
           setTour(data.data);
+          setError(null);
+        } else if (data._id) {
+          // Format: { _id: "...", title: "...", ... } (direct tour object)
+          setTour(data);
           setError(null);
         } else {
           setError(data.message || 'Failed to load tour');
         }
       } catch (err: any) {
         if (err?.name === 'AbortError') return;
-        setError('Failed to load tour details');
         console.error('Error fetching tour:', err);
+        setError('Failed to load tour details');
       } finally {
         setLoading(false);
       }
@@ -112,6 +138,25 @@ const TourDetailPage = () => {
       observer.observe(sectionRefs.details.current);
     }
   }, [tour]);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
 
   const handleBookNow = () => {
     setShowBookingForm(true);
@@ -161,29 +206,24 @@ const TourDetailPage = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isLightboxOpen, tour]);
 
-  // Loading state
-  if (loading) {
+  // Show loader while loading OR if no tour data yet
+  if (loading || !tour) {
     return <LoadingSpinner />;
   }
 
-  // Error state
-  if (error || !tour) {
+  // Only show error if loading is complete AND there's an actual error
+  if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-[#f8f8f8] font-sans">
         <div className="text-center max-w-md mx-auto p-8">
-          <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg className="w-10 h-10 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Tour Not Found</h2>
-          <p className="text-gray-600 mb-8">{error || 'The requested tour could not be found.'}</p>
-          <Link
-            to="/packages"
-            className="inline-block bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition-colors duration-200"
+          <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Tour</h2>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button 
+            onClick={() => navigate('/packages')}
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
           >
-            Browse All Tours
-          </Link>
+            Go to Packages
+          </button>
         </div>
       </div>
     );
@@ -192,27 +232,27 @@ const TourDetailPage = () => {
   // Booking success state
   if (isBooked) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-[#f8f8f8] font-sans">
         <div className="text-center max-w-md mx-auto p-8">
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Booking Confirmed!</h2>
-          <p className="text-gray-600 mb-8">
+          <h2 className="font-['Playfair_Display'] text-[clamp(2.5rem,4vw,3.5rem)] font-normal text-[#2c2c2c] tracking-tight leading-[1.2] mb-4">Booking Confirmed!</h2>
+          <p className="font-['Inter'] text-lg font-normal text-[#666] leading-[1.6] mb-8">
             Your tour has been successfully booked. You will receive a confirmation email shortly.
           </p>
           <div className="space-y-4">
             <Link
               to="/payment"
-              className="w-full bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition-colors duration-200 inline-block"
+              className="w-full bg-[#2c2c2c] text-white px-6 py-3 rounded-lg hover:bg-[#1a1a1a] transition-colors duration-200 inline-block font-['Inter']"
             >
               Complete Payment
             </Link>
             <Link
               to="/packages"
-              className="w-full border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 inline-block"
+              className="w-full border border-[#e0e0e0] text-[#666] px-6 py-3 rounded-lg hover:bg-white transition-colors duration-200 inline-block font-['Inter']"
             >
               Browse More Tours
             </Link>
@@ -226,14 +266,42 @@ const TourDetailPage = () => {
   const allImages = tour.images && tour.images.length > 0 ? tour.images : (tour.image ? [tour.image] : []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section with Image Gallery */}
-      <section
-        ref={sectionRefs.hero}
-        className="relative bg-gradient-to-br from-teal-900 to-teal-700 text-white"
-      >
-        {/* Image Carousel */}
-        <div className="relative h-[calc(100vh-80px)] min-h-[500px] overflow-hidden bg-black mt-20">
+    <div className="w-full font-sans bg-[#f8f8f8] min-h-screen">
+      {/* Navigation Header */}
+      <nav className="fixed top-0 left-0 right-0 z-[1000] p-8 px-12 flex items-center justify-between bg-transparent">
+        <div className="flex items-center gap-6">
+          <button className="flex items-center gap-3 bg-none border-none text-white font-sans text-sm font-normal tracking-wider cursor-pointer transition-opacity duration-300 hover:opacity-80" onClick={toggleMenu}>
+            <span className="flex flex-col gap-[3px]">
+              <span className="w-[18px] h-[2px] bg-white transition-all duration-300"></span>
+              <span className="w-[18px] h-[2px] bg-white transition-all duration-300"></span>
+              <span className="w-[18px] h-[2px] bg-white transition-all duration-300"></span>
+            </span>
+            MENU
+          </button>
+          <div className="w-px h-5 bg-white/30"></div>
+        </div>
+        
+        <div className="absolute left-1/2 -translate-x-1/2">
+          <img 
+            src="/Logo1.png"
+            alt="Travel Beyond Logo"
+            className="h-24 w-56 brightness-0 invert"
+          />
+        </div>
+        
+        <div className="flex items-center">
+          <button 
+            onClick={() => navigate('/packages')}
+            className="bg-white/10 border border-white/30 text-white font-sans text-sm font-normal tracking-wider py-3 px-6 cursor-pointer transition-all duration-300 backdrop-blur-[10px] hover:bg-white/20 hover:border-white/50"
+          >
+            BACK TO TOURS
+          </button>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section ref={sectionRefs.hero} className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden">
           {allImages.length > 0 ? (
             <>
               <LazyImage
@@ -242,14 +310,13 @@ const TourDetailPage = () => {
                 className="w-full h-full object-cover"
                 loading="eager"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
               
               {/* Image Navigation */}
               {allImages.length > 1 && (
                 <>
                   <button
                     onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? allImages.length - 1 : prev - 1))}
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all"
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all z-10"
                   >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -257,7 +324,7 @@ const TourDetailPage = () => {
                   </button>
                   <button
                     onClick={() => setCurrentImageIndex((prev) => (prev === allImages.length - 1 ? 0 : prev + 1))}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all"
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all z-10"
                   >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -265,7 +332,7 @@ const TourDetailPage = () => {
                   </button>
                   
                   {/* Image Indicators */}
-                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
                     {allImages.map((_, index) => (
                       <button
                         key={index}
@@ -280,91 +347,87 @@ const TourDetailPage = () => {
               )}
             </>
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-teal-600 to-teal-800 flex items-center justify-center">
-              <p className="text-white text-xl">No images available</p>
+            <div className="w-full h-full bg-gradient-to-br from-[#2c2c2c] to-[#1a1a1a] flex items-center justify-center">
+              <p className="font-['Inter'] text-white text-xl">No images available</p>
             </div>
           )}
-          
-          {/* Tour Info Overlay */}
-          <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
-            <div className="max-w-7xl mx-auto">
-              <div className="animate-on-scroll">
-                {tour.featured && (
-                  <span className="inline-block bg-yellow-500 text-yellow-900 px-3 py-1 rounded-full text-sm font-medium mb-3">
-                    Featured Tour
-                  </span>
-                )}
-                <h1 className="text-4xl md:text-5xl font-bold mb-3">{tour.title}</h1>
-                <div className="flex flex-wrap items-center gap-6 text-lg">
-                  <div className="flex items-center">
-                    <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    {tour.location}
-                  </div>
-                  <div className="flex items-center">
-                    <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    {tour.duration}
-                  </div>
-                  <div className="flex items-center">
-                    <svg className="w-6 h-6 mr-2 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                    {tour.rating.toFixed(1)} Rating
-                  </div>
-                  <div className="flex items-center capitalize">
-                    <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                    {tour.difficulty}
-                  </div>
-                </div>
-              </div>
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/20 via-black/40 to-black/30 z-[1]"></div>
+        </div>
+        
+        <div className="relative z-[2] text-center p-8 max-w-6xl mx-auto">
+          {/* Featured Badge */}
+          {tour.featured && (
+            <div className="mb-6">
+              <span className="inline-block bg-yellow-500 text-yellow-900 px-6 py-2 rounded-full text-sm font-medium">
+                Featured Tour
+              </span>
+            </div>
+          )}
+
+          {/* Title */}
+          <h1 className="font-['Playfair_Display'] text-[clamp(2.5rem,6vw,4.5rem)] font-normal text-white tracking-tight leading-[1.1] shadow-[0_2px_20px_rgba(0,0,0,0.3)] mb-8">
+            {tour.title}
+          </h1>
+
+          {/* Meta Info */}
+          <div className="flex flex-wrap items-center justify-center gap-8 text-white/90 font-['Inter'] text-sm">
+            <div className="flex items-center gap-2">
+              <FiMapPin className="w-4 h-4" />
+              <span>{tour.location}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <FiClock className="w-4 h-4" />
+              <span>{tour.duration}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <FiStar className="w-4 h-4 text-yellow-400" />
+              <span>{tour.rating.toFixed(1)} Rating</span>
+            </div>
+            <div className="flex items-center gap-2 capitalize">
+              <FiZap className="w-4 h-4" />
+              <span>{tour.difficulty}</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* Main Content */}
-      <section ref={sectionRefs.details} className="py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <section ref={sectionRefs.details} className="w-full bg-[#f8f8f8] py-16">
+        <div className="max-w-[1400px] mx-auto px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
             {/* Left Content - Tour Details */}
             <div className="lg:col-span-2 space-y-8">
               {/* Description */}
-              <div className="animate-on-scroll bg-white rounded-xl shadow-sm p-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">About This Tour</h2>
-                <p className="text-gray-700 text-lg leading-relaxed">{tour.description}</p>
-                <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
-                  <div className="bg-teal-50 p-4 rounded-lg">
-                    <p className="text-teal-600 font-semibold text-sm">Duration</p>
-                    <p className="text-gray-900 text-lg font-bold">{tour.duration}</p>
+              <div className="animate-on-scroll bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-8 border border-[#f0f0f0]">
+                <h2 className="font-['Playfair_Display'] text-[clamp(2rem,3vw,2.5rem)] font-normal text-[#2c2c2c] tracking-tight leading-[1.2] mb-6">About This Tour</h2>
+                <p className="font-['Inter'] text-[#555] text-lg leading-[1.6] tracking-[0.01em] mb-8">{tour.description}</p>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div className="bg-[#f5f5f5] p-6 rounded-lg">
+                    <p className="font-['Inter'] text-[#666] font-semibold text-sm mb-2">Duration</p>
+                    <p className="font-['Inter'] text-[#2c2c2c] text-lg font-bold">{tour.duration}</p>
                   </div>
-                  <div className="bg-teal-50 p-4 rounded-lg">
-                    <p className="text-teal-600 font-semibold text-sm">Max Group</p>
-                    <p className="text-gray-900 text-lg font-bold">{tour.maxParticipants} people</p>
+                  <div className="bg-[#f5f5f5] p-6 rounded-lg">
+                    <p className="font-['Inter'] text-[#666] font-semibold text-sm mb-2">Max Group</p>
+                    <p className="font-['Inter'] text-[#2c2c2c] text-lg font-bold">{tour.maxParticipants} people</p>
                   </div>
-                  <div className="bg-teal-50 p-4 rounded-lg">
-                    <p className="text-teal-600 font-semibold text-sm">Category</p>
-                    <p className="text-gray-900 text-lg font-bold capitalize">{tour.category}</p>
+                  <div className="bg-[#f5f5f5] p-6 rounded-lg">
+                    <p className="font-['Inter'] text-[#666] font-semibold text-sm mb-2">Category</p>
+                    <p className="font-['Inter'] text-[#2c2c2c] text-lg font-bold capitalize">{tour.category}</p>
                   </div>
                 </div>
               </div>
 
               {/* Image Thumbnails */}
               {allImages.length > 1 && (
-                <div className="animate-on-scroll bg-white rounded-xl shadow-sm p-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Tour Gallery ({allImages.length} Photos)</h2>
+                <div className="animate-on-scroll bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-8 border border-[#f0f0f0]">
+                  <h2 className="font-['Playfair_Display'] text-[clamp(1.5rem,2.5vw,2rem)] font-normal text-[#2c2c2c] tracking-tight leading-[1.2] mb-6">Tour Gallery ({allImages.length} Photos)</h2>
                   <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
                     {allImages.map((img, index) => (
                       <button
                         key={index}
                         onClick={() => openLightbox(index)}
-                        className={`relative aspect-square rounded-lg overflow-hidden cursor-pointer transition-all bg-gray-100 group ${
-                          index === currentImageIndex ? 'ring-4 ring-teal-500' : 'hover:ring-2 hover:ring-teal-300'
+                        className={`relative aspect-square rounded-lg overflow-hidden cursor-pointer transition-all bg-[#f5f5f5] group ${
+                          index === currentImageIndex ? 'ring-4 ring-[#2c2c2c]' : 'hover:ring-2 hover:ring-[#666]'
                         }`}
                       >
                         <img
@@ -385,15 +448,15 @@ const TourDetailPage = () => {
 
               {/* Highlights */}
               {tour.highlights && tour.highlights.length > 0 && (
-                <div className="animate-on-scroll bg-white rounded-xl shadow-sm p-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Tour Highlights</h2>
+                <div className="animate-on-scroll bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-8 border border-[#f0f0f0]">
+                  <h2 className="font-['Playfair_Display'] text-[clamp(1.5rem,2.5vw,2rem)] font-normal text-[#2c2c2c] tracking-tight leading-[1.2] mb-6">Tour Highlights</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {tour.highlights.map((highlight, index) => (
                       <div key={index} className="flex items-start space-x-3">
                         <svg className="w-6 h-6 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
-                        <span className="text-gray-700">{highlight}</span>
+                        <span className="font-['Inter'] text-[#555] leading-[1.6]">{highlight}</span>
                       </div>
                     ))}
                   </div>
@@ -402,12 +465,12 @@ const TourDetailPage = () => {
 
               {/* What's Included */}
               {((tour.included && tour.included.length > 0) || (tour.notIncluded && tour.notIncluded.length > 0)) && (
-                <div className="animate-on-scroll bg-white rounded-xl shadow-sm p-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">What's Included</h2>
+                <div className="animate-on-scroll bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-8 border border-[#f0f0f0]">
+                  <h2 className="font-['Playfair_Display'] text-[clamp(1.5rem,2.5vw,2rem)] font-normal text-[#2c2c2c] tracking-tight leading-[1.2] mb-6">What's Included</h2>
                   
                   {tour.included && tour.included.length > 0 && (
                     <div className="mb-6">
-                      <h3 className="text-lg font-semibold text-green-600 mb-4 flex items-center">
+                      <h3 className="font-['Inter'] text-lg font-semibold text-green-600 mb-4 flex items-center">
                         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
@@ -419,7 +482,7 @@ const TourDetailPage = () => {
                             <svg className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
-                            <span className="text-gray-700 text-sm">{item}</span>
+                            <span className="font-['Inter'] text-[#555] text-sm leading-[1.6]">{item}</span>
                           </div>
                         ))}
                       </div>
@@ -428,7 +491,7 @@ const TourDetailPage = () => {
 
                   {tour.notIncluded && tour.notIncluded.length > 0 && (
                     <div>
-                      <h3 className="text-lg font-semibold text-red-600 mb-4 flex items-center">
+                      <h3 className="font-['Inter'] text-lg font-semibold text-red-600 mb-4 flex items-center">
                         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -440,7 +503,7 @@ const TourDetailPage = () => {
                             <svg className="w-4 h-4 text-red-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                             </svg>
-                            <span className="text-gray-700 text-sm">{item}</span>
+                            <span className="font-['Inter'] text-[#555] text-sm leading-[1.6]">{item}</span>
                           </div>
                         ))}
                       </div>
@@ -451,26 +514,26 @@ const TourDetailPage = () => {
 
               {/* Itinerary */}
               {tour.itinerary && tour.itinerary.length > 0 && (
-                <div ref={sectionRefs.itinerary} className="animate-on-scroll bg-white rounded-xl shadow-sm p-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Daily Itinerary</h2>
+                <div ref={sectionRefs.itinerary} className="animate-on-scroll bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-8 border border-[#f0f0f0]">
+                  <h2 className="font-['Playfair_Display'] text-[clamp(1.5rem,2.5vw,2rem)] font-normal text-[#2c2c2c] tracking-tight leading-[1.2] mb-6">Daily Itinerary</h2>
                   <div className="space-y-6">
                     {tour.itinerary.map((day, index) => (
-                      <div key={index} className="border-l-4 border-teal-500 pl-6 pb-6 relative">
-                        <div className="absolute -left-3 top-0 w-6 h-6 bg-teal-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                      <div key={index} className="border-l-4 border-[#2c2c2c] pl-6 pb-6 relative">
+                        <div className="absolute -left-3 top-0 w-6 h-6 bg-[#2c2c2c] rounded-full flex items-center justify-center text-white text-xs font-bold">
                           {index + 1}
                         </div>
-                        <h3 className="text-xl font-semibold text-gray-900 mb-2">{day.title}</h3>
+                        <h3 className="font-['Inter'] text-xl font-semibold text-[#2c2c2c] mb-2">{day.title}</h3>
                         {day.description && (
-                          <p className="text-gray-600 mb-3">{day.description}</p>
+                          <p className="font-['Inter'] text-[#666] mb-3 leading-[1.6]">{day.description}</p>
                         )}
                         {day.points && day.points.length > 0 && (
                           <ul className="space-y-2">
                             {day.points.map((point, pointIndex) => (
                               <li key={pointIndex} className="flex items-start space-x-2">
-                                <svg className="w-4 h-4 text-teal-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-4 h-4 text-[#2c2c2c] mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                 </svg>
-                                <span className="text-gray-700 text-sm">{point}</span>
+                                <span className="font-['Inter'] text-[#555] text-sm leading-[1.6]">{point}</span>
                               </li>
                             ))}
                           </ul>
@@ -484,68 +547,66 @@ const TourDetailPage = () => {
 
             {/* Right Sidebar - Booking Card */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-xl shadow-lg p-6 sticky top-8">
-                <div className="text-center mb-6">
-                  <div className="text-4xl font-bold text-teal-600 mb-2">${tour.price}</div>
-                  <div className="text-gray-600">per person</div>
+              <div className="bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-8 sticky top-8 border border-[#f0f0f0]">
+                <div className="text-center mb-8">
+                  <div className="font-['Inter'] text-4xl font-bold text-[#2c2c2c] mb-2">${tour.price}</div>
+                  <div className="font-['Inter'] text-[#666]">per person</div>
                 </div>
 
-                <div className="space-y-4 mb-6 border-t border-b border-gray-200 py-4">
+                <div className="space-y-4 mb-8 border-t border-b border-[#e0e0e0] py-6">
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Duration</span>
-                    <span className="font-medium text-gray-900">{tour.duration}</span>
+                    <span className="font-['Inter'] text-[#666]">Duration</span>
+                    <span className="font-['Inter'] font-medium text-[#2c2c2c]">{tour.duration}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Location</span>
-                    <span className="font-medium text-gray-900">{tour.location}</span>
+                    <span className="font-['Inter'] text-[#666]">Location</span>
+                    <span className="font-['Inter'] font-medium text-[#2c2c2c]">{tour.location}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Max Group</span>
-                    <span className="font-medium text-gray-900">{tour.maxParticipants} people</span>
+                    <span className="font-['Inter'] text-[#666]">Max Group</span>
+                    <span className="font-['Inter'] font-medium text-[#2c2c2c]">{tour.maxParticipants} people</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Difficulty</span>
-                    <span className="font-medium text-gray-900 capitalize">{tour.difficulty}</span>
+                    <span className="font-['Inter'] text-[#666]">Difficulty</span>
+                    <span className="font-['Inter'] font-medium text-[#2c2c2c] capitalize">{tour.difficulty}</span>
                   </div>
                 </div>
 
                 <button
                   onClick={handleBookNow}
                   disabled={tour.status !== 'active'}
-                  className="w-full bg-teal-600 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:bg-teal-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center mb-4"
+                  className="w-full bg-[#2c2c2c] text-white py-4 px-6 rounded-lg font-['Inter'] font-semibold text-lg hover:bg-[#1a1a1a] disabled:bg-[#ccc] disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center mb-6"
                 >
                   {tour.status !== 'active' ? 'Not Available' : 'Book Now'}
                 </button>
 
-                <div className="text-sm text-gray-500 space-y-2 mt-4">
+                <div className="font-['Inter'] text-sm text-[#666] space-y-3 mt-6">
                   <p className="flex items-center">
-                    <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Free cancellation up to 48h
                   </p>
                   <p className="flex items-center">
-                    <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Instant confirmation
                   </p>
                   <p className="flex items-center">
-                    <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     24/7 customer support
                   </p>
                 </div>
 
-                <div className="mt-6 pt-6 border-t border-gray-200">
+                <div className="mt-8 pt-6 border-t border-[#e0e0e0]">
                   <Link
                     to="/packages"
-                    className="text-teal-600 hover:text-teal-700 font-medium flex items-center justify-center"
+                    className="font-['Inter'] text-[#2c2c2c] hover:text-[#666] font-medium flex items-center justify-center transition-colors duration-200"
                   >
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
+                    <FiArrowLeft className="w-5 h-5 mr-2" />
                     Back to All Tours
                   </Link>
                 </div>
@@ -556,8 +617,10 @@ const TourDetailPage = () => {
       </section>
 
       {/* Reviews Section */}
-      <section className="max-w-7xl mx-auto px-6 py-12">
-        <TourReviews tourId={tour._id} />
+      <section className="w-full bg-[#f8f8f8] py-16">
+        <div className="max-w-[1400px] mx-auto px-12">
+          <TourReviews tourId={tour._id} />
+        </div>
       </section>
 
       {/* Lightbox Modal */}
@@ -671,6 +734,9 @@ const TourDetailPage = () => {
           onSuccess={handleBookingSuccess}
         />
       )}
+
+      {/* Menu Component */}
+      <Menu isOpen={isMenuOpen} onClose={closeMenu} />
     </div>
   );
 };

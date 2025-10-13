@@ -4,7 +4,6 @@ import Swal from 'sweetalert2';
 import Modal from '../Modal';
 import { FiEdit, FiTrash2, FiEye, FiSearch, FiPlus, FiBook, FiUser, FiCalendar, FiClock, FiUpload, FiX, FiCheckCircle, FiFileText, FiArchive, FiGlobe, FiMapPin, FiInfo, FiUsers, FiActivity, FiCoffee, FiCamera } from 'react-icons/fi';
 import { useAuth } from '../../contexts/AuthContext';
-import imageCompression from 'browser-image-compression';
 
 interface BlogPost {
   _id: string;
@@ -72,15 +71,16 @@ const BlogManagement = () => {
     }
   };
 
-  const uploadImage = async (file: File): Promise<string> => {
+  const compressAndUploadImage = async (file: File): Promise<string> => {
     if (!token) {
       throw new Error('No authentication token available');
     }
 
+    // Step 1: Send image to backend for compression
     const formData = new FormData();
     formData.append('image', file);
 
-    const response = await fetch(`${API_BASE_URL}/upload/image`, {
+    const compressResponse = await fetch(`${API_BASE_URL}/upload/compress`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -88,12 +88,34 @@ const BlogManagement = () => {
       body: formData
     });
 
-    const data = await response.json();
-    if (data.success) {
-      return data.data.imageUrl;
-    } else {
-      throw new Error(data.message || 'Failed to upload image');
+    const compressData = await compressResponse.json();
+    if (!compressData.success) {
+      throw new Error(compressData.message || 'Failed to compress image');
     }
+
+    console.log(`📊 Compression stats: ${compressData.data.savings}% saved`);
+
+    // Step 2: Upload compressed image to Cloudinary
+    const compressedImageBase64 = compressData.data.compressedImage;
+    
+    const base64Response = await fetch(compressedImageBase64);
+    const blob = await base64Response.blob();
+    
+    const cloudinaryFormData = new FormData();
+    cloudinaryFormData.append('file', blob);
+    cloudinaryFormData.append('upload_preset', 'mehndi');
+
+    const cloudinaryResponse = await fetch('https://api.cloudinary.com/v1_1/dfoetpdk9/image/upload', {
+      method: 'POST',
+      body: cloudinaryFormData
+    });
+
+    if (!cloudinaryResponse.ok) {
+      throw new Error('Failed to upload to Cloudinary');
+    }
+
+    const cloudinaryData = await cloudinaryResponse.json();
+    return cloudinaryData.secure_url;
   };
 
   const createBlog = async (blogData: Partial<BlogPost>) => {
@@ -310,41 +332,31 @@ const BlogManagement = () => {
     const file = event.target.files?.[0];
     if (file) {
       if (file.type.startsWith('image/')) {
-        // Show loading dialog
-        Swal.fire({
-          title: 'Processing Image...',
-          text: 'Compressing image for upload',
-          allowOutsideClick: false,
-          didOpen: () => {
-            Swal.showLoading();
-          }
-        });
+        // Validate file size (max 25MB since backend will compress)
+        if (file.size > 25 * 1024 * 1024) {
+          Swal.fire({
+            icon: 'error',
+            title: 'File Too Large',
+            text: 'Please select an image smaller than 25MB.'
+          });
+          return;
+        }
 
         try {
-          let processedFile = file;
-          
-          // Compress if larger than 8MB
-          if (file.size > 8 * 1024 * 1024) {
-            console.log(`Compressing ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
-            
-            const compressionOptions = {
-              maxSizeMB: 8, // Max size 8MB (leave room for Cloudinary's 10MB limit)
-              maxWidthOrHeight: 2048, // Max dimension
-              useWebWorker: true,
-              fileType: 'image/jpeg' as const
-            };
-            
-            processedFile = await imageCompression(file, compressionOptions);
-            console.log(`Compressed to ${(processedFile.size / 1024 / 1024).toFixed(2)}MB`);
-          }
-          
-          setUploadedImage(processedFile);
+          setUploadedImage(file);
           const reader = new FileReader();
           reader.onload = (e) => {
             setImagePreview(e.target?.result as string);
-            Swal.close();
+            
+            Swal.fire({
+              icon: 'success',
+              title: 'Image Ready!',
+              text: 'Image selected. Backend will compress it during upload.',
+              timer: 2000,
+              showConfirmButton: false
+            });
           };
-          reader.readAsDataURL(processedFile);
+          reader.readAsDataURL(file);
           // Clear the URL input when a new image is selected
           setFormData({ ...formData, featuredImage: '' });
         } catch (err) {
@@ -379,26 +391,44 @@ const BlogManagement = () => {
     
     // Show upload progress
     Swal.fire({
-      title: 'Uploading Image...',
-      text: 'Please wait while we upload your image',
+      title: 'Processing Image...',
+      html: `
+        <div class="text-center">
+          <div class="mb-4">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto"></div>
+          </div>
+          <p class="text-sm text-gray-600">Step 1: Compressing image...</p>
+          <p class="text-xs text-gray-500 mt-2">This may take a few moments</p>
+        </div>
+      `,
       allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      }
+      showConfirmButton: false
     });
     
     try {
-      const imageUrl = await uploadImage(file);
+      // Update message for step 2
+      setTimeout(() => {
+        const messageEl = document.querySelector('.swal2-html-container p');
+        if (messageEl) {
+          messageEl.textContent = 'Step 2: Uploading to Cloudinary...';
+        }
+      }, 1000);
+
+      const imageUrl = await compressAndUploadImage(file);
       Swal.close();
+      
+      Swal.fire({
+        icon: 'success',
+        title: 'Upload Successful!',
+        text: 'Image has been compressed and uploaded to Cloudinary',
+        timer: 2000,
+        showConfirmButton: false
+      });
+      
       return imageUrl;
     } catch (error: any) {
       console.error('Image upload failed:', error);
       Swal.close();
-      
-      // Better error message for file size issues
-      if (error.message && error.message.includes('File size too large')) {
-        throw new Error('Image file is too large. Please select a smaller image or try again.');
-      }
       
       throw error;
     } finally {

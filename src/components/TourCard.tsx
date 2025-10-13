@@ -105,19 +105,19 @@ const TourCard = ({
   return (
     <div
       ref={cardRef}
-      className={`bg-white rounded-lg overflow-hidden transition-all duration-300 group cursor-pointer flex flex-col h-full ${className} ${pro ? 'border-2 border-blue-300 shadow-lg' : 'border border-gray-100 shadow'}`}
+      className={`bg-white rounded-lg overflow-hidden transition-all duration-300 group cursor-pointer flex flex-col sm:flex-row h-auto sm:h-64 ${className} ${pro ? 'border-2 border-blue-300 shadow-lg' : 'border border-gray-100 shadow'}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
       style={{ willChange: 'transform' }}
     >
       {/* Image Container */}
-      <div className="relative overflow-hidden bg-gray-100">
+      <div className="relative overflow-hidden bg-gray-100 w-full sm:w-80 flex-shrink-0">
         <img
           ref={imageRef}
           src={image}
           alt={title}
-          className="w-full h-48 object-contain transition-transform duration-500"
+          className="w-full h-48 sm:h-full object-cover transition-transform duration-500"
           loading="lazy"
           style={{ willChange: 'transform' }}
         />
@@ -147,39 +147,41 @@ const TourCard = ({
       </div>
       
       {/* Content Container */}
-      <div ref={contentRef} className="p-4 flex flex-col flex-grow">
-        {/* Location */}
-        <div className="animate-content flex items-center text-xs text-gray-500 mb-2">
-          <svg className="w-3 h-3 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          <span className="truncate">{location}</span>
+      <div ref={contentRef} className="p-4 sm:p-6 flex flex-col flex-grow justify-between">
+        <div>
+          {/* Location */}
+          <div className="animate-content flex items-center text-xs text-gray-500 mb-2">
+            <svg className="w-3 h-3 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span className="truncate">{location}</span>
+          </div>
+          
+          {/* Title */}
+          <h3 className="animate-content text-xl sm:text-2xl font-semibold text-gray-900 mb-3 group-hover:text-teal-600 transition-colors duration-300">
+            {title}
+          </h3>
+          
+          {/* Description */}
+          <p className="animate-content text-gray-600 text-sm sm:text-base mb-4 leading-relaxed">
+            {description}
+          </p>
         </div>
         
-        {/* Title */}
-        <h3 className="animate-content text-lg font-semibold text-gray-900 mb-2 line-clamp-1 group-hover:text-teal-600 transition-colors duration-300">
-          {title}
-        </h3>
-        
-        {/* Description */}
-        <p className="animate-content text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed flex-grow">
-          {description}
-        </p>
-        
         {/* Price and CTA */}
-        <div className="animate-content flex items-center justify-between mt-auto">
-          <div className="text-lg font-bold text-teal-600">
+        <div className="animate-content flex items-center justify-between mt-4">
+          <div className="text-xl sm:text-2xl font-bold text-teal-600">
             ${price}
-            <span className="text-xs font-normal text-gray-500 ml-1">/person</span>
+            <span className="text-sm font-normal text-gray-500 ml-1">/person</span>
           </div>
           
           <Link
             to={`/tour/${id}`}
-            className="bg-teal-600 text-white px-3 py-1.5 rounded text-xs font-medium hover:bg-teal-700 transition-colors duration-200"
+            className="bg-teal-600 text-white px-4 py-2 rounded text-sm font-medium hover:bg-teal-700 transition-colors duration-200"
             onClick={(e) => e.stopPropagation()}
           >
-            Details
+            View Details
           </Link>
         </div>
       </div>

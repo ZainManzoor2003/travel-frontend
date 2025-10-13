@@ -1,10 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { FiMail, FiLock, FiLogIn } from 'react-icons/fi';
+import { FiLogIn } from 'react-icons/fi';
 import Swal from 'sweetalert2';
-import TextField from '../components/TextField';
 import { useAuth } from '../contexts/AuthContext';
-import Navbar from '../components/Navbar';
+import Menu from './homepage/components/Menu.jsx';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -14,9 +13,19 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Get the intended destination or default to home
   const from = location.state?.from?.pathname || '/';
+  // Menu controls matching homepage
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+  const closeMenu = () => setIsMenuOpen(false);
+
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isMenuOpen]);
+
 
   // Clear error when user starts typing
   const handleEmailChange = (value: string) => {
@@ -152,137 +161,103 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-teal-100 relative overflow-hidden">
-      <Navbar />
-      
-      <div className="flex items-center justify-center p-4 pt-24 min-h-screen">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-teal-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-teal-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-teal-100 rounded-full mix-blend-multiply filter blur-xl opacity-20"></div>
-      </div>
+    <div className="relative min-h-screen bg-[#F8F8F8] overflow-hidden">
+      {/* Homepage-style navbar */}
+      <nav className="fixed top-0 left-0 right-0 z-[1000] p-8 px-12 flex items-center justify-between bg-transparent">
+        <div className="flex items-center gap-6">
+          <button onClick={toggleMenu} className="flex items-center gap-3 bg-none border-none text-white text-sm tracking-wider cursor-pointer transition-opacity duration-300 hover:opacity-80">
+            <span className="flex flex-col gap-[3px]">
+              <span className="w-[18px] h-[2px] bg-white" />
+              <span className="w-[18px] h-[2px] bg-white" />
+              <span className="w-[18px] h-[2px] bg-white" />
+            </span>
+            MENU
+          </button>
+          <div className="w-px h-5 bg-white/30" />
+        </div>
+        <div className="absolute left-1/2 -translate-x-1/2">
+          <img 
+            src="/Logo1.png"
+            alt="Awasi Logo"
+            className="h-24 w-56 brightness-0 invert"
+          />
+        </div>
+      </nav>
 
-      {/* Travel-themed background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="travel-pattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-              <circle cx="30" cy="30" r="2" fill="#3f7670"/>
-              <path d="M15,15 L45,45 M45,15 L15,45" stroke="#3f7670" strokeWidth="1" opacity="0.3"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#travel-pattern)"/>
-        </svg>
-      </div>
+      {/* Background hero with overlay */}
+      <section 
+        className="relative w-full min-h-screen flex items-center justify-center px-6"
+        style={{
+          backgroundImage: 'url(https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1920&q=80)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/55"></div>
+        <div className="relative z-10 w-full max-w-[520px] mx-auto bg-white rounded-[10px] shadow-[0_20px_60px_rgba(0,0,0,0.15)] p-6 sm:p-9">
+          <h1 className="font-['Playfair_Display'] text-[clamp(1.75rem,4vw,2.25rem)] font-normal text-[#2c2c2c] text-center mb-4">Welcome Back</h1>
+          <p className="font-['Inter'] text-sm text-[#666] text-center mb-6">Log in to manage your tailor-made journeys</p>
 
-      <div className="relative w-full max-w-md mx-auto z-10">
-        <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-teal-100 overflow-hidden">
-          {/* Header with travel theme */}
-          <div className="bg-gradient-to-r from-teal-600 to-teal-700 px-8 py-6 text-center">
-            <div className="flex justify-center mb-6">
-              <div className="w-24 h-24 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm p-3">
-                <img src="/Logo1.png" alt="Travel Beyond Tours Logo" className="w-20 h-20 object-contain" />
-              </div>
-            </div>
-            <h2 className="text-2xl font-bold text-white">
-              Welcome Back, Explorer!
-            </h2>
-            <p className="mt-2 text-teal-100 text-sm">
-              Continue your journey with us
-            </p>
-          </div>
-
-          <div className="p-8">
-          
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
-                {error}
-              </div>
+              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">{error}</div>
             )}
-            
-            <TextField
-              label="Email address"
-              type="email"
-              value={email}
-              onChange={handleEmailChange}
-              required
-              startIcon={<FiMail />}
-              placeholder="Enter your email address"
-            />
-            
-            <TextField
-              label="Password"
-              type="password"
-              value={password}
-              onChange={handlePasswordChange}
-              required
-              startIcon={<FiLock />}
-              placeholder="Enter your password"
-            />
 
-            <div className="flex justify-end mt-2">
-              <div className="text-sm">
-                <a href="#" className="font-medium text-teal-600 hover:text-teal-500 transition-colors duration-200">
-                  Forgot password?
-                </a>
-              </div>
+            <div className="flex flex-col">
+              <label className="font-['Inter'] text-[0.85rem] text-[#666] tracking-[0.06em] mb-1">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => handleEmailChange(e.target.value)}
+                placeholder="you@example.com"
+                className="border-none border-b border-[#ddd] py-3 px-1 font-['Inter'] text-base outline-none bg-transparent focus:border-b-[#2c2c2c]"
+                required
+              />
             </div>
 
-            <div className="mt-8">
+            <div className="flex flex-col">
+              <label className="font-['Inter'] text-[0.85rem] text-[#666] tracking-[0.06em] mb-1">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => handlePasswordChange(e.target.value)}
+                placeholder="••••••••"
+                className="border-none border-b border-[#ddd] py-3 px-1 font-['Inter'] text-base outline-none bg-transparent focus:border-b-[#2c2c2c]"
+                required
+              />
+            </div>
+
+            <div className="mt-2 text-right">
+              <a href="#" className="font-['Inter'] text-sm text-[#2c2c2c] hover:opacity-80">Forgot password?</a>
+            </div>
+
+            <div className="mt-6">
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative w-full flex justify-center py-4 px-6 border border-transparent text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02]"
+                className="group relative w-full flex justify-center py-4 px-6 text-sm font-semibold rounded-lg text-white bg-[#2c2c2c] hover:bg-[#1f1f1f] focus:outline-none focus:ring-2 focus:ring-[#2c2c2c]/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span className="absolute left-0 inset-y-0 flex items-center pl-4">
-                  <FiLogIn className="h-5 w-5 text-teal-200 group-hover:text-teal-100 transition-colors" />
+                  <FiLogIn className="h-5 w-5 text-white/80" />
                 </span>
-                {loading ? (
-                  <div className="flex items-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Signing in...
-                  </div>
-                ) : (
-                  'Sign in to your account'
-                )}
+                {loading ? 'Signing in...' : 'Login'}
               </button>
             </div>
-            
+
             <div className="text-center mt-6">
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-200"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white text-gray-500">New to our platform?</span>
-                </div>
-              </div>
-              
-              <div className="mt-4">
-                <Link 
-                  to="/signup" 
-                  className="group font-semibold text-teal-600 hover:text-teal-500 transition-colors duration-200 inline-flex items-center px-6 py-3 border border-teal-300 rounded-xl hover:border-teal-400 hover:bg-teal-50 transition-all duration-200"
-                >
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                  </svg>
-                  Create your account
-                  <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-                  </svg>
+              <span className="px-4 text-[#666] text-sm">New here?</span>
+              <div className="mt-3">
+                <Link to="/signup" className="group inline-flex items-center px-6 py-3 border border-[#2c2c2c] rounded-lg text-[#2c2c2c] hover:bg-[#2c2c2c] hover:text-white transition-colors duration-200">
+                  <span className="transition-colors group-hover:text-white">Create account</span>
                 </Link>
               </div>
             </div>
           </form>
-          </div>
         </div>
-      </div>
-      </div>
+      </section>
+
+      {/* Homepage Menu */}
+      <Menu isOpen={isMenuOpen} onClose={closeMenu} />
     </div>
   );
 };

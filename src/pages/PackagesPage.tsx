@@ -254,25 +254,37 @@ const PackagesPage = () => {
       {/* Hero Section */}
       <section 
         ref={sectionRefs.hero}
-        className="relative pt-32 pb-16 text-white overflow-hidden"
+        className="relative pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-14 lg:pb-16 overflow-hidden"
         style={{ backgroundColor: '#3f7670' }}
       >
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="animate-on-scroll text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white">
-              Travel Packages
-            </h1>
-            <p className="animate-on-scroll text-lg sm:text-xl lg:text-2xl text-white max-w-3xl mx-auto leading-relaxed">
-              Discover our carefully curated selection of travel experiences around the world
-            </p>
+          <div className="flex flex-col items-center">
+            {/* Hero Image */}
+            <div className="animate-on-scroll mb-8 sm:mb-10 lg:mb-12">
+              <img 
+                src="/Logo1.png"
+                alt="Travel Packages"
+                className="h-32 sm:h-40 lg:h-48 w-auto brightness-0 invert"
+              />
+            </div>
+            
+            {/* Hero Text Below Image */}
+            <div className="text-center text-white">
+              <h1 className="animate-on-scroll text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
+                Travel Beyond Tours
+              </h1>
+              <p className="animate-on-scroll text-base sm:text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed px-4">
+                Discover our carefully curated selection of travel experiences around the world
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Search and Filter Section */}
-      <section className="py-12 bg-gray-50">
+      <section className="py-8 sm:py-10 lg:py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Search Bar */}
             <div className="max-w-2xl mx-auto">
               <SearchBar
@@ -282,14 +294,14 @@ const PackagesPage = () => {
             </div>
 
             {/* Filters */}
-            <div className="flex flex-col lg:flex-row gap-6 justify-between items-center">
+            <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 justify-between items-center">
               {/* Category Filter */}
-              <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+              <div className="flex flex-wrap gap-2 sm:gap-3 justify-center lg:justify-start w-full lg:w-auto">
                 {categories.map((category) => (
                   <button
                     key={category.value}
                     onClick={() => setSelectedFilter(category.value)}
-                    className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 ${
+                    className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 transform hover:scale-105 whitespace-nowrap ${
                       selectedFilter === category.value
                         ? 'bg-[#3f7670] text-white shadow-lg shadow-teal-200'
                         : 'bg-white text-gray-700 hover:bg-teal-50 hover:text-[#3f7670] shadow-sm'
@@ -301,15 +313,15 @@ const PackagesPage = () => {
               </div>
 
               {/* Sort Dropdown */}
-              <div className="flex items-center space-x-3">
-                <label htmlFor="sort" className="text-sm font-medium text-gray-700 whitespace-nowrap">
+              <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full lg:w-auto">
+                <label htmlFor="sort" className="text-xs sm:text-sm font-medium text-gray-700 whitespace-nowrap">
                   Sort by:
                 </label>
                 <select
                   id="sort"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670] text-sm bg-white shadow-sm min-w-[180px]"
+                  className="px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670] text-xs sm:text-sm bg-white shadow-sm w-full sm:min-w-[160px] lg:min-w-[180px]"
                 >
                   {sortOptions.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -324,61 +336,52 @@ const PackagesPage = () => {
       </section>
 
       {/* Tours Grid */}
-      <section ref={sectionRefs.tours} className="py-20 bg-white">
+      <section ref={sectionRefs.tours} className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="max-w-7xl lg:max-w-[85%] lg:max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           {loading ? (
-            <div className="text-center py-12">
-              <svg className="w-16 h-16 text-[#3f7670] mx-auto mb-4 animate-spin" viewBox="0 0 24 24">
+            <div className="text-center py-12 sm:py-16">
+              <svg className="w-12 h-12 sm:w-16 sm:h-16 text-[#3f7670] mx-auto mb-4 animate-spin" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
               </svg>
-              <p className="text-gray-600">Loading tours...</p>
+              <p className="text-gray-600 text-sm sm:text-base">Loading tours...</p>
             </div>
           ) : error ? (
-            <div className="text-center py-12">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Unable to load tours</h3>
-              <p className="text-gray-600">{error}</p>
+            <div className="text-center py-12 sm:py-16 px-4">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">Unable to load tours</h3>
+              <p className="text-gray-600 text-sm sm:text-base">{error}</p>
             </div>
           ) : filteredTours.length === 0 ? (
-            <div className="text-center py-12">
-              <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="text-center py-12 sm:py-16 px-4">
+              <svg className="w-12 h-12 sm:w-16 sm:h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.709M15 6.291A7.962 7.962 0 0012 5c-2.34 0-4.29 1.009-5.824 2.709" />
               </svg>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No tours found</h3>
-              <p className="text-gray-600">Try adjusting your search or filter criteria</p>
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">No tours found</h3>
+              <p className="text-gray-600 text-sm sm:text-base">Try adjusting your search or filter criteria</p>
             </div>
           ) : (
             <>
-              <div className="text-center mb-16">
-                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              <div className="text-center mb-12 sm:mb-14 lg:mb-16">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 px-4">
                   {searchQuery ? `Search Results (${filteredTours.length})` : 'Available Tours'}
                 </h2>
                 {searchQuery && (
-                  <p className="text-gray-600 text-lg">Showing results for "{searchQuery}"</p>
+                  <p className="text-gray-600 text-base sm:text-lg px-4">Showing results for "{searchQuery}"</p>
                 )}
               </div>
               
-              {/* Enhanced Responsive Grid - Fixed Layout */}
+              {/* Enhanced Responsive Flex Column Layout */}
               <div 
                 ref={tourGridRef}
-                className="flex flex-wrap justify-center gap-3"
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 400px))',
-                  justifyContent: 'center',
-                  alignItems: 'stretch'
-                }}
+                className="flex flex-col gap-6 sm:gap-8 max-w-4xl mx-auto"
               >
                 {filteredTours.map((tour, index) => (
                   <div 
                     key={tour.id} 
-                    className="tour-item"
+                    className="tour-item w-full"
                     style={{ 
                       perspective: '1000px',
-                      transformStyle: 'preserve-3d',
-                      width: '100%',
-                      maxWidth: '400px',
-                      minWidth: '300px'
+                      transformStyle: 'preserve-3d'
                     }}
                   >
                     <TourCard {...tour} />
@@ -391,22 +394,22 @@ const PackagesPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20" style={{ backgroundColor: '#3f7670' }}>
+      <section className="py-16 sm:py-18 lg:py-20" style={{ backgroundColor: '#3f7670' }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">Can't Find What You're Looking For?</h2>
-          <p className="text-xl text-white mb-8 leading-relaxed">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6">Can't Find What You're Looking For?</h2>
+          <p className="text-lg sm:text-xl text-white mb-6 sm:mb-8 leading-relaxed px-4">
             We can create a custom travel package tailored to your specific needs and preferences
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center max-w-md sm:max-w-none mx-auto">
             <a
               href="/contact"
-              className="bg-white text-[#3f7670] px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="bg-white text-[#3f7670] px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg text-center"
             >
               Contact Us
             </a>
             <a
               href="/about"
-              className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#3f7670] transition-all duration-300 transform hover:scale-105"
+              className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-white hover:text-[#3f7670] transition-all duration-300 transform hover:scale-105 text-center"
             >
               Learn More
             </a>

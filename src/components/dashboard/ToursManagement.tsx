@@ -4,7 +4,6 @@ import Modal from '../Modal';
 import { FiEdit, FiTrash2, FiEye, FiSearch, FiFilter, FiPlus, FiMapPin, FiClock, FiDollarSign, FiUpload, FiX } from 'react-icons/fi';
 import { useAuth } from '../../contexts/AuthContext';
 import Swal from 'sweetalert2';
-import imageCompression from 'browser-image-compression';
 
 interface Tour {
   _id: string;
@@ -86,18 +85,49 @@ const ToursManagement = () => {
     return data.data as Tour;
   };
 
-  const uploadImage = async (file: File): Promise<string> => {
+  const compressAndUploadImage = async (file: File): Promise<string> => {
     if (!token) throw new Error('No authentication token');
+
+    // Step 1: Send image to backend for compression
     const formData = new FormData();
     formData.append('image', file);
-    const res = await fetch(`${API_BASE_URL}/upload/image`, {
+
+    const compressResponse = await fetch(`${API_BASE_URL}/upload/compress`, {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${token}` },
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
       body: formData
     });
-    const data = await res.json();
-    if (!data.success) throw new Error(data.message || 'Upload failed');
-    return data.data.imageUrl as string;
+
+    const compressData = await compressResponse.json();
+    if (!compressData.success) {
+      throw new Error(compressData.message || 'Failed to compress image');
+    }
+
+    console.log(`📊 Compression stats: ${compressData.data.savings}% saved`);
+
+    // Step 2: Upload compressed image to Cloudinary
+    const compressedImageBase64 = compressData.data.compressedImage;
+    
+    const base64Response = await fetch(compressedImageBase64);
+    const blob = await base64Response.blob();
+    
+    const cloudinaryFormData = new FormData();
+    cloudinaryFormData.append('file', blob);
+    cloudinaryFormData.append('upload_preset', 'mehndi');
+
+    const cloudinaryResponse = await fetch('https://api.cloudinary.com/v1_1/dfoetpdk9/image/upload', {
+      method: 'POST',
+      body: cloudinaryFormData
+    });
+
+    if (!cloudinaryResponse.ok) {
+      throw new Error('Failed to upload to Cloudinary');
+    }
+
+    const cloudinaryData = await cloudinaryResponse.json();
+    return cloudinaryData.secure_url;
   };
 
   const createTour = async (tourData: Partial<Tour>) => {
@@ -297,58 +327,32 @@ const ToursManagement = () => {
       const newFiles: File[] = [];
       const newPreviews: string[] = [];
       
-      // Show loading message
-      Swal.fire({
-        title: 'Processing Images...',
-        text: 'Compressing images for upload',
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
-      });
-
-      const compressionOptions = {
-        maxSizeMB: 8, // Max size 8MB (leave room for Cloudinary's 10MB limit)
-        maxWidthOrHeight: 2048, // Max dimension
-        useWebWorker: true,
-        fileType: 'image/jpeg' as const
-      };
-      
       try {
         for (const file of Array.from(files)) {
           if (file.type.startsWith('image/')) {
-            try {
-              // Compress image if it's larger than 8MB
-              let processedFile = file;
-              if (file.size > 8 * 1024 * 1024) {
-                console.log(`Compressing ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
-                processedFile = await imageCompression(file, compressionOptions);
-                console.log(`Compressed to ${(processedFile.size / 1024 / 1024).toFixed(2)}MB`);
-              }
-              
-              newFiles.push(processedFile);
-              
-              // Create preview
-              const reader = new FileReader();
-              await new Promise<void>((resolve) => {
-                reader.onload = (e) => {
-                  newPreviews.push(e.target?.result as string);
-                  resolve();
-                };
-                reader.readAsDataURL(processedFile);
-              });
-            } catch (err) {
-              console.error('Error processing image:', err);
+            // Validate file size (max 25MB since backend will compress)
+            if (file.size > 25 * 1024 * 1024) {
               Swal.fire({
-                icon: 'warning',
-                title: 'Image Processing Failed',
-                text: `Failed to process ${file.name}. It will be skipped.`
+                icon: 'error',
+                title: 'File Too Large',
+                text: `${file.name} is too large. Please select images smaller than 25MB.`
               });
+              continue;
             }
+            
+            newFiles.push(file);
+            
+            // Create preview
+            const reader = new FileReader();
+            await new Promise<void>((resolve) => {
+              reader.onload = (e) => {
+                newPreviews.push(e.target?.result as string);
+                resolve();
+              };
+              reader.readAsDataURL(file);
+            });
           }
         }
-        
-        Swal.close();
         
         if (newFiles.length === 0) {
           Swal.fire({
@@ -360,16 +364,15 @@ const ToursManagement = () => {
           setUploadedImages([...uploadedImages, ...newFiles]);
           setImagePreviews([...imagePreviews, ...newPreviews]);
           
-          if (newFiles.length < files.length) {
-            Swal.fire({
-              icon: 'info',
-              title: 'Partial Success',
-              text: `${newFiles.length} of ${files.length} images were processed successfully`
-            });
-          }
+          Swal.fire({
+            icon: 'success',
+            title: 'Images Ready!',
+            text: `${newFiles.length} image(s) selected. Backend will compress during upload.`,
+            timer: 2000,
+            showConfirmButton: false
+          });
         }
       } catch (err) {
-        Swal.close();
         Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -426,15 +429,21 @@ const ToursManagement = () => {
           uploadCount++;
           // Show progress
           Swal.fire({
-            title: 'Uploading Images...',
-            text: `Uploading ${uploadCount} of ${uploadedImages.length}`,
+            title: 'Processing Images...',
+            html: `
+              <div class="text-center">
+                <div class="mb-4">
+                  <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#3f7670] mx-auto"></div>
+                </div>
+                <p class="text-sm text-gray-600">Compressing and uploading image ${uploadCount} of ${uploadedImages.length}...</p>
+                <p class="text-xs text-gray-500 mt-2">Step 1: Compressing → Step 2: Uploading to Cloudinary</p>
+              </div>
+            `,
             allowOutsideClick: false,
-            didOpen: () => {
-              Swal.showLoading();
-            }
+            showConfirmButton: false
           });
           
-          const url = await uploadImage(file);
+          const url = await compressAndUploadImage(file);
           uploadedImageUrls.push(url);
         }
         Swal.close();
@@ -442,21 +451,12 @@ const ToursManagement = () => {
         setIsUploading(false);
         Swal.close();
         const errorMessage = (e as Error).message;
-        if (errorMessage.includes('File size too large') || errorMessage.includes('size')) {
-          Swal.fire({ 
-            icon: 'error', 
-            title: 'File Too Large', 
-            text: 'One or more images are still too large after compression. Please try smaller images or reduce quality.',
-            confirmButtonText: 'OK'
-          });
-        } else {
-          Swal.fire({ 
-            icon: 'error', 
-            title: 'Upload failed', 
-            text: errorMessage,
-            confirmButtonText: 'OK'
-          });
-        }
+        Swal.fire({ 
+          icon: 'error', 
+          title: 'Upload failed', 
+          text: errorMessage,
+          confirmButtonText: 'OK'
+        });
         return;
       }
     }
