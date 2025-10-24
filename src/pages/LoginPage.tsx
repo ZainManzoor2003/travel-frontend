@@ -185,16 +185,18 @@ const Login = () => {
       </nav>
 
       {/* Background hero with overlay */}
-      <section 
-        className="relative w-full min-h-screen flex items-center justify-center px-6"
-        style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1920&q=80)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
-      >
+      <section className="relative w-full flex items-center justify-center px-6 py-16">
+        {/* Background Image */}
+        <div className="absolute inset-0 w-full h-full">
+          <img 
+            src="/patagonia-bg.jpg" 
+            alt="Background" 
+            className="w-full h-full object-cover"
+          />
+        </div>
+        
         <div className="absolute inset-0 bg-black/55"></div>
-        <div className="relative z-10 w-full max-w-[520px] mx-auto bg-white rounded-[10px] shadow-[0_20px_60px_rgba(0,0,0,0.15)] p-6 sm:p-9">
+        <div className="relative z-10 w-full max-w-[520px] mx-auto bg-white rounded-[10px] shadow-[0_20px_60px_rgba(0,0,0,0.15)] p-6 sm:p-9 mt-16">
           <h1 className="font-['Playfair_Display'] text-[clamp(1.75rem,4vw,2.25rem)] font-normal text-[#2c2c2c] text-center mb-4">Welcome Back</h1>
           <p className="font-['Inter'] text-sm text-[#666] text-center mb-6">Log in to manage your tailor-made journeys</p>
 

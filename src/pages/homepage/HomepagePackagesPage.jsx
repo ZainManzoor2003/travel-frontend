@@ -103,7 +103,7 @@ const HomepagePackagesPage = () => {
           {/* Image Section */}
           <div className="relative overflow-hidden h-2/3">
             <img 
-              src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&h=600&fit=crop"
+              src="images/Patagonia (38).jpg"
               alt="Packages"
               className="w-full h-full object-cover block"
             />

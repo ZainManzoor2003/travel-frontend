@@ -329,7 +329,7 @@ function Homepage() {
             playsInline
             className="w-full h-full object-cover"
           >
-            <source src="https://awasi.com/assets/videos/home-hero.mp4" type="video/mp4" />
+            <source src="/CEO.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/20 via-black/40 to-black/30 z-[1]"></div>
@@ -373,7 +373,7 @@ function Homepage() {
               </div>
               <div className="relative overflow-hidden">
                 <img 
-                  src="https://awasi.com/assets/images/santa-catarina/8c48863d3399a30b9dde178784d094a1b8e5d88e.png"
+                  src="/images/Patagonia (6).jpg"
                   alt="Awasi Santa Catarina"
                   className="w-full h-full object-cover block"
                 />
@@ -383,38 +383,76 @@ function Homepage() {
 
           {/* Horizontal Section 2: Gallery */}
           <div className="w-screen h-screen flex-shrink-0 relative">
-            <div className="w-full h-full overflow-hidden bg-[#f5f5f5] relative">
+            <div className="w-full h-full overflow-hidden bg-[#f5f5f5] relative flex items-center justify-center">
               <div 
-                className="w-full h-full overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide" 
+                className="w-full max-w-[1400px] h-[80vh] overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide" 
                 ref={galleryContainerRef}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', willChange: 'scroll-position', backfaceVisibility: 'hidden', transform: 'translateZ(0)' }}
               >
-                <div className="flex h-full w-[400vw]" style={{ willChange: 'transform', backfaceVisibility: 'hidden', transform: 'translateZ(0)' }}>
-                  <div className="flex-[0_0_100vw] h-full relative overflow-hidden snap-start">
+                <div className="flex h-full w-[500%] gap-4" style={{ willChange: 'transform', backfaceVisibility: 'hidden', transform: 'translateZ(0)' }}>
+                  {/* Single large image on the left */}
+                  <div className="flex-[0_0_20%] h-full relative overflow-hidden snap-start">
                     <img 
-                      src="https://awasi.com/assets/images/home-gallery2.png"
+                      src="/images/Patagonia (9).jpeg"
                       alt="Awasi Gallery 1"
                       className="w-full h-full object-cover block"
                     />
                   </div>
-                  <div className="flex-[0_0_100vw] h-full relative overflow-hidden snap-start">
-                    <img 
-                      src="https://awasi.com/assets/images/home-gallery2.png"
-                      alt="Awasi Gallery 2"
-                      className="w-full h-full object-cover block"
-                    />
+                  
+                  {/* Two images in one column */}
+                  <div className="flex-[0_0_20%] h-full relative overflow-hidden snap-start">
+                    <div className="h-full flex flex-col gap-2">
+                      <div className="flex-1 relative overflow-hidden">
+                        <img 
+                          src="/images/Patagonia (10).jpg"
+                          alt="Awasi Gallery 2"
+                          className="w-full h-full object-cover block"
+                        />
+                      </div>
+                      <div className="flex-1 relative overflow-hidden">
+                        <img 
+                          src="/images/Patagonia (15).jpg"
+                          alt="Awasi Gallery 3"
+                          className="w-full h-full object-cover block"
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex-[0_0_100vw] h-full relative overflow-hidden snap-start">
+                  
+                  {/* Another single large image */}
+                  <div className="flex-[0_0_20%] h-full relative overflow-hidden snap-start">
                     <img 
-                      src="https://awasi.com/assets/images/home-gallery2.png"
-                      alt="Awasi Gallery 3"
-                      className="w-full h-full object-cover block"
-                    />
-                  </div>
-                  <div className="flex-[0_0_100vw] h-full relative overflow-hidden snap-start" ref={lastGalleryItemRef}>
-                    <img 
-                      src="https://awasi.com/assets/images/mendoza/mendoza-full.jpg"
+                      src="/images/Patagonia (25).jpg"
                       alt="Awasi Mendoza"
+                      className="w-full h-full object-cover block"
+                    />
+                  </div>
+                  
+                  {/* Another two images in one column */}
+                  <div className="flex-[0_0_20%] h-full relative overflow-hidden snap-start">
+                    <div className="h-full flex flex-col gap-2">
+                      <div className="flex-1 relative overflow-hidden">
+                        <img 
+                          src="/images/Patagonia (34).jpeg"
+                          alt="Awasi Gallery 4"
+                          className="w-full h-full object-cover block"
+                        />
+                      </div>
+                      <div className="flex-1 relative overflow-hidden">
+                        <img 
+                          src="/images/Patagonia (38).jpg"
+                          alt="Awasi Gallery 5"
+                          className="w-full h-full object-cover block"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Final single large image */}
+                  <div className="flex-[0_0_20%] h-full relative overflow-hidden snap-start" ref={lastGalleryItemRef}>
+                    <img 
+                      src="/images/DSC_2904.JPG"
+                      alt="Awasi Gallery 6"
                       className="w-full h-full object-cover block"
                     />
                   </div>
@@ -430,7 +468,7 @@ function Homepage() {
       <section className="video-scroll-section w-full h-auto relative overflow-visible bg-transparent">
         <div className="relative w-full h-auto overflow-visible">
           <video className="w-full h-auto object-cover" autoPlay muted playsInline loop>
-            <source src="https://awasi.com/assets/videos/glacier.mp4" type="video/mp4" />
+            <source src="CEO.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>

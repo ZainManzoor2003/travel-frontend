@@ -1,4 +1,6 @@
 
+import React from 'react';
+
 const InstagramSection = () => {
   return (
     <section className="w-full bg-[#f5f5f0] p-0">
@@ -10,22 +12,17 @@ const InstagramSection = () => {
         </div>
         
         <div className="flex gap-0 w-full h-auto">
-          <div className="relative flex-1 aspect-square overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02]">
-            <video 
-              className="w-full h-full object-cover block bg-black"
-              autoPlay
-              muted
-              loop
-              playsInline
-            >
-              <source src="https://videos.ctfassets.net/hz1mviiqoqof/2KhyAHGxQo1vWzFocY2T2i/42a6420c740bac2d267a56f028fd8d9c/filmCollectionGalleryCard3.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
           
           <div className="relative flex-1 aspect-square overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02]">
             <img 
-              src="https://images.ctfassets.net/hz1mviiqoqof/38LQEYTjOmLC8PQEyLZ8Tp/b030f502a486738e443c0b49a2730434/film13.png"
+              src="/images/Torres del Paine (1).jpg"
+              alt="Awasi Experience"
+              className="w-full h-full object-cover block"
+            />
+          </div>
+          <div className="relative flex-1 aspect-square overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02]">
+            <img 
+              src="/images/Torres del Paine (2).jpeg"
               alt="Awasi Experience"
               className="w-full h-full object-cover block"
             />
@@ -33,7 +30,7 @@ const InstagramSection = () => {
           
           <div className="relative flex-1 aspect-square overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02]">
             <img 
-              src="https://images.ctfassets.net/hz1mviiqoqof/5gC6xOjJCRkr1PL14WNxsI/de82f96cdd3ebb8e418e0e2ccfbf31f5/film14.png"
+              src="/images/Torres del Paine (3).jpg"
               alt="Awasi Experience"
               className="w-full h-full object-cover block"
             />
@@ -41,7 +38,7 @@ const InstagramSection = () => {
           
           <div className="relative flex-1 aspect-square overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02]">
             <img 
-              src="https://images.ctfassets.net/hz1mviiqoqof/8vsHZ5nMPKFiScsVU7Gkh/c0477c9f869bca0ecb0d5494d5a90903/film15.png"
+              src="/images/DSC_2904.JPG"
               alt="Awasi Experience"
               className="w-full h-full object-cover block"
             />

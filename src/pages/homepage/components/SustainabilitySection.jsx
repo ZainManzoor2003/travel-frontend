@@ -48,7 +48,7 @@ export default function SustainabilitySection() {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         aria-hidden="true"
-        style={{ backgroundImage: "url('https://awasi.com/assets/images/pagination-home/home-pagination-4.jpg')" }}
+        style={{ backgroundImage: "url('/images/Torres del Paine (1).jpg')" }}
       />
 
       <div className="relative z-[1] w-full h-full flex items-end pb-10">

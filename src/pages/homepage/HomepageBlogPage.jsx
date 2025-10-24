@@ -98,7 +98,7 @@ const HomepageBlogPage = () => {
           {/* Image Section */}
           <div className="relative overflow-hidden h-2/3">
             <img 
-              src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop"
+              src="/images/PXL_20241111_192620770.RAW-01.COVER.jpg"
               alt="Nature exploration"
               className="w-full h-full object-cover block"
               onError={(e) => {
