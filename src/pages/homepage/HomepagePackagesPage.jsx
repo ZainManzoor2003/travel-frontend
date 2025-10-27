@@ -99,9 +99,9 @@ const HomepagePackagesPage = () => {
 
       {/* Hero Section */}
       <section className="w-full h-screen flex items-center relative">
-        <div className="w-full h-full flex flex-col min-h-screen">
+      <div className="w-full h-full flex md:flex-col lg:flex-row-reverse">
           {/* Image Section */}
-          <div className="relative overflow-hidden h-2/3">
+          <div className="relative overflow-hidden md:w-full md:h-[60%] lg:w-[50%] lg:h-full">
             <img 
               src="images/Patagonia (38).jpg"
               alt="Packages"
@@ -110,7 +110,9 @@ const HomepagePackagesPage = () => {
           </div>
           
           {/* Text Section Below Image */}
-          <div className="bg-gradient-to-br from-[#8B4513] via-[#A0522D] to-[#8B7355] flex flex-col justify-center items-center p-16 relative h-1/3">
+          <div className="bg-gradient-to-br from-[#8B4513] via-[#A0522D] to-[#8B7355] 
+          flex flex-col justify-center items-center p-8 sm:p-16 relative 
+          md:w-full md:h-[40%] lg:w-[50%] lg:h-full">
             <h1 className="font-['Playfair_Display'] text-[clamp(2.5rem,6vw,4rem)] font-normal text-[#F5F5DC] mb-6 tracking-tight leading-[1.1] text-center">
               Travel Beyond Tours
             </h1>

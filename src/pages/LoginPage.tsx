@@ -185,7 +185,7 @@ const Login = () => {
       </nav>
 
       {/* Background hero with overlay */}
-      <section className="relative w-full flex items-center justify-center px-6 py-16">
+      <section className="relative w-full h-screen flex items-center justify-center px-6 py-16">
         {/* Background Image */}
         <div className="absolute inset-0 w-full h-full">
           <img 

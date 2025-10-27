@@ -18,7 +18,9 @@ function Homepage() {
   const [featuredTours, setFeaturedTours] = useState([])
   const [toursLoading, setToursLoading] = useState(true)
   const [toursError, setToursError] = useState(null)
+  const [isSecondMuted, setIsSecondMuted] = useState(true)
   const videoRef = useRef(null)
+  const secondVideoRef = useRef(null)
   const horizontalContainerRef = useRef(null)
   const contentSectionRef = useRef(null)
   const galleryContainerRef = useRef(null)
@@ -30,6 +32,13 @@ function Homepage() {
     if (videoRef.current) {
       videoRef.current.muted = !videoRef.current.muted
       setIsMuted(videoRef.current.muted)
+    }
+  }
+
+  const toggleSecondMute = () => {
+    if (secondVideoRef.current) {
+      secondVideoRef.current.muted = !secondVideoRef.current.muted
+      setIsSecondMuted(secondVideoRef.current.muted)
     }
   }
 
@@ -329,7 +338,7 @@ function Homepage() {
             playsInline
             className="w-full h-full object-cover"
           >
-            <source src="/CEO.mp4" type="video/mp4" />
+            <source src="/Demo Travel.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/20 via-black/40 to-black/30 z-[1]"></div>
@@ -467,11 +476,20 @@ function Homepage() {
       {/* Video Scroll Section - Below the hero and horizontal sections */}
       <section className="video-scroll-section w-full h-auto relative overflow-visible bg-transparent">
         <div className="relative w-full h-auto overflow-visible">
-          <video className="w-full h-auto object-cover" autoPlay muted playsInline loop>
-            <source src="CEO.mp4" type="video/mp4" />
+          <video ref={secondVideoRef} className="w-full h-auto object-cover" autoPlay muted playsInline loop>
+            <source src="/CEO.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
+        
+        <button className="absolute bottom-4 sm:bottom-6 lg:bottom-8 left-1/2 -translate-x-1/2 z-[3] bg-white/10 border border-white/20 rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-white cursor-pointer transition-all duration-300 backdrop-blur-[10px] hover:bg-white/20 hover:border-white/40 hover:scale-110" onClick={toggleSecondMute}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5">
+            <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M19.07 4.93C20.9441 6.8041 21.9999 9.34784 21.9999 12C21.9999 14.6522 20.9441 17.1959 19.07 19.07" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M15.54 8.46C16.4774 9.39764 17.0039 10.6692 17.0039 12C17.0039 13.3308 16.4774 14.6024 15.54 15.54" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            {isSecondMuted && <line x1="1" y1="1" x2="23" y2="23" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>}
+          </svg>
+        </button>
       </section>
 
       {/* Bottom Section */}
