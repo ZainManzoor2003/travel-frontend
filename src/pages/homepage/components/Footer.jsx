@@ -1,7 +1,7 @@
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-[#4a423e] text-white py-8 sm:py-12 px-0 pb-6 sm:pb-8">
+    <footer className="w-full text-white py-8 sm:py-12 px-0 pb-6 sm:pb-8" style={{ backgroundColor: '#000000' }}>
       <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12">
         {/* Top Section */}
         <div className="flex flex-col lg:flex-row justify-between items-center gap-6 lg:gap-0 mb-8 sm:mb-12 pb-6 sm:pb-8 border-b border-[rgba(245,245,240,0.2)]">

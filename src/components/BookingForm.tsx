@@ -129,7 +129,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) =
                 min="1"
                 max={tour.maxParticipants}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-transparent"
               />
               <p className="text-xs text-gray-500 mt-1">Maximum {tour.maxParticipants} participants</p>
             </div>
@@ -146,7 +146,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) =
                 onChange={handleChange}
                 min={minDateStr}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-transparent"
               />
             </div>
 
@@ -161,7 +161,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) =
                 value={formData.customerName}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-transparent"
               />
             </div>
 
@@ -176,7 +176,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) =
                 value={formData.customerEmail}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-transparent"
               />
             </div>
 
@@ -190,7 +190,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) =
                 name="customerPhone"
                 value={formData.customerPhone}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-transparent"
               />
             </div>
 
@@ -204,26 +204,26 @@ const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) =
                 value={formData.notes}
                 onChange={handleChange}
                 rows={3}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-transparent"
                 placeholder="Any dietary restrictions, accessibility needs, etc."
               />
             </div>
           </div>
 
           {/* Price Summary */}
-          <div className="mt-6 bg-teal-50 p-4 rounded-lg">
+          <div className="mt-6 bg-secondary-50 p-4 rounded-lg">
             <div className="flex justify-between items-center mb-2">
               <span className="text-gray-700">Price per person:</span>
-              <span className="font-semibold text-teal-600">${tour.price}</span>
+              <span className="font-semibold text-secondary-600">${tour.price}</span>
             </div>
             <div className="flex justify-between items-center mb-2">
               <span className="text-gray-700">Number of participants:</span>
-              <span className="font-semibold text-teal-600">{formData.participants}</span>
+              <span className="font-semibold text-secondary-600">{formData.participants}</span>
             </div>
-            <div className="border-t border-teal-200 pt-2 mt-2">
+            <div className="border-t border-secondary-200 pt-2 mt-2">
               <div className="flex justify-between items-center">
                 <span className="text-lg font-bold text-gray-900">Total Price:</span>
-                <span className="text-2xl font-bold text-teal-600">${totalPrice}</span>
+                <span className="text-2xl font-bold text-secondary-600">${totalPrice}</span>
               </div>
             </div>
           </div>
@@ -241,7 +241,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) =
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 px-4 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-4 py-3 bg-secondary-600 text-white rounded-lg hover:bg-secondary-700 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Processing...' : 'Confirm Booking'}
             </button>

@@ -1,10 +1,10 @@
 const TravelSection = () => {
   return (
-    <section className="w-full bg-[#f8f8f8] py-8 sm:py-12 lg:py-16">
+    <section className="w-full py-8 sm:py-12 lg:py-16" style={{ backgroundColor: '#ffe020' }}>
       <div className="max-w-[1400px] mx-auto grid grid-cols-1 gap-8 sm:gap-12 lg:gap-16 px-4 sm:px-8 lg:px-12 min-h-[60vh]">
         <div className="flex items-center justify-center text-center">
           <div className="max-w-[600px]">
-            <h2 className="font-['Playfair_Display'] text-[clamp(2rem,4vw,3rem)] font-normal text-[#2c2c2c] tracking-tight leading-[1.2] mb-6 sm:mb-8 text-center">
+            <h2 className="font-['Playfair_Display'] text-[clamp(2rem,4vw,3rem)] font-normal text-black tracking-tight leading-[1.2] mb-6 sm:mb-8 text-center">
               Combine two or more of our lodges
               <br />
               for the perfect South American

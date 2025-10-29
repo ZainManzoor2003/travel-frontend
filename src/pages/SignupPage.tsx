@@ -187,9 +187,9 @@ const Signup = () => {
         </div>
         <div className="absolute left-1/2 -translate-x-1/2">
           <img 
-            src="/Logo1.png"
+            src="/Logo.webp"
             alt="Awasi Logo"
-            className="h-24 w-56 brightness-0 invert"
+            className="h-24 w-56"
           />
         </div>
       </nav>

@@ -277,12 +277,12 @@ const BlogPage = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" style={{ backgroundColor: '#ffe020' }}>
       {/* Hero Section */}
       <section id="yy"
         ref={sectionRefs.hero}
         className="relative pt-32 pb-16 text-white"
-        style={{ backgroundColor: '#3f7670' }}
+        style={{ backgroundColor: '#000000' }}
       >
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
@@ -297,7 +297,7 @@ const BlogPage = () => {
       </section>
 
       {/* Search and Filter Section */}
-      <section className="py-12 bg-gray-50">
+      <section className="py-12" style={{ backgroundColor: '#ffe020' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-6">
             {/* Search Bar */}
@@ -316,10 +316,10 @@ const BlogPage = () => {
                   <button
                     key={category.value}
                     onClick={() => setSelectedFilter(category.value)}
-                    className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 ${
+                  className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 ${
                       selectedFilter === category.value
-                        ? 'bg-[#3f7670] text-white shadow-lg shadow-teal-200'
-                        : 'bg-white text-gray-700 hover:bg-teal-50 hover:text-[#3f7670] shadow-sm'
+                        ? 'bg-[#00c3a1] text-white shadow-lg shadow-secondary-200'
+                        : 'bg-[#ffe020] text-black hover:bg-[#00c3a1]/10 hover:text-[#00c3a1] shadow-sm'
                     }`}
                   >
                     {category.label}
@@ -329,14 +329,14 @@ const BlogPage = () => {
 
               {/* Sort Dropdown */}
               <div className="flex items-center space-x-3">
-                <label htmlFor="sort" className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                <label htmlFor="sort" className="text-sm font-medium text-black whitespace-nowrap">
                   Sort by:
                 </label>
                 <select
                   id="sort"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670] text-sm bg-white shadow-sm min-w-[160px]"
+                  className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00c3a1] focus:border-[#00c3a1] text-sm bg-[#ffe020] shadow-sm min-w-[160px] text-black"
                 >
                   {sortOptions.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -351,7 +351,7 @@ const BlogPage = () => {
       </section>
 
       {/* Blog Posts Grid */}
-      <section ref={sectionRefs.posts} className="py-20 bg-white">
+      <section ref={sectionRefs.posts} className="py-20" style={{ backgroundColor: '#00c3a1' }}>
         <div className="max-w-7xl lg:max-w-[85%] lg:max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           {loading ? (
             <div className="text-center py-12">

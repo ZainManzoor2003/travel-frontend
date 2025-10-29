@@ -79,14 +79,14 @@ const DashboardLayout = ({ children, activeSection, onSectionChange }: Dashboard
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top Navigation Bar */}
-      <nav className="shadow-sm" style={{ backgroundColor: '#3f7670' }}>
+      <nav className="shadow-sm" style={{ backgroundColor: '#22c55e' }}>
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20 py-4">
             {/* Logo */}
             <div className="flex items-center">
               <Link to="/" className="flex items-center">
                 <img 
-                  src="/Logo1.png" 
+                  src="/logo.webp" 
                   alt="Travel Beyond Tours Logo" 
                   className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain"
                 />

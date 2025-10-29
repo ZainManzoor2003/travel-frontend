@@ -86,7 +86,7 @@ const TourReviews: React.FC<TourReviewsProps> = ({ tourId }) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-secondary-600"></div>
       </div>
     );
   }
@@ -138,8 +138,8 @@ const TourReviews: React.FC<TourReviewsProps> = ({ tourId }) => {
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <div className="flex items-center space-x-3 mb-2">
-                      <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center">
-                        <span className="text-teal-700 font-semibold text-lg">
+                      <div className="w-10 h-10 bg-secondary-100 rounded-full flex items-center justify-center">
+                        <span className="text-secondary-700 font-semibold text-lg">
                           {review.user.username.charAt(0).toUpperCase()}
                         </span>
                       </div>

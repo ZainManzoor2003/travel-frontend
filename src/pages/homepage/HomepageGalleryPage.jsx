@@ -49,7 +49,7 @@ const HomepageGalleryPage = () => {
   }, [])
 
   return (
-    <div className="w-full min-h-screen bg-[#F8F8F8]">
+    <div className="w-full min-h-screen" style={{ backgroundColor: '#ffe020' }}>
       {/** Helper accessors to prefer gallery items over placeholders */}
       {(() => null)()}
       {/* Convenience helpers */}
@@ -74,9 +74,9 @@ const HomepageGalleryPage = () => {
         </div>
         <div className="absolute left-1/2 -translate-x-1/2">
           <img 
-            src="/Logo1.png"
+            src="/Logo.webp"
             alt="Awasi Logo"
-            className="h-24 w-56 brightness-0 invert"
+            className="mt-2 h-24 w-56"
           />
         </div>
       </nav>
@@ -110,7 +110,7 @@ const HomepageGalleryPage = () => {
 
       {/* Split Section - Two Images (left then right aligned) */}
       {(galleryItems[2] && galleryItems[3]) && (
-        <section className="w-full min-h-screen flex items-center bg-[#F8F8F8] py-16">
+        <section className="w-full min-h-screen flex items-center py-16" style={{ backgroundColor: '#ffe020' }}>
           <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 gap-16 items-center justify-items-start px-12">
             {/* gallery[2] */}
             <div className="relative overflow-hidden rounded-lg shadow-[0_8px_25px_rgba(0,0,0,0.1)] justify-self-start w-[70%]">
@@ -134,7 +134,7 @@ const HomepageGalleryPage = () => {
 
       {/* Split Section - Two Images second pair */}
       {(galleryItems[4] && galleryItems[5]) && (
-        <section className="w-full min-h-screen flex items-center bg-[#F8F8F8] py-16">
+        <section className="w-full min-h-screen flex items-center py-16" style={{ backgroundColor: '#ffe020' }}>
           <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 gap-16 items-center justify-items-start px-12">
             {/* gallery[4] */}
             <div className="relative overflow-hidden rounded-lg shadow-[0_8px_25px_rgba(0,0,0,0.1)] justify-self-start w-[70%]">
@@ -157,7 +157,7 @@ const HomepageGalleryPage = () => {
       )}
 
       {/* Three Images Row */}
-      <section className="w-full py-16 bg-[#F8F8F8]">
+      <section className="w-full py-16" style={{ backgroundColor: '#ffe020' }}>
         <div className="max-w-[1400px] mx-auto grid grid-cols-3 gap-8 px-12">
           {loading && (
             <div className="col-span-3 text-center font-['Inter'] text-sm text-[#666]">Loading gallery...</div>
@@ -191,7 +191,7 @@ const HomepageGalleryPage = () => {
 
       {/* Final Split Section */}
       {(galleryItems[10] && galleryItems[11]) && (
-        <section className="w-full min-h-screen flex items-center bg-[#F8F8F8] py-16">
+        <section className="w-full min-h-screen flex items-center py-16" style={{ backgroundColor: '#ffe020' }}>
           <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 gap-16 items-center justify-items-start px-12">
             {/* gallery[10] */}
             <div className="relative overflow-hidden rounded-lg shadow-[0_8px_25px_rgba(0,0,0,0.1)] justify-self-start w-[70%]">

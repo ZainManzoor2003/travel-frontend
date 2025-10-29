@@ -101,14 +101,14 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ booking, clientSecret, onCl
           </button>
         </div>
 
-        <div className="mb-6 bg-teal-50 p-4 rounded-lg">
+        <div className="mb-6 bg-secondary-50 p-4 rounded-lg">
           <div className="flex justify-between mb-2">
             <span className="text-gray-600">Participants:</span>
-            <span className="font-semibold text-teal-600">{booking.participants}</span>
+            <span className="font-semibold text-secondary-600">{booking.participants}</span>
           </div>
           <div className="flex justify-between text-lg font-bold">
             <span>Total Amount:</span>
-            <span className="text-teal-600">${booking.totalPrice}</span>
+            <span className="text-secondary-600">${booking.totalPrice}</span>
           </div>
         </div>
 
@@ -131,7 +131,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ booking, clientSecret, onCl
                 options={{
                   style: {
                     base: {
-                      color: '#0d9488', // teal-600
+                      color: '#16a34a', // green-600
                       fontFamily: 'system-ui, sans-serif',
                       fontSize: '16px',
                       '::placeholder': {
@@ -159,7 +159,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ booking, clientSecret, onCl
             <button
               type="submit"
               disabled={processing || !stripe || !elements}
-              className="flex-1 px-4 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-4 py-3 bg-secondary-600 text-white rounded-lg hover:bg-secondary-700 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {processing ? 'Processing...' : `Pay $${booking.totalPrice}`}
             </button>

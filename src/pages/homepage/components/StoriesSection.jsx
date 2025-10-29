@@ -32,9 +32,9 @@ export default function StoriesSection() {
     return () => controller.abort()
   }, [])
   return (
-    <section className="w-full bg-[#f8f8f8] py-16 pb-20">
+    <section className="w-full py-16 pb-20" style={{ backgroundColor: '#ffe020' }}>
       <div className="max-w-[1400px] mx-auto px-12">
-        <h2 className="font-['Playfair_Display'] font-normal text-[clamp(2.25rem,4.5vw,3.75rem)] text-[#2c2c2c] mb-8">
+        <h2 className="font-['Playfair_Display'] font-normal text-[clamp(2.25rem,4.5vw,3.75rem)] text-black mb-8">
           Explore more Awasi stories
         </h2>
 
@@ -58,7 +58,7 @@ export default function StoriesSection() {
             <li key={blog._id} className="grid grid-cols-[1fr_auto] items-center py-7 border-b border-[#cfcfcf]">
               <Link
                 to={`/blog/${blog._id}`}
-                className="no-underline text-[#2c2c2c] font-['Playfair_Display'] text-[clamp(1.25rem,2.2vw,1.75rem)] transition-colors duration-[250ms] hover:text-black"
+                className="no-underline text-black font-['Playfair_Display'] text-[clamp(1.25rem,2.2vw,1.75rem)] transition-colors duration-[250ms] hover:text-[#00c3a1]"
               >
                 {blog.title}
               </Link>
@@ -72,7 +72,7 @@ export default function StoriesSection() {
             </li>
           ))}
         </ul>
-          <Link to="/blog" className="mt-10 bg-transparent text-[#2c2c2c] border border-[#cfcfcf] rounded-lg py-[0.9rem] px-[1.2rem] font-['Inter'] font-semibold tracking-wider cursor-pointer transition-all duration-[250ms] hover:bg-[#eee] hover:border-[#bbb]">
+          <Link to="/blog" className="mt-10 bg-black text-white border border-black rounded-lg py-[0.9rem] px-[1.2rem] font-['Inter'] font-semibold tracking-wider cursor-pointer transition-all duration-[250ms] hover:bg-[#00c3a1] hover:border-[#00c3a1]">
             SEE OUR BLOG
           </Link>
       </div>

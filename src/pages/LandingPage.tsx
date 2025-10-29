@@ -372,7 +372,7 @@ const LandingPage = () => {
                     })}
           {/* readability overlays: subtle blue + vertical gradient */}
                      <div className="absolute inset-0 pointer-events-none">
-             <div className="absolute inset-0 bg-teal-900/25" />
+             <div className="absolute inset-0 bg-secondary-900/25" />
              <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/35 via-transparent to-emerald-900/35" />
            </div>
           </div>
@@ -381,23 +381,23 @@ const LandingPage = () => {
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
           <h1 className="hero-title text-4xl md:text-6xl font-bold mb-6 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
             Discover Your
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-300 mt-2">
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-secondary-300 mt-2">
               Next Adventure
             </span>
           </h1>
-          <p className="hero-subtitle text-lg md:text-xl mb-8 text-teal-100 max-w-2xl mx-auto leading-relaxed drop-shadow-[0_1px_6px_rgba(0,0,0,0.6)]">
+          <p className="hero-subtitle text-lg md:text-xl mb-8 text-secondary-100 max-w-2xl mx-auto leading-relaxed drop-shadow-[0_1px_6px_rgba(0,0,0,0.6)]">
             Explore breathtaking destinations, create unforgettable memories, and experience the world like never before.
           </p>
           <div className="hero-cta flex flex-wrap gap-4 justify-center">
             <Link
               to="/packages"
-              className="bg-teal-500 text-white hover:bg-teal-600 px-6 py-3 rounded-md text-base font-medium transition-all duration-200 shadow-sm hover:shadow-md focus:ring-2 focus:ring-emerald-300"
+              className="bg-secondary-500 text-white hover:bg-secondary-600 px-6 py-3 rounded-md text-base font-medium transition-all duration-200 shadow-sm hover:shadow-md focus:ring-2 focus:ring-emerald-300"
             >
               Explore Tours
             </Link>
             <Link
               to="/gallery"
-              className="border border-teal-300/50 text-white hover:bg-teal-300/10 px-6 py-3 rounded-md text-base font-medium transition-all duration-200 backdrop-blur-sm"
+              className="border border-secondary-300/50 text-white hover:bg-secondary-300/10 px-6 py-3 rounded-md text-base font-medium transition-all duration-200 backdrop-blur-sm"
             >
               View Gallery
             </Link>
@@ -423,25 +423,25 @@ const LandingPage = () => {
           
           <div className="flex flex-wrap justify-center gap-8 md:gap-12 lg:gap-16 text-center">
             <div className="stat-item flex-1 min-w-[120px] max-w-[160px] sm:max-w-none">
-              <div className="text-3xl md:text-4xl font-bold mb-2 text-teal-600">
+              <div className="text-3xl md:text-4xl font-bold mb-2 text-secondary-600">
                 {isStatsVisible && <CountUp end={500} duration={2} suffix="+" />}
               </div>
               <div className="text-gray-600 text-sm">Happy Travelers</div>
             </div>
             <div className="stat-item flex-1 min-w-[120px] max-w-[160px] sm:max-w-none">
-              <div className="text-3xl md:text-4xl font-bold mb-2 text-teal-600">
+              <div className="text-3xl md:text-4xl font-bold mb-2 text-secondary-600">
                 {isStatsVisible && <CountUp end={50} duration={2} suffix="+" />}
               </div>
               <div className="text-gray-600 text-sm">Destinations</div>
             </div>
             <div className="stat-item flex-1 min-w-[120px] max-w-[160px] sm:max-w-none">
-              <div className="text-3xl md:text-4xl font-bold mb-2 text-teal-600">
+              <div className="text-3xl md:text-4xl font-bold mb-2 text-secondary-600">
                 {isStatsVisible && <CountUp end={100} duration={2} suffix="+" />}
               </div>
               <div className="text-gray-600 text-sm">Tours Available</div>
             </div>
             <div className="stat-item flex-1 min-w-[120px] max-w-[160px] sm:max-w-none">
-              <div className="text-3xl md:text-4xl font-bold mb-2 text-teal-600">
+              <div className="text-3xl md:text-4xl font-bold mb-2 text-secondary-600">
                 {isStatsVisible && <CountUp end={4.9} duration={2} decimals={1} />}
               </div>
               <div className="text-gray-600 text-sm">Average Rating</div>
@@ -580,7 +580,7 @@ const LandingPage = () => {
               <p className="text-gray-600 mb-4">{error}</p>
               <button
                 onClick={fetchFeaturedTours}
-                className="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors duration-200"
+                className="bg-secondary-600 text-white px-4 py-2 rounded-lg hover:bg-secondary-700 transition-colors duration-200"
               >
                 Try Again
               </button>
@@ -623,7 +623,7 @@ const LandingPage = () => {
               <p className="text-gray-600 mb-4">No featured tours available at the moment.</p>
               <Link
                 to="/packages"
-                className="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors duration-200 inline-block"
+                className="bg-secondary-600 text-white px-4 py-2 rounded-lg hover:bg-secondary-700 transition-colors duration-200 inline-block"
               >
                 Browse All Tours
               </Link>
@@ -633,7 +633,7 @@ const LandingPage = () => {
           <div className="text-center mt-12">
             <Link
               to="/packages"
-              className="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium transition-colors duration-200"
+              className="inline-flex items-center text-secondary-600 hover:text-secondary-700 font-medium transition-colors duration-200"
             >
               View All Tours
               <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -648,7 +648,7 @@ const LandingPage = () => {
       <section ref={servicesRef} className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <p className="text-teal-600 font-semibold text-sm uppercase tracking-wide mb-2">Popular Services</p>
+            <p className="text-secondary-600 font-semibold text-sm uppercase tracking-wide mb-2">Popular Services</p>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
               Select Offers For Traveling
             </h2>
@@ -658,7 +658,7 @@ const LandingPage = () => {
             {/* Different Location */}
             <div className="service-item text-center group cursor-pointer flex-shrink-0">
               <div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                <svg className="w-16 h-16 text-teal-600 group-hover:text-teal-700 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-16 h-16 text-secondary-600 group-hover:text-secondary-700 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
@@ -669,7 +669,7 @@ const LandingPage = () => {
             {/* Best Travel */}
             <div className="service-item text-center group cursor-pointer flex-shrink-0">
               <div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                <svg className="w-16 h-16 text-teal-600 group-hover:text-teal-700 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-16 h-16 text-secondary-600 group-hover:text-secondary-700 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                 </svg>
               </div>
@@ -679,7 +679,7 @@ const LandingPage = () => {
             {/* Food Tours */}
             <div className="service-item text-center group cursor-pointer flex-shrink-0">
               <div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                <svg className="w-16 h-16 text-teal-600 group-hover:text-teal-700 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-16 h-16 text-secondary-600 group-hover:text-secondary-700 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                   <circle cx="12" cy="12" r="10" strokeWidth={1.5} />
                 </svg>
@@ -690,7 +690,7 @@ const LandingPage = () => {
             {/* Summer Rest */}
             <div className="service-item text-center group cursor-pointer flex-shrink-0">
               <div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                <svg className="w-16 h-16 text-teal-600 group-hover:text-teal-700 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-16 h-16 text-secondary-600 group-hover:text-secondary-700 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
               </div>
@@ -700,7 +700,7 @@ const LandingPage = () => {
             {/* Ship Cruises */}
             <div className="service-item text-center group cursor-pointer flex-shrink-0">
               <div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                <svg className="w-16 h-16 text-teal-600 group-hover:text-teal-700 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-16 h-16 text-secondary-600 group-hover:text-secondary-700 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
                 </svg>
               </div>
@@ -710,7 +710,7 @@ const LandingPage = () => {
             {/* Mountain Tours */}
             <div className="service-item text-center group cursor-pointer flex-shrink-0">
               <div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                <svg className="w-16 h-16 text-teal-600 group-hover:text-teal-700 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-16 h-16 text-secondary-600 group-hover:text-secondary-700 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3l3.057-3L20 21H2z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 14l2-2 2 2" />
                 </svg>
@@ -725,7 +725,7 @@ const LandingPage = () => {
       <section className="py-16 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <p className="text-teal-600 font-semibold text-sm uppercase tracking-wide mb-2">Our Gallery</p>
+            <p className="text-secondary-600 font-semibold text-sm uppercase tracking-wide mb-2">Our Gallery</p>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
               Best Traveler Share A Photo
             </h2>
@@ -746,8 +746,8 @@ const LandingPage = () => {
                       alt="Travel moment" 
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-teal-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <img src="/Logo1.png" alt="Logo" className="w-32 h-32 object-contain" />
+                    <div className="absolute inset-0 bg-secondary-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <img src="/Logo.webp" alt="Logo" className="w-32 h-32 object-contain" />
                     </div>
                   </div>
                   <div 
@@ -759,8 +759,8 @@ const LandingPage = () => {
                       alt="Travel moment" 
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-teal-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <img src="/Logo1.png" alt="Logo" className="w-32 h-32 object-contain" />
+                    <div className="absolute inset-0 bg-secondary-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <img src="/Logo.webp" alt="Logo" className="w-32 h-32 object-contain" />
                     </div>
                   </div>
                   <div 
@@ -772,8 +772,8 @@ const LandingPage = () => {
                       alt="Travel moment" 
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-teal-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <img src="/Logo1.png" alt="Logo" className="w-32 h-32 object-contain" />
+                    <div className="absolute inset-0 bg-secondary-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <img src="/Logo.webp" alt="Logo" className="w-32 h-32 object-contain" />
                     </div>
                   </div>
                   <div 
@@ -785,8 +785,8 @@ const LandingPage = () => {
                       alt="Travel moment" 
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-teal-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <img src="/Logo1.png" alt="Logo" className="w-32 h-32 object-contain" />
+                    <div className="absolute inset-0 bg-secondary-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <img src="/Logo.webp" alt="Logo" className="w-32 h-32 object-contain" />
                     </div>
                   </div>
                   <div 
@@ -798,8 +798,8 @@ const LandingPage = () => {
                       alt="Travel moment" 
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-teal-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <img src="/Logo1.png" alt="Logo" className="w-32 h-32 object-contain" />
+                    <div className="absolute inset-0 bg-secondary-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <img src="/Logo.webp" alt="Logo" className="w-32 h-32 object-contain" />
                     </div>
                   </div>
                   <div 
@@ -811,8 +811,8 @@ const LandingPage = () => {
                       alt="Travel moment" 
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-teal-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <img src="/Logo1.png" alt="Logo" className="w-32 h-32 object-contain" />
+                    <div className="absolute inset-0 bg-secondary-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <img src="/Logo.webp" alt="Logo" className="w-32 h-32 object-contain" />
                     </div>
                   </div>
                   <div 
@@ -824,8 +824,8 @@ const LandingPage = () => {
                       alt="Travel moment" 
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-teal-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <img src="/Logo1.png" alt="Logo" className="w-32 h-32 object-contain" />
+                    <div className="absolute inset-0 bg-secondary-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <img src="/Logo.webp" alt="Logo" className="w-32 h-32 object-contain" />
                     </div>
                   </div>
                   <div 
@@ -837,8 +837,8 @@ const LandingPage = () => {
                       alt="Travel moment" 
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-teal-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <img src="/Logo1.png" alt="Logo" className="w-32 h-32 object-contain" />
+                    <div className="absolute inset-0 bg-secondary-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <img src="/Logo.webp" alt="Logo" className="w-32 h-32 object-contain" />
                     </div>
                   </div>
                   <div 
@@ -850,8 +850,8 @@ const LandingPage = () => {
                       alt="Travel moment" 
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-teal-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <img src="/Logo1.png" alt="Logo" className="w-32 h-32 object-contain" />
+                    <div className="absolute inset-0 bg-secondary-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <img src="/Logo.webp" alt="Logo" className="w-32 h-32 object-contain" />
                     </div>
                   </div>
                   <div 
@@ -863,8 +863,8 @@ const LandingPage = () => {
                       alt="Travel moment" 
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-teal-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <img src="/Logo1.png" alt="Logo" className="w-32 h-32 object-contain" />
+                    <div className="absolute inset-0 bg-secondary-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <img src="/Logo.webp" alt="Logo" className="w-32 h-32 object-contain" />
                     </div>
                   </div>
                   <div 
@@ -876,7 +876,7 @@ const LandingPage = () => {
                       alt="Travel moment" 
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-teal-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-secondary-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <img src="/Logo1.png" alt="Logo" className="w-32 h-32 object-contain" />
                     </div>
                   </div>
@@ -889,7 +889,7 @@ const LandingPage = () => {
                       alt="Travel moment" 
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-teal-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-secondary-600/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <img src="/Logo1.png" alt="Logo" className="w-32 h-32 object-contain" />
                     </div>
                   </div>
@@ -901,7 +901,7 @@ const LandingPage = () => {
           <div className="text-center mt-10">
             <Link
               to="/gallery"
-              className="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium transition-colors duration-200"
+              className="inline-flex items-center text-secondary-600 hover:text-secondary-700 font-medium transition-colors duration-200"
             >
               View Full Gallery
               <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -940,10 +940,10 @@ const LandingPage = () => {
                   className="w-full h-[400px] object-cover"
                 />
                 {/* Artistic brush stroke overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-teal-500/20 via-transparent to-blue-500/20 mix-blend-overlay"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-secondary-500/20 via-transparent to-blue-500/20 mix-blend-overlay"></div>
               </div>
               {/* Decorative background shape */}
-              <div className="absolute -top-4 -left-4 w-24 h-24 bg-teal-200 rounded-full blur-3xl opacity-50 -z-10"></div>
+              <div className="absolute -top-4 -left-4 w-24 h-24 bg-secondary-200 rounded-full blur-3xl opacity-50 -z-10"></div>
               <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-blue-200 rounded-full blur-3xl opacity-50 -z-10"></div>
             </div>
 
@@ -958,7 +958,7 @@ const LandingPage = () => {
               </p>
               <Link
                 to="/blog"
-                className="inline-flex items-center text-teal-600 hover:text-teal-700 font-semibold text-lg group"
+                className="inline-flex items-center text-secondary-600 hover:text-secondary-700 font-semibold text-lg group"
               >
                 Read more
                 <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -975,7 +975,7 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center items-center gap-12">
             {/* Left Eye */}
-            <div className="relative w-60 h-60 rounded-full flex items-center justify-center shadow-2xl" style={{ backgroundColor: '#3f7670' }}>
+            <div className="relative w-60 h-60 rounded-full flex items-center justify-center shadow-2xl" style={{ backgroundColor: '#22c55e' }}>
               <div 
                 id="left-pupil"
                 className="w-24 h-24 bg-gray-900 rounded-full transition-all duration-100 ease-out flex items-center justify-center"
@@ -985,7 +985,7 @@ const LandingPage = () => {
             </div>
 
             {/* Right Eye */}
-            <div className="relative w-60 h-60 rounded-full flex items-center justify-center shadow-2xl" style={{ backgroundColor: '#3f7670' }}>
+            <div className="relative w-60 h-60 rounded-full flex items-center justify-center shadow-2xl" style={{ backgroundColor: '#22c55e' }}>
               <div 
                 id="right-pupil"
                 className="w-24 h-24 bg-gray-900 rounded-full transition-all duration-100 ease-out flex items-center justify-center"
@@ -998,7 +998,7 @@ const LandingPage = () => {
       </section>
 
       {/* Infinite Scrolling Text Section */}
-      <section className="py-16 overflow-hidden border-t-2 border-b-2" style={{ backgroundColor: '#3f7670', borderColor: '#2f5650' }}>
+      <section className="py-16 overflow-hidden border-t-2 border-b-2" style={{ backgroundColor: '#22c55e', borderColor: '#2f5650' }}>
         <div className="scrolling-text-container">
           <div className="scrolling-text">
             <span className="text-item">TRAVELERS ARE EXPLORERS</span>
@@ -1100,7 +1100,7 @@ const LandingPage = () => {
             <div className="text-center">
               <p className="text-gray-700 text-lg leading-relaxed max-w-3xl mx-auto">
                 "I'm passionate about connecting travelers to help them create unforgettable memories and experiences, 
-                but <span className="font-semibold text-teal-600">travel</span> is the ever-changing landscape we navigate."
+                but <span className="font-semibold text-secondary-600">travel</span> is the ever-changing landscape we navigate."
               </p>
             </div>
           </div>
@@ -1108,7 +1108,7 @@ const LandingPage = () => {
       </section>
 
       {/* Promotional Banner Section */}
-      <section className="py-20 bg-gradient-to-r from-teal-500 via-teal-600 to-blue-600 relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-r from-secondary-500 via-secondary-600 to-blue-600 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 w-40 h-40 bg-white rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 right-10 w-60 h-60 bg-white rounded-full blur-3xl"></div>
@@ -1119,15 +1119,15 @@ const LandingPage = () => {
             <div className="text-white">
               <h2 className="text-5xl md:text-6xl font-bold mb-6">
                 DISCOVER
-                <span className="block text-3xl md:text-4xl mt-2 text-teal-100">YOUR NEXT ADVENTURE</span>
+                <span className="block text-3xl md:text-4xl mt-2 text-secondary-100">YOUR NEXT ADVENTURE</span>
               </h2>
-              <p className="text-xl mb-8 text-teal-50 leading-relaxed">
+              <p className="text-xl mb-8 text-secondary-50 leading-relaxed">
                 Experience the world like never before. Book now and start your journey to discover amazing destinations and create unforgettable memories.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
                   to="/packages"
-                  className="bg-white text-teal-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-teal-50 transition-colors duration-200 shadow-xl hover:shadow-2xl inline-flex items-center"
+                  className="bg-white text-secondary-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-secondary-50 transition-colors duration-200 shadow-xl hover:shadow-2xl inline-flex items-center"
                 >
                   EXPLORE TOURS
                   <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

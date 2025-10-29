@@ -51,12 +51,12 @@ const SearchBar = ({ onSearch, placeholder = "Search tours...", className = "" }
             value={query}
             onChange={handleInputChange}
             placeholder={placeholder}
-            className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670] text-sm"
+            className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e] text-sm"
           />
         </div>
         <button
           type="submit"
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-teal-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-teal-700 transition-colors duration-200"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-secondary-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-secondary-700 transition-colors duration-200"
         >
           Search
         </button>

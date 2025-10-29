@@ -38,7 +38,7 @@ const TextField: React.FC<TextFieldProps> = ({
       <div
         className={`relative flex items-start rounded-md bg-gray-50 border ${
           error ? "border-red-500" : "border-gray-300"
-        } transition-all duration-200 ${focused ? "shadow-md ring-2 ring-[#3f7670] ring-opacity-20" : ""}`}
+        } transition-all duration-200 ${focused ? "shadow-md ring-2 ring-[#22c55e] ring-opacity-20" : ""}`}
       >
         {startIcon && (
           <div className="pl-3 pt-3 text-gray-500">
@@ -50,7 +50,7 @@ const TextField: React.FC<TextFieldProps> = ({
           <label
             className={`absolute left-3 pointer-events-none origin-left transition-all duration-200 ${
               shouldFloatLabel 
-                ? "top-1 text-xs font-medium scale-85 text-[#3f7670]" 
+                ? "top-1 text-xs font-medium scale-85 text-[#22c55e]" 
                 : "top-3 text-base text-gray-500"
             } ${error && shouldFloatLabel ? "text-red-500" : ""}`}
           >
@@ -94,7 +94,7 @@ const TextField: React.FC<TextFieldProps> = ({
       <div
         className={`absolute bottom-0 left-0 h-0.5 transition-all duration-300 ${
           focused ? "w-full" : "w-0"
-        } ${error ? "bg-red-500" : "bg-[#3f7670]"}`}
+        } ${error ? "bg-red-500" : "bg-[#22c55e]"}`}
       />
 
       {error && (
@@ -185,7 +185,7 @@ const ContactPage = () => {
           <p className="text-gray-600 mb-8">Thank you for contacting us. We'll get back to you within 24 hours.</p>
           <button
             onClick={() => setIsSubmitted(false)}
-            className="bg-[#3f7670] text-white px-6 py-3 rounded-lg hover:bg-[#2d5550] transition-colors duration-200 shadow-lg"
+            className="bg-[#22c55e] text-white px-6 py-3 rounded-lg hover:bg-[#15803d] transition-colors duration-200 shadow-lg"
           >
             Send Another Message
           </button>
@@ -195,9 +195,9 @@ const ContactPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+      <div className="min-h-screen" style={{ backgroundColor: '#ffe020' }}>
       {/* Hero Section */}
-      <section id="yy" className="relative pt-32 pb-16 text-white" style={{ backgroundColor: '#3f7670' }}>
+              <section id="yy" className="relative pt-32 pb-16 text-white" style={{ backgroundColor: '#00c3a1' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
@@ -211,12 +211,12 @@ const ContactPage = () => {
       </section>
 
       {/* Contact Form & Info */}
-      <section className="py-16">
+      <section className="py-16" style={{ backgroundColor: '#ffe020' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             {/* Contact Form */}
             <div>
-              <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+              <div className="rounded-2xl shadow-lg p-8 border border-gray-100" style={{ backgroundColor: '#00c3a1' }}>
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Send Message</h2>
                 
                 <div className="space-y-6">
@@ -265,7 +265,7 @@ const ContactPage = () => {
                   <button
                     onClick={handleSubmit}
                     disabled={isSubmitting}
-                    className="w-full bg-[#3f7670] text-white py-3 px-6 rounded-lg font-semibold hover:bg-[#2d5550] disabled:bg-teal-400 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                    className="w-full bg-[#22c55e] text-white py-3 px-6 rounded-lg font-semibold hover:bg-[#15803d] disabled:bg-secondary-400 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
                   >
                     {isSubmitting ? (
                       <>
@@ -288,15 +288,15 @@ const ContactPage = () => {
 
             {/* Contact Info */}
             <div>
-              <div className="bg-gray-50 rounded-2xl p-8">
+              <div className="rounded-2xl p-8" style={{ backgroundColor: '#ffe020' }}>
                 <h2 className="text-2xl font-bold text-gray-900 mb-8">Contact Info</h2>
                 
                 {/* Contact information in responsive grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6">
                   {/* Address */}
-                  <div className="flex items-start space-x-4 p-4 bg-white rounded-lg shadow-sm">
-                    <div className="flex-shrink-0 w-10 h-10 bg-teal-50 rounded-lg flex items-center justify-center">
-                      <FiMapPin className="w-5 h-5 text-[#3f7670]" />
+                  <div className="flex items-start space-x-4 p-4 rounded-lg shadow-sm" style={{ backgroundColor: '#00c3a1' }}>
+                    <div className="flex-shrink-0 w-10 h-10 bg-secondary-50 rounded-lg flex items-center justify-center">
+                      <FiMapPin className="w-5 h-5 text-[#22c55e]" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-1">Address</h3>
@@ -308,7 +308,7 @@ const ContactPage = () => {
                   </div>
 
                   {/* Phone */}
-                  <div className="flex items-start space-x-4 p-4 bg-white rounded-lg shadow-sm">
+                  <div className="flex items-start space-x-4 p-4 rounded-lg shadow-sm" style={{ backgroundColor: '#00c3a1' }}>
                     <div className="flex-shrink-0 w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
                       <FiPhone className="w-5 h-5 text-green-600" />
                     </div>
@@ -320,7 +320,7 @@ const ContactPage = () => {
                   </div>
 
                   {/* Business Hours - spans full width on larger screens */}
-                  <div className="sm:col-span-2 lg:col-span-1 xl:col-span-2 flex items-start space-x-4 p-4 bg-white rounded-lg shadow-sm">
+                  <div className="sm:col-span-2 lg:col-span-1 xl:col-span-2 flex items-start space-x-4 p-4 rounded-lg shadow-sm" style={{ backgroundColor: '#00c3a1' }}>
                     <div className="flex-shrink-0 w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
                       <FiClock className="w-5 h-5 text-purple-600" />
                     </div>
@@ -336,8 +336,8 @@ const ContactPage = () => {
                 </div>
 
                 {/* Quick response note */}
-                <div className="mt-6 p-4 bg-teal-50 rounded-lg border border-teal-200">
-                  <p className="text-teal-800 text-sm">
+                <div className="mt-6 p-4 bg-secondary-50 rounded-lg border border-secondary-200">
+                  <p className="text-secondary-800 text-sm">
                     <span className="font-semibold">Quick Response:</span> We typically respond to all inquiries within 2-4 hours during business hours.
                   </p>
                 </div>

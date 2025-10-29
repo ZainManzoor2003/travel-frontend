@@ -52,7 +52,7 @@ const HomepageContactPage = () => {
           <img 
             src="/Logo1.png"
             alt="Awasi Logo"
-            className="h-24 w-56 brightness-0 invert"
+            className="h-24 w-56"
           />
         </div>
         

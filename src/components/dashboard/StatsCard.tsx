@@ -26,40 +26,40 @@ const StatsCard = ({ title, value, change, changeType, icon, color }: StatsCardP
   const getColorClasses = (color: string) => {
     const colorMap = {
       blue: {
-        bg: 'bg-teal-50',
-        icon: 'bg-teal-100',
-        text: 'text-[#3f7670]',
-        accent: 'text-[#3f7670]'
+        bg: 'bg-secondary-50',
+        icon: 'bg-secondary-100',
+        text: 'text-[#22c55e]',
+        accent: 'text-[#22c55e]'
       },
       green: {
-        bg: 'bg-teal-50',
-        icon: 'bg-teal-100',
-        text: 'text-[#3f7670]',
-        accent: 'text-[#3f7670]'
+        bg: 'bg-secondary-50',
+        icon: 'bg-secondary-100',
+        text: 'text-[#22c55e]',
+        accent: 'text-[#22c55e]'
       },
       purple: {
-        bg: 'bg-teal-50',
-        icon: 'bg-teal-100',
-        text: 'text-[#3f7670]',
-        accent: 'text-[#3f7670]'
+        bg: 'bg-secondary-50',
+        icon: 'bg-secondary-100',
+        text: 'text-[#22c55e]',
+        accent: 'text-[#22c55e]'
       },
       orange: {
-        bg: 'bg-teal-50',
-        icon: 'bg-teal-100',
-        text: 'text-[#3f7670]',
-        accent: 'text-[#3f7670]'
+        bg: 'bg-secondary-50',
+        icon: 'bg-secondary-100',
+        text: 'text-[#22c55e]',
+        accent: 'text-[#22c55e]'
       },
       indigo: {
-        bg: 'bg-teal-50',
-        icon: 'bg-teal-100',
-        text: 'text-[#3f7670]',
-        accent: 'text-[#3f7670]'
+        bg: 'bg-secondary-50',
+        icon: 'bg-secondary-100',
+        text: 'text-[#22c55e]',
+        accent: 'text-[#22c55e]'
       },
       emerald: {
-        bg: 'bg-teal-50',
-        icon: 'bg-teal-100',
-        text: 'text-[#3f7670]',
-        accent: 'text-[#3f7670]'
+        bg: 'bg-secondary-50',
+        icon: 'bg-secondary-100',
+        text: 'text-[#22c55e]',
+        accent: 'text-[#22c55e]'
       },
       red: {
         bg: 'bg-red-50',

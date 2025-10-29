@@ -129,26 +129,30 @@ const Navbar = () => {
           ? 'shadow-lg backdrop-blur-md'
           : ''
           }`}
-        style={{ backgroundColor: '#3f7670' }}
+        style={{ backgroundColor: '#000000' }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20 py-4">
             {/* Logo */}
             <Link to="/" className="flex items-center z-50 pt-2">
-              <img  src="/Logo1.png" alt="Travel Beyond Tours Logo" className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain" />
+              <img  src="/Logo.webp" alt="Travel Beyond Tours Logo" className="mt-2 h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain" />
             </Link>
 
             {/* Desktop Navigation - This should be visible on larger screens */}
 
             {/* <div className={isMenuOpen?"hidden":"flex items-center space-x-8"}> */}
             <div className="hidden lg:flex! items-center space-x-8">
-              {navItems.map((item) => (
+              {navItems.map((item) => {
+                const isActive = item.path === '/' 
+                  ? location.pathname === '/' 
+                  : location.pathname === item.path || location.pathname.startsWith(item.path + '/');
+                return (
                 <Link
                   key={item.name}
                   to={item.path}
-                  className={`flex items-center text-sm font-medium transition-colors duration-200 ${location.pathname === item.path
-                    ? 'text-teal-200'
-                    : 'text-white hover:text-teal-200'
+                  className={`flex items-center text-sm font-medium transition-colors duration-200 ${isActive
+                    ? 'text-primary-300'
+                    : 'text-white hover:text-primary-300'
                     }`}
                   onMouseEnter={item.path === '/packages' ? prefetchTours : undefined}
                   onFocus={item.path === '/packages' ? prefetchTours : undefined}
@@ -156,17 +160,18 @@ const Navbar = () => {
                   {item.icon}
                   {item.name}
                 </Link>
-              ))}
+                );
+              })}
 
               {/* User authentication section */}
               {isLoggedIn ? (
                 <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={toggleDropdown}
-                    className="flex items-center space-x-2 p-2 rounded-full hover:bg-teal-700 transition-colors duration-200"
+                    className="flex items-center space-x-2 p-2 rounded-full hover:bg-secondary-700 transition-colors duration-200"
                   >
-                    <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center">
-                      <FiUser className="text-teal-600" />
+                    <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                      <FiUser className="text-primary-600" />
                     </div>
                     <span className="text-sm font-medium text-white">{user?.username || user?.email || 'User'}</span>
                   </button>
@@ -204,7 +209,7 @@ const Navbar = () => {
                 <div className="flex items-center space-x-4">
                   <Link
                     to="/login"
-                    className="bg-teal-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-teal-700 focus:ring-2 focus:ring-emerald-300 transition-colors duration-200"
+                    className="bg-primary-500 text-black px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-600 focus:ring-2 focus:ring-primary-300 transition-colors duration-200"
                   >
                     Login
                   </Link>
@@ -245,7 +250,7 @@ const Navbar = () => {
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200">
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-secondary-600 rounded-lg flex items-center justify-center">
                     <span className="text-white font-bold text-lg">T</span>
                   </div>
                   <span className="text-xl font-bold text-gray-900">Travel Beyond Tours</span>
@@ -260,20 +265,25 @@ const Navbar = () => {
 
               {/* Navigation Links */}
               <div className="flex-1 px-6 py-6 space-y-2">
-                {navItems.map((item) => (
+                {navItems.map((item) => {
+                  const isActive = item.path === '/' 
+                    ? location.pathname === '/' 
+                    : location.pathname === item.path || location.pathname.startsWith(item.path + '/');
+                  return (
                   <Link
                     key={item.name}
                     to={item.path}
-                    className={`flex items-center px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${location.pathname === item.path
-                      ? 'text-teal-600 bg-teal-50'
-                      : 'text-gray-700 hover:text-teal-600 hover:bg-gray-50'
+                    className={`flex items-center px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${isActive
+                      ? 'text-secondary-600 bg-secondary-50'
+                      : 'text-gray-700 hover:text-secondary-600 hover:bg-gray-50'
                       }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.icon}
                     {item.name}
                   </Link>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Authentication Section */}
@@ -281,8 +291,8 @@ const Navbar = () => {
                 {isLoggedIn ? (
                   <>
                     <div className="flex items-center space-x-3 px-4 py-2 bg-gray-50 rounded-lg">
-                      <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center">
-                        <FiUser className="text-teal-600" />
+                      <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center">
+                        <FiUser className="text-primary-600" />
                       </div>
                       <div>
                         <p className="text-sm font-medium text-gray-900">{user?.username || user?.email || 'User'}</p>
@@ -291,7 +301,7 @@ const Navbar = () => {
                     {user?.role === 'admin' ? (
                       <Link
                         to="/dashboard"
-                        className="block w-full text-center bg-teal-100 text-teal-700 px-4 py-3 rounded-lg font-medium hover:bg-teal-200 transition-colors duration-200"
+                        className="block w-full text-center bg-secondary-100 text-secondary-700 px-4 py-3 rounded-lg font-medium hover:bg-secondary-200 transition-colors duration-200"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         Admin Dashboard
@@ -299,7 +309,7 @@ const Navbar = () => {
                     ) : (
                       <Link
                         to="/my-dashboard"
-                        className="block w-full text-center bg-teal-100 text-teal-700 px-4 py-3 rounded-lg font-medium hover:bg-teal-200 transition-colors duration-200"
+                        className="block w-full text-center bg-secondary-100 text-secondary-700 px-4 py-3 rounded-lg font-medium hover:bg-secondary-200 transition-colors duration-200"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         My Dashboard
@@ -307,7 +317,7 @@ const Navbar = () => {
                     )}
                     <button
                       onClick={handleLogout}
-                      className="flex items-center justify-center w-full bg-teal-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-teal-700 transition-colors duration-200"
+                      className="flex items-center justify-center w-full bg-secondary-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-secondary-700 transition-colors duration-200"
                     >
                       <FiLogOut className="mr-2" />
                       Logout
@@ -324,7 +334,7 @@ const Navbar = () => {
                     </Link>
                     <Link
                       to="/signup"
-                      className="block w-full text-center bg-teal-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-teal-700 transition-colors duration-200"
+                      className="block w-full text-center bg-secondary-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-secondary-700 transition-colors duration-200"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Sign Up

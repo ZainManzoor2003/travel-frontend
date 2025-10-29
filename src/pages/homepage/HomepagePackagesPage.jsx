@@ -69,7 +69,7 @@ const HomepagePackagesPage = () => {
   }, [])
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8]">
+    <div className="min-h-screen" style={{ backgroundColor: '#ffe020' }}>
       {/* Navigation Header */}
       <nav className="fixed top-0 left-0 right-0 z-[1000] p-8 px-12 flex items-center justify-between bg-transparent">
         <div className="flex items-center gap-6">
@@ -89,7 +89,7 @@ const HomepagePackagesPage = () => {
         
         <div className="absolute left-1/2 -translate-x-1/2">
           <img 
-            src="/Logo1.png"
+            src="/logo.webp"
             alt="Awasi Logo"
             className="h-24 w-56 brightness-0 invert"
           />
@@ -110,9 +110,8 @@ const HomepagePackagesPage = () => {
           </div>
           
           {/* Text Section Below Image */}
-          <div className="bg-gradient-to-br from-[#8B4513] via-[#A0522D] to-[#8B7355] 
-          flex flex-col justify-center items-center p-8 sm:p-16 relative 
-          md:w-full md:h-[40%] lg:w-[50%] lg:h-full">
+          <div className="flex flex-col justify-center items-center p-8 sm:p-16 relative 
+          md:w-full md:h-[40%] lg:w-[50%] lg:h-full" style={{ backgroundColor: '#000000' }}>
             <h1 className="font-['Playfair_Display'] text-[clamp(2.5rem,6vw,4rem)] font-normal text-[#F5F5DC] mb-6 tracking-tight leading-[1.1] text-center">
               Travel Beyond Tours
             </h1>
@@ -123,9 +122,9 @@ const HomepagePackagesPage = () => {
         </div>
       </section>
       
-      <div className="py-8 sm:py-12 lg:py-16">
+      <div className="py-8 sm:py-12 lg:py-16" style={{ backgroundColor: '#ffe020' }}>
         <div className="text-center mb-8 sm:mb-12 lg:mb-16 px-4 sm:px-8">
-          <h2 className="font-['Playfair_Display'] text-[clamp(2rem,4vw,3.5rem)] font-normal text-[#333] mb-3 sm:mb-4 tracking-tight leading-[1.2]">
+          <h2 className="font-['Playfair_Display'] text-[clamp(2rem,4vw,3.5rem)] font-normal text-black mb-3 sm:mb-4 tracking-tight leading-[1.2]">
             Choose Your Journey
           </h2>
           <p className="font-['Inter'] text-base sm:text-lg font-normal text-[#666] max-w-[600px] mx-auto leading-[1.6]">

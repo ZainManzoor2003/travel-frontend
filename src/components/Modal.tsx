@@ -76,7 +76,7 @@ const Modal = ({ isOpen, onClose, children, title, size = 'md' }: ModalProps) =>
     >
       <div
         ref={modalRef}
-        className={`bg-white rounded-xl shadow-2xl w-full ${sizeClasses[size]} max-h-[90vh] overflow-hidden`}
+        className={`rounded-xl shadow-2xl w-full ${sizeClasses[size]} max-h-[90vh] overflow-hidden`} style={{ backgroundColor: '#ffe020' }}
       >
         {title && (
           <div className="flex items-center justify-between p-6 border-b border-gray-200">

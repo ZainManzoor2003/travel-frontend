@@ -149,7 +149,7 @@ const AboutPage = () => {
         "We're driven by our love for travel and our desire to share the world's beauty with others.",
       icon: (
         <svg
-          className="w-8 h-8 text-teal-600"
+          className="w-8 h-8 text-secondary-600"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -237,7 +237,7 @@ const AboutPage = () => {
             <h1 className="animate-on-scroll text-4xl md:text-5xl font-bold mb-6">
               About Travel Beyond Tours
             </h1>
-            <p className="animate-on-scroll text-lg md:text-xl text-teal-100 max-w-3xl mx-auto leading-relaxed">
+            <p className="animate-on-scroll text-lg md:text-xl text-secondary-100 max-w-3xl mx-auto leading-relaxed">
               We're passionate about creating extraordinary travel experiences
               that connect you with the world's most beautiful destinations.
             </p>
@@ -247,7 +247,7 @@ const AboutPage = () => {
 
       {/* Mission Section */}
       <div className="flex items-center">
-        <section ref={sectionRefs.mission} className="py-16 bg-white">
+        <section ref={sectionRefs.mission} className="py-16" style={{ backgroundColor: '#ffe020' }}>
           <div className="max-w-5xl  px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row gap-10 items-center">
               <div className="lg:w-1/2">
@@ -278,7 +278,7 @@ const AboutPage = () => {
         </section>
 
         {/* Vision Section */}
-        <section ref={sectionRefs.vision} className="py-16 bg-gray-50">
+        <section ref={sectionRefs.vision} className="py-16" style={{ backgroundColor: '#00c3a1' }}>
           <div className="max-w-5xl w-full px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row gap-10 items-center">
               <div className="animate-on-scroll lg:w-1/2 order-2 lg:order-1">
@@ -309,7 +309,7 @@ const AboutPage = () => {
       </div>
 
       {/* Values Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16" style={{ backgroundColor: '#ffe020' }}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -340,7 +340,7 @@ const AboutPage = () => {
       </section>
 
       {/* Team Section */}
-      <section ref={sectionRefs.team} className="py-16 bg-gray-50">
+      <section ref={sectionRefs.team} className="py-16" style={{ backgroundColor: '#00c3a1' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -385,7 +385,7 @@ const AboutPage = () => {
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
                       {member.name}
                     </h3>
-                    <p className="text-teal-600 font-medium mb-3">
+                    <p className="text-secondary-600 font-medium mb-3">
                       {member.role}
                     </p>
                     <p className="text-gray-600 text-sm">{member.bio}</p>

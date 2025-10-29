@@ -58,7 +58,7 @@ const Footer = () => {
   };
 
   return (
-    <footer ref={footerRef} className="bg-[#2b2b2b] text-white">
+      <footer ref={footerRef} className="text-white" style={{ backgroundColor: '#000000' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div 
           ref={columnsRef}
@@ -103,11 +103,11 @@ const Footer = () => {
           {/* Center Column - Logo */}
           <div className="flex flex-col items-center justify-center">
             <div className="mb-6">
-              <div className="w-56 h-56 rounded-full border-4 border-white flex items-center justify-center p-6" style={{ backgroundColor: '#3f7670' }}>
+              <div className="w-56 h-56 rounded-full border-4 border-white flex items-center justify-center p-6" style={{ backgroundColor: '#00c3a1' }}>
                 <img 
-                  src="/Logo1.png" 
+                  src="/Logo.webp" 
                   alt="Travel Beyond Tours Logo" 
-                  className="w-40 h-40 object-contain"
+                   className="w-40 h-40 object-contain"
                 />
               </div>
             </div>

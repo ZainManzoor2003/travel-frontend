@@ -536,7 +536,7 @@ const BlogManagement = () => {
         </div>
         <button
           onClick={handleAddPost}
-          className="mt-4 sm:mt-0 bg-[#3f7670] text-white px-4 py-2 rounded-lg hover:bg-[#2d5550] transition-colors duration-200 flex items-center space-x-2"
+          className="mt-4 sm:mt-0 bg-[#22c55e] text-white px-4 py-2 rounded-lg hover:bg-[#15803d] transition-colors duration-200 flex items-center space-x-2"
         >
           <FiPlus className="w-4 h-4" />
           <span>New Post</span>
@@ -544,7 +544,7 @@ const BlogManagement = () => {
       </div>
 
       {/* Enhanced Filters */}
-      <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl shadow-sm border border-emerald-100 p-6">
+      <div className="bg-gradient-to-r from-secondary-50 to-primary-50 rounded-xl shadow-sm border border-secondary-100 p-6">
         <div className="flex items-center space-x-2 mb-4">
           <FiBook className="w-5 h-5 text-emerald-600" />
           <h3 className="text-lg font-semibold text-gray-800">Filter Blog Posts</h3>
@@ -727,7 +727,7 @@ const BlogManagement = () => {
                   className="w-full h-48 object-cover"
                 />
                 {post.isFeatured && (
-                  <div className="absolute top-3 left-3 bg-[#3f7670] text-white px-2 py-1 rounded text-xs font-medium">
+                  <div className="absolute top-3 left-3 bg-[#22c55e] text-white px-2 py-1 rounded text-xs font-medium">
                     Featured
                   </div>
                 )}
@@ -735,11 +735,11 @@ const BlogManagement = () => {
                   <button
                     onClick={() => handleViewPost(post)}
                     disabled={loadingPost}
-                    className="p-1 bg-white/90 backdrop-blur-sm rounded text-gray-600 hover:text-[#3f7670] disabled:opacity-50"
+                    className="p-1 bg-white/90 backdrop-blur-sm rounded text-gray-600 hover:text-[#22c55e] disabled:opacity-50"
                     title="View"
                   >
                     {loadingPost ? (
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#3f7670]"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#22c55e]"></div>
                     ) : (
                       <FiEye className="w-4 h-4" />
                     )}
@@ -747,11 +747,11 @@ const BlogManagement = () => {
                   <button
                     onClick={() => handleEditPost(post)}
                     disabled={loadingPost}
-                    className="p-1 bg-white/90 backdrop-blur-sm rounded text-gray-600 hover:text-[#3f7670] disabled:opacity-50"
+                    className="p-1 bg-white/90 backdrop-blur-sm rounded text-gray-600 hover:text-[#22c55e] disabled:opacity-50"
                     title="Edit"
                   >
                     {loadingPost ? (
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#3f7670]"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#22c55e]"></div>
                     ) : (
                       <FiEdit className="w-4 h-4" />
                     )}
@@ -835,7 +835,7 @@ const BlogManagement = () => {
                     type="text"
                     value={formData.title || ''}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   />
                 </div>
                 <div>
@@ -844,7 +844,7 @@ const BlogManagement = () => {
                     type="text"
                     value={formData.author || ''}
                     onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   />
                 </div>
                 <div>
@@ -852,7 +852,7 @@ const BlogManagement = () => {
                   <select
                     value={formData.category || 'destinations'}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   >
                     {categories.slice(1).map(category => (
                       <option key={category.value} value={category.value}>
@@ -866,7 +866,7 @@ const BlogManagement = () => {
                   <select
                     value={formData.status || 'draft'}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value as BlogPost['status'] })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   >
                     <option value="draft">Draft</option>
                     <option value="published">Published</option>
@@ -879,7 +879,7 @@ const BlogManagement = () => {
                     type="text"
                     value={formData.readTime || ''}
                     onChange={(e) => setFormData({ ...formData, readTime: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   />
                 </div>
                 {/* Image Upload Section */}
@@ -969,7 +969,7 @@ const BlogManagement = () => {
                   value={formData.excerpt || ''}
                   onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                 />
               </div>
               
@@ -979,7 +979,7 @@ const BlogManagement = () => {
                   value={formData.content || ''}
                   onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                   rows={8}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                 />
               </div>
               
@@ -989,12 +989,12 @@ const BlogManagement = () => {
                   {formData.tags?.map((tag, index) => (
                     <span
                       key={index}
-                      className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-teal-50 text-[#2d5550]"
+                      className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-secondary-50 text-[#15803d]"
                     >
                       {tag}
                       <button
                         onClick={() => handleRemoveTag(tag)}
-                        className="ml-1 text-[#3f7670] hover:text-[#2d5550]"
+                        className="ml-1 text-[#22c55e] hover:text-[#15803d]"
                       >
                         ×
                       </button>
@@ -1007,12 +1007,12 @@ const BlogManagement = () => {
                     value={newTag}
                     onChange={(e) => setNewTag(e.target.value)}
                     placeholder="Add a tag"
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                     onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
                   />
                   <button
                     onClick={handleAddTag}
-                    className="px-4 py-2 bg-[#3f7670] text-white rounded-lg hover:bg-[#2d5550] transition-colors duration-200"
+                    className="px-4 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#15803d] transition-colors duration-200"
                   >
                     Add
                   </button>
@@ -1025,7 +1025,7 @@ const BlogManagement = () => {
                     type="checkbox"
                     checked={formData.isFeatured || false}
                     onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
-                    className="rounded border-gray-300 text-[#3f7670] focus:ring-[#3f7670]"
+                    className="rounded border-gray-300 text-[#22c55e] focus:ring-[#22c55e]"
                   />
                   <span className="ml-2 text-sm text-gray-700">Featured Post</span>
                 </label>

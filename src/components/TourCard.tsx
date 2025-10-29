@@ -105,11 +105,11 @@ const TourCard = ({
   return (
     <div
       ref={cardRef}
-      className={`bg-white rounded-lg overflow-hidden transition-all duration-300 group cursor-pointer flex flex-col sm:flex-row h-auto sm:h-64 ${className} ${pro ? 'border-2 border-blue-300 shadow-lg' : 'border border-gray-100 shadow'}`}
+      className={`rounded-lg overflow-hidden transition-all duration-300 group cursor-pointer flex flex-col sm:flex-row h-auto sm:h-64 ${className} ${pro ? 'border-2 border-blue-300 shadow-lg' : 'border border-gray-100 shadow'}`}
+      style={{ backgroundColor: '#00c3a1', willChange: 'transform' }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
-      style={{ willChange: 'transform' }}
     >
       {/* Image Container */}
       <div className="relative overflow-hidden bg-gray-100 w-full sm:w-80 flex-shrink-0">
@@ -140,18 +140,18 @@ const TourCard = ({
 
         {/* Pro badge */}
         {pro && (
-          <div className="absolute top-12 left-3 bg-teal-600 text-white px-2 py-1 rounded text-xs font-medium">
+          <div className="absolute top-12 left-3 bg-secondary-600 text-white px-2 py-1 rounded text-xs font-medium">
             PRO
           </div>
         )}
       </div>
       
       {/* Content Container */}
-      <div ref={contentRef} className="p-4 sm:p-6 flex flex-col flex-grow justify-between">
+      <div ref={contentRef} className="p-4 sm:p-6 flex flex-col flex-grow justify-between" style={{ backgroundColor: '#00c3a1' }}>
         <div>
           {/* Location */}
-          <div className="animate-content flex items-center text-xs text-gray-500 mb-2">
-            <svg className="w-3 h-3 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="animate-content flex items-center text-xs text-white mb-2">
+              <svg className="w-3 h-3 mr-1 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
@@ -159,26 +159,26 @@ const TourCard = ({
           </div>
           
           {/* Title */}
-          <h3 className="animate-content text-xl sm:text-2xl font-semibold text-gray-900 mb-3 group-hover:text-teal-600 transition-colors duration-300">
+          <h3 className="animate-content text-xl sm:text-2xl font-semibold text-white mb-3 group-hover:text-primary-300 transition-colors duration-300">
             {title}
           </h3>
           
           {/* Description */}
-          <p className="animate-content text-gray-600 text-sm sm:text-base mb-4 leading-relaxed">
+          <p className="animate-content text-white text-sm sm:text-base mb-4 leading-relaxed">
             {description}
           </p>
         </div>
         
         {/* Price and CTA */}
         <div className="animate-content flex items-center justify-between mt-4">
-          <div className="text-xl sm:text-2xl font-bold text-teal-600">
+          <div className="text-xl sm:text-2xl font-bold text-white">
             ${price}
-            <span className="text-sm font-normal text-gray-500 ml-1">/person</span>
+            <span className="text-sm font-normal text-white/80 ml-1">/person</span>
           </div>
           
           <Link
             to={`/tour/${id}`}
-            className="bg-teal-600 text-white px-4 py-2 rounded text-sm font-medium hover:bg-teal-700 transition-colors duration-200"
+            className="bg-primary-600 text-black px-4 py-2 rounded text-sm font-medium hover:bg-primary-700 transition-colors duration-200"
             onClick={(e) => e.stopPropagation()}
           >
             View Details

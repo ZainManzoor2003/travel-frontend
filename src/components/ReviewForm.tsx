@@ -143,7 +143,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ tourId, tourTitle, bookingId, o
               placeholder="Sum up your experience in one line"
               maxLength={100}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-transparent"
             />
             <p className="text-xs text-gray-500 mt-1">{title.length}/100 characters</p>
           </div>
@@ -161,7 +161,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ tourId, tourTitle, bookingId, o
               minLength={10}
               maxLength={1000}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-transparent resize-none"
             />
             <p className="text-xs text-gray-500 mt-1">{comment.length}/1000 characters (minimum 10)</p>
           </div>
@@ -179,7 +179,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ tourId, tourTitle, bookingId, o
             <button
               type="submit"
               disabled={loading || !title.trim() || comment.length < 10}
-              className="flex-1 px-6 py-3 bg-gradient-to-r from-teal-600 to-teal-700 text-white rounded-lg font-semibold hover:from-teal-700 hover:to-teal-800 transition shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-6 py-3 bg-gradient-to-r from-secondary-600 to-secondary-700 text-white rounded-lg font-semibold hover:from-secondary-700 hover:to-secondary-800 transition shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Submitting...' : 'Submit Review'}
             </button>

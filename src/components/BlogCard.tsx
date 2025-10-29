@@ -105,15 +105,15 @@ const BlogCard = ({
   return (
     <div
       ref={cardRef}
-      className={`bg-white rounded-xl overflow-hidden transition-all duration-300 group cursor-pointer flex flex-col h-full ${className} ${
+      className={`rounded-xl overflow-hidden transition-all duration-300 group cursor-pointer flex flex-col h-full ${className} ${
         featured 
-          ? 'border-2 border-blue-300 shadow-xl' 
-          : 'border border-gray-100 shadow-lg'
+          ? 'border-2 border-[#00c3a1] shadow-xl' 
+          : 'border border-[#00c3a1]/30 shadow-lg'
       } hover:shadow-2xl`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
-      style={{ willChange: 'transform' }}
+      style={{ willChange: 'transform', backgroundColor: '#00c3a1' }}
     >
       {/* Image Container */}
       <div className="relative overflow-hidden">
@@ -135,7 +135,7 @@ const BlogCard = ({
         </div>
         
         {/* Category badge */}
-        <div className="absolute top-4 left-4 bg-teal-600 text-white px-3 py-1 rounded-full text-xs font-medium">
+        <div className="absolute top-4 left-4 bg-secondary-600 text-white px-3 py-1 rounded-full text-xs font-medium">
           {category}
         </div>
 
@@ -150,7 +150,7 @@ const BlogCard = ({
       {/* Content Container */}
       <div ref={contentRef} className="p-6 flex flex-col flex-grow">
         {/* Author and Date */}
-        <div className="animate-content flex items-center text-sm text-gray-500 mb-3">
+        <div className="animate-content flex items-center text-sm text-white/80 mb-3">
           <div className="flex items-center">
             <svg className="w-4 h-4 mr-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -167,12 +167,12 @@ const BlogCard = ({
         </div>
         
         {/* Title */}
-        <h3 className="animate-content text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#3f7670] transition-colors duration-300 leading-tight">
+        <h3 className="animate-content text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-black transition-colors duration-300 leading-tight">
           {title}
         </h3>
         
         {/* Excerpt */}
-        <p className="animate-content text-gray-600 text-sm mb-6 line-clamp-3 leading-relaxed flex-grow">
+        <p className="animate-content text-white/90 text-sm mb-6 line-clamp-3 leading-relaxed flex-grow">
           {excerpt}
         </p>
         
@@ -180,7 +180,7 @@ const BlogCard = ({
         <div className="animate-content mt-auto">
           <Link
             to={`/blog/${id}`}
-            className="inline-flex items-center text-[#3f7670] hover:text-[#2d5550] font-semibold text-sm transition-all duration-200 group-hover:translate-x-1"
+            className="inline-flex items-center text-black hover:text-white font-semibold text-sm transition-all duration-200 group-hover:translate-x-1"
             onClick={(e) => e.stopPropagation()}
           >
             Read Full Article

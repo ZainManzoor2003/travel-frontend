@@ -433,7 +433,7 @@ const ToursManagement = () => {
             html: `
               <div class="text-center">
                 <div class="mb-4">
-                  <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#3f7670] mx-auto"></div>
+                  <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#22c55e] mx-auto"></div>
                 </div>
                 <p class="text-sm text-gray-600">Compressing and uploading image ${uploadCount} of ${uploadedImages.length}...</p>
                 <p class="text-xs text-gray-500 mt-2">Step 1: Compressing → Step 2: Uploading to Cloudinary</p>
@@ -543,7 +543,7 @@ const ToursManagement = () => {
         </div>
         <button
           onClick={handleAddTour}
-          className="mt-4 sm:mt-0 bg-[#3f7670] text-white px-4 py-2 rounded-lg hover:bg-[#2d5550] transition-colors duration-200 flex items-center space-x-2"
+          className="mt-4 sm:mt-0 bg-[#22c55e] text-white px-4 py-2 rounded-lg hover:bg-[#15803d] transition-colors duration-200 flex items-center space-x-2"
         >
           <FiPlus className="w-4 h-4" />
           <span>Add Tour</span>
@@ -551,9 +551,9 @@ const ToursManagement = () => {
       </div>
 
       {/* Enhanced Filters */}
-      <div className="bg-gradient-to-r from-teal-50 to-teal-100 rounded-xl shadow-sm border border-teal-100 p-6">
+      <div className="bg-gradient-to-r from-secondary-50 to-secondary-100 rounded-xl shadow-sm border border-secondary-100 p-6">
         <div className="flex items-center space-x-2 mb-4">
-          <FiFilter className="w-5 h-5 text-[#3f7670]" />
+          <FiFilter className="w-5 h-5 text-[#22c55e]" />
           <h3 className="text-lg font-semibold text-gray-800">Filter Tours</h3>
         </div>
         
@@ -562,13 +562,13 @@ const ToursManagement = () => {
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">Search Tours</label>
             <div className="relative group">
-              <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-teal-400 w-5 h-5 group-focus-within:text-[#3f7670] transition-colors" />
+              <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-400 w-5 h-5 group-focus-within:text-[#22c55e] transition-colors" />
               <input
                 type="text"
                 placeholder="Search by title, location, or description..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border-2 border-teal-200 rounded-xl focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670] bg-white shadow-sm transition-all duration-200 hover:border-teal-300"
+                className="w-full pl-10 pr-4 py-3 border-2 border-secondary-200 rounded-xl focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e] bg-white shadow-sm transition-all duration-200 hover:border-secondary-300"
               />
             </div>
           </div>
@@ -582,7 +582,7 @@ const ToursManagement = () => {
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-teal-200 rounded-xl focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670] bg-white shadow-sm transition-all duration-200 hover:border-teal-300 appearance-none cursor-pointer"
+                  className="w-full px-4 py-3 border-2 border-secondary-200 rounded-xl focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e] bg-white shadow-sm transition-all duration-200 hover:border-secondary-300 appearance-none cursor-pointer"
                 >
                   <option value="all">All Status</option>
                   <option value="active">Active Tours</option>
@@ -590,7 +590,7 @@ const ToursManagement = () => {
                   <option value="draft">Draft Tours</option>
                 </select>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <svg className="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -604,7 +604,7 @@ const ToursManagement = () => {
                 <select
                   value={categoryFilter}
                   onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-teal-200 rounded-xl focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670] bg-white shadow-sm transition-all duration-200 hover:border-teal-300 appearance-none cursor-pointer"
+                  className="w-full px-4 py-3 border-2 border-secondary-200 rounded-xl focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e] bg-white shadow-sm transition-all duration-200 hover:border-secondary-300 appearance-none cursor-pointer"
                 >
                   {categories.map(category => (
                     <option key={category.value} value={category.value}>
@@ -617,7 +617,7 @@ const ToursManagement = () => {
                   ))}
                 </select>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <svg className="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -630,7 +630,7 @@ const ToursManagement = () => {
         <div className="mt-4 flex items-center justify-between">
           <div className="flex items-center space-x-4 text-sm text-gray-600">
             <span className="flex items-center space-x-1">
-              <span className="w-2 h-2 bg-[#3f7670] rounded-full"></span>
+              <span className="w-2 h-2 bg-[#22c55e] rounded-full"></span>
               <span>{filteredTours.length} tours found</span>
             </span>
             {(searchQuery || statusFilter !== 'all' || categoryFilter !== 'all') && (
@@ -640,7 +640,7 @@ const ToursManagement = () => {
                   setStatusFilter('all');
                   setCategoryFilter('all');
                 }}
-                className="text-[#3f7670] hover:text-[#2d5550] font-medium transition-colors"
+                className="text-[#22c55e] hover:text-[#15803d] font-medium transition-colors"
               >
                 Clear filters
               </button>
@@ -652,7 +652,7 @@ const ToursManagement = () => {
       {/* Tours Grid */}
       {/* Loading */}
       {loading && (
-        <div className="flex justify-center items-center py-12"><div className="animate-spin h-10 w-10 rounded-full border-b-2 border-[#3f7670]"></div></div>
+        <div className="flex justify-center items-center py-12"><div className="animate-spin h-10 w-10 rounded-full border-b-2 border-[#22c55e]"></div></div>
       )}
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4">{error}</div>
@@ -669,21 +669,21 @@ const ToursManagement = () => {
                 className="w-full h-48 object-cover"
               />
               {tour.featured && (
-                <div className="absolute top-3 left-3 bg-[#3f7670] text-white px-2 py-1 rounded text-xs font-medium">
+                <div className="absolute top-3 left-3 bg-[#22c55e] text-white px-2 py-1 rounded text-xs font-medium">
                   Featured
                 </div>
               )}
               <div className="absolute top-3 right-3 flex space-x-1">
                 <button
                   onClick={() => handleViewTour(tour)}
-                  className="p-1 bg-white/90 backdrop-blur-sm rounded text-gray-600 hover:text-[#3f7670]"
+                  className="p-1 bg-white/90 backdrop-blur-sm rounded text-gray-600 hover:text-[#22c55e]"
                   title="View"
                 >
                   <FiEye className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => handleEditTour(tour)}
-                  className="p-1 bg-white/90 backdrop-blur-sm rounded text-gray-600 hover:text-[#3f7670]"
+                  className="p-1 bg-white/90 backdrop-blur-sm rounded text-gray-600 hover:text-[#22c55e]"
                   title="Edit"
                 >
                   <FiEdit className="w-4 h-4" />
@@ -721,7 +721,7 @@ const ToursManagement = () => {
               
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                  <span className="text-lg font-bold text-[#3f7670]">${tour.price}</span>
+                  <span className="text-lg font-bold text-[#22c55e]">${tour.price}</span>
                   <span className="text-sm text-gray-500">/person</span>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -754,7 +754,7 @@ const ToursManagement = () => {
                     type="text"
                     value={formData.title || ''}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   />
                 </div>
                 <div>
@@ -763,7 +763,7 @@ const ToursManagement = () => {
                     type="number"
                     value={formData.price || ''}
                     onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   />
                 </div>
                 <div>
@@ -772,7 +772,7 @@ const ToursManagement = () => {
                     type="text"
                     value={formData.duration || ''}
                     onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   />
                 </div>
                 <div>
@@ -781,7 +781,7 @@ const ToursManagement = () => {
                     type="text"
                     value={formData.location || ''}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   />
                 </div>
                 <div>
@@ -789,7 +789,7 @@ const ToursManagement = () => {
                   <select
                     value={formData.category || 'adventure'}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   >
                     <option value="adventure">Adventure</option>
                     <option value="cultural">Cultural</option>
@@ -802,7 +802,7 @@ const ToursManagement = () => {
                   <select
                     value={formData.difficulty || 'easy'}
                     onChange={(e) => setFormData({ ...formData, difficulty: e.target.value as Tour['difficulty'] })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   >
                     <option value="easy">Easy</option>
                     <option value="medium">Medium</option>
@@ -815,7 +815,7 @@ const ToursManagement = () => {
                     type="number"
                     value={formData.maxParticipants || ''}
                     onChange={(e) => setFormData({ ...formData, maxParticipants: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   />
                 </div>
                 <div>
@@ -823,7 +823,7 @@ const ToursManagement = () => {
                   <select
                     value={formData.status || 'draft'}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value as Tour['status'] })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   >
                     <option value="draft">Draft</option>
                     <option value="active">Active</option>
@@ -838,7 +838,7 @@ const ToursManagement = () => {
                   value={formData.description || ''}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                 />
               </div>
 
@@ -847,9 +847,9 @@ const ToursManagement = () => {
                 <h4 className="text-md font-semibold text-gray-900">Tour Highlights</h4>
                 <div className="flex flex-wrap gap-2">
                   {(formData.highlights || []).map((h, idx) => (
-                    <span key={idx} className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-teal-50 text-[#2d5550]">
+                    <span key={idx} className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-secondary-50 text-[#15803d]">
                       {h}
-                      <button onClick={() => removeHighlight(h)} className="ml-1 text-[#3f7670] hover:text-[#2d5550]">×</button>
+                      <button onClick={() => removeHighlight(h)} className="ml-1 text-[#22c55e] hover:text-[#15803d]">×</button>
                     </span>
                   ))}
                 </div>
@@ -859,10 +859,10 @@ const ToursManagement = () => {
                     value={newHighlight}
                     onChange={(e) => setNewHighlight(e.target.value)}
                     placeholder="Add a highlight bullet"
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                     onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addHighlight())}
                   />
-                  <button onClick={addHighlight} className="px-4 py-2 bg-[#3f7670] text-white rounded-lg hover:bg-[#2d5550]">Add</button>
+                  <button onClick={addHighlight} className="px-4 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#15803d]">Add</button>
                 </div>
               </div>
 
@@ -884,7 +884,7 @@ const ToursManagement = () => {
                       value={newIncluded}
                       onChange={(e) => setNewIncluded(e.target.value)}
                       placeholder="Add an included item"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                       onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addIncluded())}
                     />
                     <button onClick={addIncluded} className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Add</button>
@@ -907,7 +907,7 @@ const ToursManagement = () => {
                       value={newNotIncluded}
                       onChange={(e) => setNewNotIncluded(e.target.value)}
                       placeholder="Add a not-included item"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                       onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addNotIncluded())}
                     />
                     <button onClick={addNotIncluded} className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Add</button>
@@ -925,8 +925,8 @@ const ToursManagement = () => {
                       <div key={idx} className="border border-gray-200 rounded-lg p-4">
                         <div className="flex items-start justify-between">
                           <div>
-                            <div className="flex items-center gap-2 text-[#3f7670] font-semibold">
-                              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-teal-50">{idx + 1}</span>
+                            <div className="flex items-center gap-2 text-[#22c55e] font-semibold">
+                              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-secondary-50">{idx + 1}</span>
                               <span>{day.title}</span>
                             </div>
                             {day.description && (
@@ -955,7 +955,7 @@ const ToursManagement = () => {
                         value={newItineraryDayTitle}
                         onChange={(e) => setNewItineraryDayTitle(e.target.value)}
                         placeholder="e.g., Arrival in Bali"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                       />
                     </div>
                     <div>
@@ -965,7 +965,7 @@ const ToursManagement = () => {
                         value={newItineraryDayDesc}
                         onChange={(e) => setNewItineraryDayDesc(e.target.value)}
                         placeholder="e.g., Welcome dinner and orientation"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                       />
                     </div>
                   </div>
@@ -978,23 +978,23 @@ const ToursManagement = () => {
                         value={newItineraryPoint}
                         onChange={(e) => setNewItineraryPoint(e.target.value)}
                         placeholder="e.g., Airport pickup"
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                         onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addItineraryPointToDraft())}
                       />
-                      <button onClick={addItineraryPointToDraft} className="px-4 py-2 bg-[#3f7670] text-white rounded-lg hover:bg-[#2d5550]">Add Point</button>
+                      <button onClick={addItineraryPointToDraft} className="px-4 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#15803d]">Add Point</button>
                     </div>
                     {draftItineraryPoints.length > 0 && (
                       <div className="flex flex-wrap gap-2">
                         {draftItineraryPoints.map((p, i) => (
-                          <span key={i} className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-teal-50 text-[#2d5550]">
+                          <span key={i} className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-secondary-50 text-[#15803d]">
                             {p}
-                            <button onClick={() => removeItineraryPointFromDraft(p)} className="ml-1 text-[#3f7670] hover:text-[#2d5550]">×</button>
+                            <button onClick={() => removeItineraryPointFromDraft(p)} className="ml-1 text-[#22c55e] hover:text-[#15803d]">×</button>
                           </span>
                         ))}
                       </div>
                     )}
                     <div className="pt-2">
-                      <button onClick={addItineraryDay} className="px-4 py-2 bg-[#3f7670] text-white rounded-lg hover:bg-[#2d5550]">Add Day</button>
+                      <button onClick={addItineraryDay} className="px-4 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#15803d]">Add Day</button>
                     </div>
                   </div>
                 </div>
@@ -1055,7 +1055,7 @@ const ToursManagement = () => {
                 )}
 
                 {/* Upload Area */}
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-teal-400 transition-colors">
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-secondary-400 transition-colors">
                   <input
                     ref={fileInputRef}
                     type="file"
@@ -1071,7 +1071,7 @@ const ToursManagement = () => {
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="bg-[#3f7670] text-white px-4 py-2 rounded-lg hover:bg-[#2d5550] transition-colors"
+                      className="bg-[#22c55e] text-white px-4 py-2 rounded-lg hover:bg-[#15803d] transition-colors"
                     >
                       Choose Images
                     </button>
@@ -1087,7 +1087,7 @@ const ToursManagement = () => {
                     type="checkbox"
                     checked={formData.featured || false}
                     onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                    className="rounded border-gray-300 text-[#3f7670] focus:ring-[#3f7670]"
+                    className="rounded border-gray-300 text-[#22c55e] focus:ring-[#22c55e]"
                   />
                   <span className="ml-2 text-sm text-gray-700">Featured Tour</span>
                 </label>
@@ -1103,7 +1103,7 @@ const ToursManagement = () => {
                 <button
                   onClick={handleSaveTour}
                   disabled={isUploading}
-                  className="px-4 py-2 bg-[#3f7670] text-white rounded-lg hover:bg-[#2d5550] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+                  className="px-4 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#15803d] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
                 >
                   {isUploading && (
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>

@@ -246,13 +246,13 @@ const TourDetailPage = () => {
           <div className="space-y-4">
             <Link
               to="/payment"
-              className="w-full bg-[#2c2c2c] text-white px-6 py-3 rounded-lg hover:bg-[#1a1a1a] transition-colors duration-200 inline-block font-['Inter']"
+              className="w-full text-white px-6 py-3 rounded-lg hover:bg-black transition-colors duration-200 inline-block font-['Inter']" style={{ backgroundColor: '#00c3a1' }}
             >
               Complete Payment
             </Link>
             <Link
               to="/packages"
-              className="w-full border border-[#e0e0e0] text-[#666] px-6 py-3 rounded-lg hover:bg-white transition-colors duration-200 inline-block font-['Inter']"
+              className="w-full border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors duration-200 inline-block font-['Inter']" style={{ backgroundColor: '#ffe020' }}
             >
               Browse More Tours
             </Link>
@@ -266,7 +266,7 @@ const TourDetailPage = () => {
   const allImages = tour.images && tour.images.length > 0 ? tour.images : (tour.image ? [tour.image] : []);
 
   return (
-    <div className="w-full font-sans bg-[#f8f8f8] min-h-screen">
+    <div className="w-full font-sans min-h-screen" style={{ backgroundColor: '#ffe020' }}>
       {/* Navigation Header */}
       <nav className="fixed top-0 left-0 right-0 z-[1000] p-8 px-12 flex items-center justify-between bg-transparent">
         <div className="flex items-center gap-6">
@@ -283,9 +283,9 @@ const TourDetailPage = () => {
         
         <div className="absolute left-1/2 -translate-x-1/2">
           <img 
-            src="/Logo1.png"
+            src="/Logo.webp"
             alt="Travel Beyond Logo"
-            className="h-24 w-56 brightness-0 invert"
+            className="mt-2 h-24 w-56"
           />
         </div>
         
@@ -392,7 +392,7 @@ const TourDetailPage = () => {
       </section>
 
       {/* Main Content */}
-      <section ref={sectionRefs.details} className="w-full bg-[#f8f8f8] py-16">
+      <section ref={sectionRefs.details} className="w-full py-16" style={{ backgroundColor: '#ffe020' }}>
         <div className="max-w-[1400px] mx-auto px-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
             {/* Left Content - Tour Details */}
@@ -402,15 +402,15 @@ const TourDetailPage = () => {
                 <h2 className="font-['Playfair_Display'] text-[clamp(2rem,3vw,2.5rem)] font-normal text-[#2c2c2c] tracking-tight leading-[1.2] mb-6">About This Tour</h2>
                 <p className="font-['Inter'] text-[#555] text-lg leading-[1.6] tracking-[0.01em] mb-8">{tour.description}</p>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  <div className="bg-[#f5f5f5] p-6 rounded-lg">
+                  <div className="p-6 rounded-lg" style={{ backgroundColor: '#00c3a1' }}>
                     <p className="font-['Inter'] text-[#666] font-semibold text-sm mb-2">Duration</p>
                     <p className="font-['Inter'] text-[#2c2c2c] text-lg font-bold">{tour.duration}</p>
                   </div>
-                  <div className="bg-[#f5f5f5] p-6 rounded-lg">
+                  <div className="p-6 rounded-lg" style={{ backgroundColor: '#00c3a1' }}>
                     <p className="font-['Inter'] text-[#666] font-semibold text-sm mb-2">Max Group</p>
                     <p className="font-['Inter'] text-[#2c2c2c] text-lg font-bold">{tour.maxParticipants} people</p>
                   </div>
-                  <div className="bg-[#f5f5f5] p-6 rounded-lg">
+                  <div className="p-6 rounded-lg" style={{ backgroundColor: '#00c3a1' }}>
                     <p className="font-['Inter'] text-[#666] font-semibold text-sm mb-2">Category</p>
                     <p className="font-['Inter'] text-[#2c2c2c] text-lg font-bold capitalize">{tour.category}</p>
                   </div>
@@ -426,7 +426,7 @@ const TourDetailPage = () => {
                       <button
                         key={index}
                         onClick={() => openLightbox(index)}
-                        className={`relative aspect-square rounded-lg overflow-hidden cursor-pointer transition-all bg-[#f5f5f5] group ${
+                        className={`relative aspect-square rounded-lg overflow-hidden cursor-pointer transition-all group ${
                           index === currentImageIndex ? 'ring-4 ring-[#2c2c2c]' : 'hover:ring-2 hover:ring-[#666]'
                         }`}
                       >
@@ -575,7 +575,7 @@ const TourDetailPage = () => {
                 <button
                   onClick={handleBookNow}
                   disabled={tour.status !== 'active'}
-                  className="w-full bg-[#2c2c2c] text-white py-4 px-6 rounded-lg font-['Inter'] font-semibold text-lg hover:bg-[#1a1a1a] disabled:bg-[#ccc] disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center mb-6"
+                  className="w-full text-white py-4 px-6 rounded-lg font-['Inter'] font-semibold text-lg hover:bg-black disabled:bg-[#ccc] disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center mb-6" style={{ backgroundColor: '#00c3a1' }}
                 >
                   {tour.status !== 'active' ? 'Not Available' : 'Book Now'}
                 </button>
@@ -617,7 +617,7 @@ const TourDetailPage = () => {
       </section>
 
       {/* Reviews Section */}
-      <section className="w-full bg-[#f8f8f8] py-16">
+      <section className="w-full py-16" style={{ backgroundColor: '#ffe020' }}>
         <div className="max-w-[1400px] mx-auto px-12">
           <TourReviews tourId={tour._id} />
         </div>

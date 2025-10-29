@@ -19,6 +19,7 @@ function Homepage() {
   const [toursLoading, setToursLoading] = useState(true)
   const [toursError, setToursError] = useState(null)
   const [isSecondMuted, setIsSecondMuted] = useState(true)
+  const transitioningRef = useRef(false)
   const videoRef = useRef(null)
   const secondVideoRef = useRef(null)
   const horizontalContainerRef = useRef(null)
@@ -26,6 +27,21 @@ function Homepage() {
   const galleryContainerRef = useRef(null)
   const lastGalleryItemRef = useRef(null)
   const videoScrollRef = useRef(null)
+  // Utility: temporarily lock body scroll to avoid stuck state during transitions
+  const lockScrollTemporarily = (durationMs) => {
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const unlock = () => {
+      document.body.style.overflow = previousOverflow || ''
+    }
+    setTimeout(unlock, durationMs)
+    return unlock
+  }
+  // Ensure page always loads from top
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }, [])
+
   const touchStartRef = useRef({ x: 0, y: 0 })
 
   const toggleMute = () => {
@@ -53,6 +69,7 @@ function Homepage() {
   useEffect(() => {
     let rafId = null
     const handleScroll = () => {
+      if (isTransitioning || transitioningRef.current) return
       if (rafId) return
       rafId = requestAnimationFrame(() => {
         rafId = null
@@ -60,15 +77,33 @@ function Homepage() {
       if (contentSectionRef.current) {
         const rect = contentSectionRef.current.getBoundingClientRect()
         const shouldEnter = rect.top <= 0 && rect.bottom > 0
-        
+        const contentTop = rect.top + window.scrollY
+        const videoTop = videoScrollRef.current ? videoScrollRef.current.getBoundingClientRect().top + window.scrollY : Number.POSITIVE_INFINITY
+
         if (shouldEnter && !isHorizontalMode) {
+          // Immediately enter horizontal mode and show first horizontal section
           setIsHorizontalMode(true)
+          setCurrentHorizontalSection(1)
+          // Snap the page so the content section is perfectly aligned
+          const y = contentTop
+          window.scrollTo({ top: Math.max(0, y), behavior: 'auto' })
         } else if (!shouldEnter && isHorizontalMode) {
           if (galleryContainerRef.current) {
             galleryContainerRef.current.scrollTo({ left: 0, behavior: 'auto' })
           }
           setIsHorizontalMode(false)
           setCurrentHorizontalSection(0)
+        } else if (!isHorizontalMode) {
+          // Re-enter horizontal when scrolling up near the boundary between video section and horizontal track
+          const y = window.scrollY
+          // Wider hysteresis band to reliably re-enter horizontal when scrolling up
+          if (y <= videoTop + 260 && y >= contentTop - 260) {
+            setIsHorizontalMode(true)
+            setCurrentHorizontalSection(1)
+            if (galleryContainerRef.current) {
+              galleryContainerRef.current.scrollLeft = galleryContainerRef.current.scrollWidth
+            }
+          }
         }
       }
     }
@@ -82,7 +117,8 @@ function Homepage() {
 
   useEffect(() => {
     const handleReverseScroll = (e) => {
-      if (isHorizontalMode && e.deltaY < 0) {
+      if (isTransitioning || transitioningRef.current) return
+      if (e.deltaY < 0 && isHorizontalMode) {
         e.preventDefault()
         
         if (currentHorizontalSection === 1) {
@@ -103,6 +139,31 @@ function Homepage() {
           setIsHorizontalMode(false)
           setCurrentHorizontalSection(0)
         }
+      } else if (e.deltaY < 0 && !isHorizontalMode) {
+        // From vertical back into horizontal section
+        const section = document.querySelector('.video-scroll-section')
+        const triggerY = section ? section.getBoundingClientRect().top + window.scrollY : 0
+        // If we're near the top area of the video section, pull user back into horizontal
+        if (window.scrollY <= triggerY + 220) {
+          e.preventDefault()
+          transitioningRef.current = true
+          setIsTransitioning(true)
+          const contentTop = contentSectionRef.current ? contentSectionRef.current.getBoundingClientRect().top + window.scrollY : 0
+          // Temporarily lock scroll and scroll to the start of horizontal container
+          const unlock = lockScrollTemporarily(500)
+          window.scrollTo({ top: Math.max(0, contentTop), behavior: 'auto' })
+          setTimeout(() => {
+            setIsHorizontalMode(true)
+            setCurrentHorizontalSection(1)
+            if (galleryContainerRef.current) {
+              const gc = galleryContainerRef.current
+              gc.scrollLeft = gc.scrollWidth // jump to end so user can scroll left back through
+            }
+            transitioningRef.current = false
+            setIsTransitioning(false)
+            unlock()
+          }, 400)
+        }
       }
     }
 
@@ -113,6 +174,7 @@ function Homepage() {
   useEffect(() => {
     let rafId = null
     const handleWheel = (e) => {
+      if (isTransitioning || transitioningRef.current) return
       if (rafId) return
       rafId = requestAnimationFrame(() => {
         rafId = null
@@ -128,20 +190,27 @@ function Homepage() {
             const canScrollRight = galleryContainer.scrollLeft + galleryContainer.clientWidth < galleryContainer.scrollWidth
             
             if (canScrollRight) {
-              galleryContainer.scrollTo({
-                left: galleryContainer.scrollLeft + window.innerWidth,
-                behavior: 'smooth'
-              })
+              galleryContainer.scrollLeft = galleryContainer.scrollLeft + window.innerWidth
             } else {
+              // Smoothly transition to the next vertical section
+              transitioningRef.current = true
               setIsTransitioning(true)
               setIsHorizontalMode(false)
               setCurrentHorizontalSection(0)
+              // Temporarily lock scroll to avoid extra wheel events during animation
+              const unlock = lockScrollTemporarily(500)
               requestAnimationFrame(() => {
                 const section = document.querySelector('.video-scroll-section')
                 if (section) {
-                  section.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                  const y = section.getBoundingClientRect().top + window.scrollY
+                  window.scrollTo({ top: y + 1, behavior: 'auto' })
                 }
-                setTimeout(() => setIsTransitioning(false), 600)
+                // Unlock after the smooth scroll completes
+                setTimeout(() => {
+                  unlock()
+                  transitioningRef.current = false
+                  setIsTransitioning(false)
+                }, 400)
               })
             }
           }
@@ -169,22 +238,9 @@ function Homepage() {
   }, [isHorizontalMode, currentHorizontalSection])
 
   useEffect(() => {
-    if (isHorizontalMode) {
-      document.body.style.overflow = 'hidden'
-      if (horizontalContainerRef.current) {
-        horizontalContainerRef.current.style.willChange = 'transform'
-      }
-    } else {
-      document.body.style.overflow = ''
-      if (horizontalContainerRef.current) {
-        horizontalContainerRef.current.style.willChange = 'auto'
-      }
-    }
-    return () => {
-      document.body.style.overflow = ''
-      if (horizontalContainerRef.current) {
-        horizontalContainerRef.current.style.willChange = 'auto'
-      }
+    // Keep default body scrolling behavior; only optimize transform usage
+    if (horizontalContainerRef.current) {
+      horizontalContainerRef.current.style.willChange = isHorizontalMode ? 'transform' : 'auto'
     }
   }, [isHorizontalMode])
 
@@ -319,9 +375,9 @@ function Homepage() {
         
         <div className="absolute left-1/2 -translate-x-1/2 mt-2 sm:mt-3 lg:mt-4">
           <img 
-            src="/Logo1.png"
+            src="/Logo.webp"
             alt="Awasi Logo"
-            className="h-16 w-40 sm:h-20 sm:w-48 lg:h-24 lg:w-56 brightness-0 invert"
+            className="mt-2 h-16 w-40 sm:mt-3 sm:h-20 sm:w-48 lg:mt-4 lg:h-24 lg:w-56"
           />
         </div>
         
@@ -337,6 +393,7 @@ function Homepage() {
             loop
             playsInline
             className="w-full h-full object-cover"
+            style={{ pointerEvents: 'none', touchAction: 'pan-y' }}
           >
             <source src="/Demo Travel.mp4" type="video/mp4" />
             Your browser does not support the video tag.
@@ -346,7 +403,7 @@ function Homepage() {
         
         <div className="relative z-[2] text-center p-4 sm:p-6 lg:p-8">
           <h1 className="font-['Playfair_Display'] text-[clamp(2rem,8vw,4.5rem)] font-normal text-white tracking-tight leading-[1.1] shadow-[0_2px_20px_rgba(0,0,0,0.3)] px-4">
-            The Journey Begins Here
+            <span className="!text-[#00c3a1]">The Journey Begins Here</span>
           </h1>
         </div>
 
@@ -370,11 +427,11 @@ function Homepage() {
           {/* Horizontal Section 1: Content */}
           <div className="w-screen h-screen flex-shrink-0 relative">
             <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-screen">
-              <div className="bg-[#f5f5f5] flex items-center justify-start p-8 sm:p-12 lg:p-16 lg:pl-24">
+              <div className="flex items-center justify-start p-8 sm:p-12 lg:p-16 lg:pl-24" style={{ backgroundColor: '#ffe020' }}>
                 <div className="max-w-[480px] text-left">
-                  <h2 className="font-['Playfair_Display'] text-[clamp(2rem,4vw,3rem)] font-normal text-[#2c2c2c] tracking-tight leading-[1.2] mb-8">
-                    Where Time and Space are Yours to Own
-                  </h2>
+                    <h2 className="font-['Playfair_Display'] text-[clamp(2rem,4vw,3rem)] font-normal text-black tracking-tight leading-[1.2] mb-8">
+                      Where Time and Space are Yours to Own
+                    </h2>
                   <p className="font-['Inter'] text-lg font-normal text-[#555] leading-[1.6] tracking-[0.01em]">
                     At Awasi, our lodges are designed to feel like the home of an old friend, guiding you through stunning landscapes, native flavors and hidden gems. It's a fusion of friendship, admiration for the place, and personal hospitality that creates a genuine connection with each guest.
                   </p>
@@ -392,7 +449,7 @@ function Homepage() {
 
           {/* Horizontal Section 2: Gallery */}
           <div className="w-screen h-screen flex-shrink-0 relative">
-            <div className="w-full h-full overflow-hidden bg-[#f5f5f5] relative flex items-center justify-center">
+            <div className="w-full h-full overflow-hidden relative flex items-center justify-center" style={{ backgroundColor: '#ffe020' }}>
               <div 
                 className="w-full max-w-[1400px] h-[80vh] overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide" 
                 ref={galleryContainerRef}
@@ -474,9 +531,9 @@ function Homepage() {
       </section>
 
       {/* Video Scroll Section - Below the hero and horizontal sections */}
-      <section className="video-scroll-section w-full h-auto relative overflow-visible bg-transparent">
+      <section ref={videoScrollRef} className="video-scroll-section w-full h-auto relative overflow-visible bg-transparent" style={{ overscrollBehavior: 'contain' }}>
         <div className="relative w-full h-auto overflow-visible">
-          <video ref={secondVideoRef} className="w-full h-auto object-cover" autoPlay muted playsInline loop>
+          <video ref={secondVideoRef} className="w-full h-auto object-cover" autoPlay muted playsInline loop style={{ pointerEvents: 'none', touchAction: 'pan-y' }}>
             <source src="/CEO.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
@@ -493,14 +550,14 @@ function Homepage() {
       </section>
 
       {/* Bottom Section */}
-      <section className="w-full relative bg-[#f8f8f8]">
+      <section className="w-full relative" style={{ backgroundColor: '#ffe020' }}>
         <div className="w-full min-h-[60vh] flex items-center justify-center py-8 sm:py-12 lg:py-16">
           <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 px-4 sm:px-8 lg:px-12">
             <div className="flex flex-col justify-center text-center lg:text-left">
-              <h2 className="font-['Playfair_Display'] text-[clamp(2rem,5vw,4rem)] font-normal text-[#2c2c2c] tracking-tight leading-[1.1] m-0 mb-2">
+              <h2 className="font-['Playfair_Display'] text-[clamp(2rem,5vw,4rem)] font-normal text-black tracking-tight leading-[1.1] m-0 mb-2">
                 A Meaningful Exploration
               </h2>
-              <h2 className="font-['Playfair_Display'] text-[clamp(2rem,5vw,4rem)] font-normal text-[#2c2c2c] tracking-tight leading-[1.1] m-0">
+              <h2 className="font-['Playfair_Display'] text-[clamp(2rem,5vw,4rem)] font-normal text-black tracking-tight leading-[1.1] m-0">
                 Centered Around You
               </h2>
             </div>
@@ -514,10 +571,10 @@ function Homepage() {
       </section>
 
       {/* Tour Packages Section */}
-      <section className="w-full bg-[#f8f8f8] py-8 sm:py-12 lg:py-16">
+      <section className="w-full py-8 sm:py-12 lg:py-16" style={{ backgroundColor: '#00c3a1' }}>
         <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12">
           <div className="text-center mb-8 sm:mb-10 lg:mb-12">
-            <h2 className="font-['Playfair_Display'] text-[clamp(2rem,5vw,3.5rem)] font-normal text-[#2c2c2c] tracking-tight leading-[1.2] mb-4 px-4">
+            <h2 className="font-['Playfair_Display'] text-[clamp(2rem,5vw,3.5rem)] font-normal text-black tracking-tight leading-[1.2] mb-4 px-4">
               Discover Our Destinations
             </h2>
             <p className="font-['Inter'] text-base sm:text-lg font-normal text-[#666] leading-[1.6] max-w-[600px] mx-auto px-4">
@@ -526,7 +583,7 @@ function Homepage() {
           </div>
           
           <div className="relative flex items-center gap-4 sm:gap-6 lg:gap-8">
-            <button className="bg-white border border-[#e0e0e0] rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-300 text-[#333] flex-shrink-0 z-10 hover:bg-[#f5f5f5] hover:border-[#ccc] hover:scale-105" aria-label="Previous destinations">
+            <button className="rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-300 text-black flex-shrink-0 z-10 hover:scale-105" aria-label="Previous destinations" style={{ backgroundColor: '#ffe020', borderColor: '#ffe020', borderWidth: '1px' }}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
@@ -549,26 +606,26 @@ function Homepage() {
                 </div>
               )}
               {!toursLoading && !toursError && featuredTours.map((tour) => (
-                <div key={tour._id} className="flex-[0_0_280px] sm:flex-[0_0_320px] bg-white rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] transition-all duration-300 snap-start hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
+                <div key={tour._id} className="flex-[0_0_280px] sm:flex-[0_0_320px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] transition-all duration-300 snap-start hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)]" style={{ backgroundColor: '#ffe020' }}>
                   <div className="relative h-60 overflow-hidden">
                     <img 
                       src={tour.image || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop'}
                       alt={tour.title}
                       className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                     />
-                    <div className="absolute top-4 right-4 bg-black/80 text-white py-2 px-4 rounded-[20px] font-['Inter'] text-xs font-semibold tracking-wider uppercase">
+                    <div className="absolute top-4 right-4 bg-secondary-600 text-white py-2 px-4 rounded-[20px] font-['Inter'] text-xs font-semibold tracking-wider uppercase">
                       {tour.location}
                     </div>
                   </div>
                   <div className="p-4 sm:p-6">
-                    <h3 className="font-['Playfair_Display'] text-xl sm:text-2xl font-normal text-[#2c2c2c] mb-3 sm:mb-4 leading-[1.3]">
+                    <h3 className="font-['Playfair_Display'] text-xl sm:text-2xl font-normal text-black mb-3 sm:mb-4 leading-[1.3]">
                       {tour.title}
                     </h3>
                     <div className="flex flex-col gap-3">
-                      <Link to={`/tour/${tour._id}`} className="font-['Inter'] text-sm font-medium text-[#666] no-underline uppercase tracking-wider transition-colors duration-300 border-b border-transparent pb-[2px] inline-block w-fit hover:text-[#2c2c2c] hover:border-[#2c2c2c]">
+                      <Link to={`/tour/${tour._id}`} className="font-['Inter'] text-sm font-medium text-secondary-600 no-underline uppercase tracking-wider transition-colors duration-300 border-b border-transparent pb-[2px] inline-block w-fit hover:text-secondary-700 hover:border-secondary-700">
                         VIEW TOUR DETAILS
                       </Link>
-                      <Link to={`/tour/${tour._id}`} className="font-['Inter'] text-sm font-medium text-[#666] no-underline uppercase tracking-wider transition-colors duration-300 border-b border-transparent pb-[2px] inline-block w-fit hover:text-[#2c2c2c] hover:border-[#2c2c2c]">
+                      <Link to={`/tour/${tour._id}`} className="font-['Inter'] text-sm font-medium text-primary-600 no-underline uppercase tracking-wider transition-colors duration-300 border-b border-transparent pb-[2px] inline-block w-fit hover:text-primary-700 hover:border-primary-700">
                         BOOK THIS TOUR
                       </Link>
                     </div>
@@ -577,7 +634,7 @@ function Homepage() {
               ))}
             </div>
             
-            <button className="bg-white border border-[#e0e0e0] rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-300 text-[#333] flex-shrink-0 z-10 hover:bg-[#f5f5f5] hover:border-[#ccc] hover:scale-105" aria-label="Next destinations">
+            <button className="rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-300 text-black flex-shrink-0 z-10 hover:scale-105" aria-label="Next destinations" style={{ backgroundColor: '#ffe020', borderColor: '#ffe020', borderWidth: '1px' }}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>

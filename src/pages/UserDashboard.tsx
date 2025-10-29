@@ -229,7 +229,7 @@ const UserDashboard: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-xl flex items-center justify-center">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
@@ -241,7 +241,7 @@ const UserDashboard: React.FC = () => {
             </div>
             <button
               onClick={() => navigate('/packages')}
-              className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors flex items-center space-x-2 shadow-sm hover:shadow-md"
+              className="bg-secondary-600 hover:bg-secondary-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors flex items-center space-x-2 shadow-sm hover:shadow-md"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -304,8 +304,8 @@ const UserDashboard: React.FC = () => {
                 <p className="text-sm font-medium text-gray-600">Total Spent</p>
                 <p className="text-2xl font-bold text-gray-900 mt-1">${stats.totalSpent}</p>
               </div>
-              <div className="w-10 h-10 bg-teal-50 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-10 h-10 bg-secondary-50 rounded-lg flex items-center justify-center">
+                <svg className="w-5 h-5 text-secondary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
@@ -328,7 +328,7 @@ const UserDashboard: React.FC = () => {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
           <div className="border-b border-gray-200 px-6 py-4 bg-gray-50">
             <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-              <svg className="w-5 h-5 mr-2 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 mr-2 text-secondary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
               </svg>
               My Bookings
@@ -338,8 +338,8 @@ const UserDashboard: React.FC = () => {
           {bookings.length === 0 ? (
             <div className="px-6 py-20 text-center">
               <div className="max-w-md mx-auto">
-                <div className="w-20 h-20 bg-teal-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-10 h-10 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-20 h-20 bg-secondary-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-10 h-10 text-secondary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
                 </div>
@@ -347,7 +347,7 @@ const UserDashboard: React.FC = () => {
                 <p className="text-gray-500 mb-6">Start your adventure by booking your first tour</p>
                 <button
                   onClick={() => navigate('/packages')}
-                  className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors"
+                  className="bg-secondary-600 hover:bg-secondary-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors"
                 >
                   Explore Tours
                 </button>
@@ -373,19 +373,19 @@ const UserDashboard: React.FC = () => {
                     <div className="flex-1">
                       <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
                         <div className="flex-1">
-                          <h3 className="text-xl font-semibold text-gray-900 mb-2 hover:text-teal-600 transition-colors cursor-pointer" onClick={() => booking.tour?._id && navigate(`/tour/${booking.tour._id}`)}>
+                          <h3 className="text-xl font-semibold text-gray-900 mb-2 hover:text-secondary-600 transition-colors cursor-pointer" onClick={() => booking.tour?._id && navigate(`/tour/${booking.tour._id}`)}>
                             {booking.tour?.title || 'Tour unavailable'}
                           </h3>
                           <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-4">
                             <div className="flex items-center">
-                              <svg className="w-4 h-4 mr-1.5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 mr-1.5 text-secondary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                               </svg>
                               {booking.tour?.location || '—'}
                             </div>
                             <div className="flex items-center">
-                              <svg className="w-4 h-4 mr-1.5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 mr-1.5 text-secondary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                               </svg>
                               {booking.tour?.duration || '—'}
@@ -419,7 +419,7 @@ const UserDashboard: React.FC = () => {
                         </div>
                         <div>
                           <p className="text-xs text-gray-500 font-medium mb-1">Total Price</p>
-                          <p className="text-lg font-bold text-teal-600">${booking.totalPrice}</p>
+                          <p className="text-lg font-bold text-secondary-600">${booking.totalPrice}</p>
                         </div>
                       </div>
 
@@ -428,7 +428,7 @@ const UserDashboard: React.FC = () => {
                         {booking.paymentStatus === 'pending' && booking.status !== 'cancelled' && (
                           <button
                             onClick={() => handlePayNow(booking)}
-                            className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center text-sm"
+                            className="bg-secondary-600 hover:bg-secondary-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center text-sm"
                           >
                             <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />

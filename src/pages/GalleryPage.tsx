@@ -232,18 +232,18 @@ const GalleryPage = () => {
   // Gallery data is now loaded dynamically from backend
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" style={{ backgroundColor: '#ffe020' }}>
       {/* Hero Section */}
       <section id="yy"
         ref={sectionRefs.hero}
-        className="relative pt-40 pb-16 bg-[#3e7670] text-white"
+        className="relative pt-40 pb-16 text-white" style={{ backgroundColor: '#000000' }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="animate-on-scroll text-5xl md:text-6xl font-bold mb-6">
               Travel Gallery
             </h1>
-            <p className="animate-on-scroll text-xl md:text-2xl text-[#3f7670] max-w-3xl mx-auto">
+            <p className="animate-on-scroll text-xl md:text-2xl text-[#22c55e] max-w-3xl mx-auto">
               Immerse yourself in the beauty of our destinations through stunning photography
             </p>
           </div>
@@ -251,7 +251,7 @@ const GalleryPage = () => {
       </section>
 
       {/* Filter Section */}
-      <section className="py-12 bg-gray-50 sticky top-0 z-10 shadow-sm">
+      <section className="py-12 sticky top-0 z-10 shadow-sm" style={{ backgroundColor: '#ffe020' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center gap-4">
             {categories.map((category) => (
@@ -260,8 +260,8 @@ const GalleryPage = () => {
                 onClick={() => setActiveFilter(category.value)}
                 className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 ${
                   activeFilter === category.value
-                    ? 'bg-[#3f7670] text-white shadow-lg'
-                    : 'bg-white text-gray-700 hover:bg-[#3f7670]/10 hover:text-[#3f7670] shadow-sm'
+                    ? 'bg-[#22c55e] text-white shadow-lg'
+                    : 'bg-[#ffe020] text-black hover:bg-[#00c3a1]/20 hover:text-[#00c3a1] shadow-sm'
                 }`}
               >
                 {category.label}
@@ -272,7 +272,7 @@ const GalleryPage = () => {
       </section>
 
       {/* Gallery Section with Bento Grid */}
-      <section ref={sectionRefs.gallery} className="py-20 bg-white">
+      <section ref={sectionRefs.gallery} className="py-20" style={{ backgroundColor: '#00c3a1' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Explore Our Destinations</h2>
@@ -309,6 +309,7 @@ const GalleryPage = () => {
                 <div 
                   key={image.id} 
                   className={`gallery-item ${image.aspect === 'wide' ? 'bento-wide' : image.aspect === 'tall' ? 'bento-tall' : 'bento-square'}`}
+                  style={{ backgroundColor: '#00c3a1' }}
                 >
                   <GalleryItem
                     {...image}
@@ -322,7 +323,7 @@ const GalleryPage = () => {
       </section>
 
       {/* Enhanced Stats Section */}
-      <section ref={sectionRefs.stats} className="py-16 bg-gray-50">
+      <section ref={sectionRefs.stats} className="py-16" style={{ backgroundColor: '#ffe020' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-3">Our Gallery in Numbers</h2>
@@ -333,25 +334,25 @@ const GalleryPage = () => {
           
           <div className="flex flex-wrap justify-center gap-8 md:gap-12 lg:gap-16 text-center">
             <div className="stat-item flex-1 min-w-[120px] max-w-[160px] sm:max-w-none">
-              <div className="text-3xl md:text-4xl font-bold mb-2 text-[#3f7670]">
+              <div className="text-3xl md:text-4xl font-bold mb-2 text-[#22c55e]">
                 {isStatsVisible && <CountUp end={stats.totalPhotos} duration={2} suffix="+" />}
               </div>
               <div className="text-gray-600 text-sm">Stunning Photos</div>
             </div>
             <div className="stat-item flex-1 min-w-[120px] max-w-[160px] sm:max-w-none">
-              <div className="text-3xl md:text-4xl font-bold mb-2 text-[#3f7670]">
+              <div className="text-3xl md:text-4xl font-bold mb-2 text-[#22c55e]">
                 {isStatsVisible && <CountUp end={stats.totalDestinations} duration={2} suffix="+" />}
               </div>
               <div className="text-gray-600 text-sm">Destinations</div>
             </div>
             <div className="stat-item flex-1 min-w-[120px] max-w-[160px] sm:max-w-none">
-              <div className="text-3xl md:text-4xl font-bold mb-2 text-[#3f7670]">
+              <div className="text-3xl md:text-4xl font-bold mb-2 text-[#22c55e]">
                 {isStatsVisible && <CountUp end={stats.happyTravelers} duration={2} suffix="+" />}
               </div>
               <div className="text-gray-600 text-sm">Happy Travelers</div>
             </div>
             <div className="stat-item flex-1 min-w-[120px] max-w-[160px] sm:max-w-none">
-              <div className="text-3xl md:text-4xl font-bold mb-2 text-[#3f7670]">
+              <div className="text-3xl md:text-4xl font-bold mb-2 text-[#22c55e]">
                 {isStatsVisible && <CountUp end={stats.averageRating} duration={2} decimals={1} />}
               </div>
               <div className="text-gray-600 text-sm">Average Rating</div>
@@ -425,6 +426,7 @@ const GalleryPage = () => {
           grid-auto-rows: 250px;
           grid-gap: 1rem;
           grid-auto-flow: dense;
+          background-color: #00c3a1;
         }
         
         .bento-wide {
@@ -437,6 +439,11 @@ const GalleryPage = () => {
         
         .bento-square {
           /* Default is 1x1 */
+        }
+        
+        .gallery-item {
+          background-color: #00c3a1;
+          overflow: hidden;
         }
         
         @media (max-width: 640px) {

@@ -106,7 +106,7 @@ const TourBookingsManagement: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-secondary-600"></div>
       </div>
     );
   }
@@ -122,9 +122,9 @@ const TourBookingsManagement: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-teal-600 to-teal-700 rounded-xl shadow-lg p-6 text-white">
+      <div className="bg-gradient-to-r from-secondary-600 to-secondary-700 rounded-xl shadow-lg p-6 text-white">
         <h2 className="text-2xl font-bold mb-2">Tour Bookings Management</h2>
-        <p className="text-teal-100">View all tours and their bookings with customer details</p>
+        <p className="text-secondary-100">View all tours and their bookings with customer details</p>
       </div>
 
       {/* Summary Stats */}
@@ -229,18 +229,18 @@ const TourBookingsManagement: React.FC = () => {
                         <h3 className="text-xl font-bold text-gray-900 mb-2">{tourData.tour.title}</h3>
                         <div className="flex flex-wrap gap-4 text-sm text-gray-600">
                           <span className="flex items-center">
-                            <svg className="w-4 h-4 mr-1 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 mr-1 text-secondary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                             </svg>
                             {tourData.tour.location}
                           </span>
                           <span className="flex items-center">
-                            <svg className="w-4 h-4 mr-1 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 mr-1 text-secondary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                             {tourData.tour.duration}
                           </span>
-                          <span className="flex items-center font-semibold text-teal-600">
+                          <span className="flex items-center font-semibold text-secondary-600">
                             ${tourData.tour.price} / person
                           </span>
                         </div>
@@ -250,7 +250,7 @@ const TourBookingsManagement: React.FC = () => {
                     {/* Tour Stats */}
                     <div className="flex items-center space-x-6 ml-4">
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-teal-600">{tourData.stats.totalBookings}</p>
+                        <p className="text-2xl font-bold text-secondary-600">{tourData.stats.totalBookings}</p>
                         <p className="text-xs text-gray-500">Bookings</p>
                       </div>
                       <div className="text-center">

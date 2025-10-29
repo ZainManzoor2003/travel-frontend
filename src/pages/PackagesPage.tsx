@@ -250,21 +250,21 @@ const PackagesPage = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" style={{ backgroundColor: '#ffe020' }}>
       {/* Hero Section */}
       <section 
         ref={sectionRefs.hero}
         className="relative pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-14 lg:pb-16 overflow-hidden"
-        style={{ backgroundColor: '#3f7670' }}
+        style={{ backgroundColor: '#00c3a1' }}
       >
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center">
             {/* Hero Image */}
             <div className="animate-on-scroll mb-8 sm:mb-10 lg:mb-12">
               <img 
-                src="/Logo1.png"
+                src="/Logo.webp"
                 alt="Travel Packages"
-                className="h-32 sm:h-40 lg:h-48 w-auto brightness-0 invert"
+                className="mt-2 h-32 sm:mt-3 sm:h-40 lg:mt-4 lg:h-48 w-auto"
               />
             </div>
             
@@ -282,7 +282,7 @@ const PackagesPage = () => {
       </section>
 
       {/* Search and Filter Section */}
-      <section className="py-8 sm:py-10 lg:py-12 bg-gray-50">
+      <section className="py-8 sm:py-10 lg:py-12" style={{ backgroundColor: '#ffe020' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-4 sm:space-y-6">
             {/* Search Bar */}
@@ -303,8 +303,8 @@ const PackagesPage = () => {
                     onClick={() => setSelectedFilter(category.value)}
                     className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 transform hover:scale-105 whitespace-nowrap ${
                       selectedFilter === category.value
-                        ? 'bg-[#3f7670] text-white shadow-lg shadow-teal-200'
-                        : 'bg-white text-gray-700 hover:bg-teal-50 hover:text-[#3f7670] shadow-sm'
+                        ? 'bg-[#00c3a1] text-white shadow-lg shadow-secondary-200'
+                        : 'bg-white text-black hover:bg-secondary-50 hover:text-[#00c3a1] shadow-sm'
                     }`}
                   >
                     {category.label}
@@ -321,7 +321,7 @@ const PackagesPage = () => {
                   id="sort"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670] text-xs sm:text-sm bg-white shadow-sm w-full sm:min-w-[160px] lg:min-w-[180px]"
+                  className="px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00c3a1] focus:border-[#00c3a1] text-xs sm:text-sm bg-white shadow-sm w-full sm:min-w-[160px] lg:min-w-[180px]"
                 >
                   {sortOptions.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -336,11 +336,11 @@ const PackagesPage = () => {
       </section>
 
       {/* Tours Grid */}
-      <section ref={sectionRefs.tours} className="py-12 sm:py-16 lg:py-20 bg-white">
+      <section ref={sectionRefs.tours} className="py-12 sm:py-16 lg:py-20" style={{ backgroundColor: '#ffe020' }}>
         <div className="max-w-7xl lg:max-w-[85%] lg:max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           {loading ? (
             <div className="text-center py-12 sm:py-16">
-              <svg className="w-12 h-12 sm:w-16 sm:h-16 text-[#3f7670] mx-auto mb-4 animate-spin" viewBox="0 0 24 24">
+              <svg className="w-12 h-12 sm:w-16 sm:h-16 text-[#00c3a1] mx-auto mb-4 animate-spin" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
               </svg>
@@ -394,7 +394,7 @@ const PackagesPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 sm:py-18 lg:py-20" style={{ backgroundColor: '#3f7670' }}>
+      <section className="py-16 sm:py-18 lg:py-20" style={{ backgroundColor: '#00c3a1' }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6">Can't Find What You're Looking For?</h2>
           <p className="text-lg sm:text-xl text-white mb-6 sm:mb-8 leading-relaxed px-4">
@@ -403,13 +403,13 @@ const PackagesPage = () => {
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center max-w-md sm:max-w-none mx-auto">
             <a
               href="/contact"
-              className="bg-white text-[#3f7670] px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg text-center"
+              className="bg-white text-[#00c3a1] px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg text-center"
             >
               Contact Us
             </a>
             <a
               href="/about"
-              className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-white hover:text-[#3f7670] transition-all duration-300 transform hover:scale-105 text-center"
+              className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-white hover:text-[#00c3a1] transition-all duration-300 transform hover:scale-105 text-center"
             >
               Learn More
             </a>

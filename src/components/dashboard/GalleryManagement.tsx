@@ -382,7 +382,7 @@ const GalleryManagement = () => {
       html: `
         <div class="text-center">
           <div class="mb-4">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#3f7670] mx-auto"></div>
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#22c55e] mx-auto"></div>
           </div>
           <p class="text-sm text-gray-600">Step 1: Compressing image...</p>
           <p class="text-xs text-gray-500 mt-2">This may take a few moments</p>
@@ -396,7 +396,7 @@ const GalleryManagement = () => {
         progressContainer.className = 'mt-4';
         progressContainer.innerHTML = `
           <div class="bg-gray-200 rounded-full h-2">
-            <div class="bg-[#3f7670] h-2 rounded-full animate-pulse" style="width: 50%"></div>
+            <div class="bg-[#22c55e] h-2 rounded-full animate-pulse" style="width: 50%"></div>
           </div>
         `;
         Swal.getHtmlContainer()?.appendChild(progressContainer);
@@ -608,7 +608,7 @@ const GalleryManagement = () => {
         </div>
         <button
           onClick={handleAddItem}
-          className="mt-4 sm:mt-0 bg-[#3f7670] text-white px-4 py-2 rounded-lg hover:bg-[#2d5550] transition-colors duration-200 flex items-center space-x-2"
+          className="mt-4 sm:mt-0 bg-[#22c55e] text-white px-4 py-2 rounded-lg hover:bg-[#15803d] transition-colors duration-200 flex items-center space-x-2"
         >
           <FiPlus className="w-4 h-4" />
           <span>Add Image</span>
@@ -616,9 +616,9 @@ const GalleryManagement = () => {
       </div>
 
       {/* Enhanced Filters */}
-      <div className="bg-gradient-to-r from-teal-50 to-teal-100 rounded-xl shadow-sm border border-teal-100 p-6">
+      <div className="bg-gradient-to-r from-secondary-50 to-secondary-100 rounded-xl shadow-sm border border-secondary-100 p-6">
         <div className="flex items-center space-x-2 mb-4">
-          <FiImage className="w-5 h-5 text-[#3f7670]" />
+          <FiImage className="w-5 h-5 text-[#22c55e]" />
           <h3 className="text-lg font-semibold text-gray-800">Filter Gallery</h3>
         </div>
         
@@ -627,13 +627,13 @@ const GalleryManagement = () => {
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">Search Images</label>
             <div className="relative group">
-              <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-teal-400 w-5 h-5 group-focus-within:text-[#3f7670] transition-colors" />
+              <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-400 w-5 h-5 group-focus-within:text-[#22c55e] transition-colors" />
               <input
                 type="text"
                 placeholder="Search by title, tags, or description..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border-2 border-teal-200 rounded-xl focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670] bg-white shadow-sm transition-all duration-200 hover:border-teal-300"
+                className="w-full pl-10 pr-4 py-3 border-2 border-secondary-200 rounded-xl focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e] bg-white shadow-sm transition-all duration-200 hover:border-secondary-300"
               />
             </div>
           </div>
@@ -647,14 +647,14 @@ const GalleryManagement = () => {
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-teal-200 rounded-xl focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670] bg-white shadow-sm transition-all duration-200 hover:border-teal-300 appearance-none cursor-pointer"
+                  className="w-full px-4 py-3 border-2 border-secondary-200 rounded-xl focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e] bg-white shadow-sm transition-all duration-200 hover:border-secondary-300 appearance-none cursor-pointer"
                 >
                   <option value="all">All Images</option>
                   <option value="active">Active Images</option>
                   <option value="inactive">Inactive Images</option>
                 </select>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <svg className="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -668,7 +668,7 @@ const GalleryManagement = () => {
                 <select
                   value={categoryFilter}
                   onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-teal-200 rounded-xl focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670] bg-white shadow-sm transition-all duration-200 hover:border-teal-300 appearance-none cursor-pointer"
+                  className="w-full px-4 py-3 border-2 border-secondary-200 rounded-xl focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e] bg-white shadow-sm transition-all duration-200 hover:border-secondary-300 appearance-none cursor-pointer"
                 >
                   {categories.map(category => (
                     <option key={category.value} value={category.value}>
@@ -683,7 +683,7 @@ const GalleryManagement = () => {
                   ))}
                 </select>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <svg className="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -696,7 +696,7 @@ const GalleryManagement = () => {
         <div className="mt-4 flex items-center justify-between">
           <div className="flex items-center space-x-4 text-sm text-gray-600">
             <span className="flex items-center space-x-1">
-              <span className="w-2 h-2 bg-[#3f7670] rounded-full"></span>
+              <span className="w-2 h-2 bg-[#22c55e] rounded-full"></span>
               <span>{filteredItems.length} images found</span>
             </span>
             {(searchQuery || statusFilter !== 'all' || categoryFilter !== 'all') && (
@@ -706,7 +706,7 @@ const GalleryManagement = () => {
                   setStatusFilter('all');
                   setCategoryFilter('all');
                 }}
-                className="text-[#3f7670] hover:text-[#2d5550] font-medium transition-colors"
+                className="text-[#22c55e] hover:text-[#15803d] font-medium transition-colors"
               >
                 Clear filters
               </button>
@@ -718,7 +718,7 @@ const GalleryManagement = () => {
       {/* Loading State */}
       {loading && (
         <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#3f7670]"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#22c55e]"></div>
         </div>
       )}
 
@@ -761,21 +761,21 @@ const GalleryManagement = () => {
                 className="w-full h-48 object-cover"
               />
               {item.featured && (
-                <div className="absolute top-3 left-3 bg-[#3f7670] text-white px-2 py-1 rounded text-xs font-medium">
+                <div className="absolute top-3 left-3 bg-[#22c55e] text-white px-2 py-1 rounded text-xs font-medium">
                   Featured
                 </div>
               )}
               <div className="absolute top-3 right-3 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                 <button
                   onClick={() => handleViewItem(item)}
-                  className="p-1 bg-white/90 backdrop-blur-sm rounded text-gray-600 hover:text-[#3f7670]"
+                  className="p-1 bg-white/90 backdrop-blur-sm rounded text-gray-600 hover:text-[#22c55e]"
                   title="View"
                 >
                   <FiEye className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => handleEditItem(item)}
-                  className="p-1 bg-white/90 backdrop-blur-sm rounded text-gray-600 hover:text-[#3f7670]"
+                  className="p-1 bg-white/90 backdrop-blur-sm rounded text-gray-600 hover:text-[#22c55e]"
                   title="Edit"
                 >
                   <FiEdit className="w-4 h-4" />
@@ -834,7 +834,7 @@ const GalleryManagement = () => {
         <div className="p-6">
           {loadingItem ? (
             <div className="flex justify-center items-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#3f7670]"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#22c55e]"></div>
             </div>
           ) : isEditMode ? (
             <div className="space-y-4">
@@ -848,7 +848,7 @@ const GalleryManagement = () => {
                       console.log('Title changed:', e.target.value);
                       setFormData({ ...formData, title: e.target.value });
                     }}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   />
                 </div>
                 <div>
@@ -856,7 +856,7 @@ const GalleryManagement = () => {
                   <select
                     value={formData.category || 'nature'}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   >
                     {categories.slice(1).map(category => (
                       <option key={category.value} value={category.value}>
@@ -890,7 +890,7 @@ const GalleryManagement = () => {
                   )}
 
                   {/* Upload Area */}
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-teal-400 transition-colors">
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-secondary-400 transition-colors">
                     <input
                       ref={fileInputRef}
                       type="file"
@@ -906,7 +906,7 @@ const GalleryManagement = () => {
                         <button
                           type="button"
                           onClick={() => fileInputRef.current?.click()}
-                          className="bg-[#3f7670] text-white px-4 py-2 rounded-lg hover:bg-[#2d5550] transition-colors"
+                          className="bg-[#22c55e] text-white px-4 py-2 rounded-lg hover:bg-[#15803d] transition-colors"
                         >
                           Choose Image
                         </button>
@@ -940,7 +940,7 @@ const GalleryManagement = () => {
                         }
                       }}
                       placeholder="https://example.com/image.jpg"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                     />
                   </div>
                 </div>
@@ -953,7 +953,7 @@ const GalleryManagement = () => {
                       console.log('Alt text changed:', e.target.value);
                       setFormData({ ...formData, alt: e.target.value });
                     }}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   />
                 </div>
                 <div>
@@ -961,7 +961,7 @@ const GalleryManagement = () => {
                   <select
                     value={formData.status || 'inactive'}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value as GalleryItem['status'] })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   >
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
@@ -978,7 +978,7 @@ const GalleryManagement = () => {
                     setFormData({ ...formData, description: e.target.value });
                   }}
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                 />
               </div>
               
@@ -988,12 +988,12 @@ const GalleryManagement = () => {
                   {formData.tags?.map((tag, index) => (
                     <span
                       key={index}
-                      className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-teal-50 text-[#2d5550]"
+                      className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-secondary-50 text-[#15803d]"
                     >
                       {tag}
                       <button
                         onClick={() => handleRemoveTag(tag)}
-                        className="ml-1 text-[#3f7670] hover:text-[#2d5550]"
+                        className="ml-1 text-[#22c55e] hover:text-[#15803d]"
                       >
                         ×
                       </button>
@@ -1006,12 +1006,12 @@ const GalleryManagement = () => {
                     value={newTag}
                     onChange={(e) => setNewTag(e.target.value)}
                     placeholder="Add a tag"
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f7670] focus:border-[#3f7670]"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                     onKeyPress={(e) => e.key === 'Enter' && handleAddTag()}
                   />
                   <button
                     onClick={handleAddTag}
-                    className="px-4 py-2 bg-[#3f7670] text-white rounded-lg hover:bg-[#2d5550] transition-colors duration-200"
+                    className="px-4 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#15803d] transition-colors duration-200"
                   >
                     Add
                   </button>
@@ -1024,7 +1024,7 @@ const GalleryManagement = () => {
                     type="checkbox"
                     checked={formData.featured || false}
                     onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                    className="rounded border-gray-300 text-[#3f7670] focus:ring-[#3f7670]"
+                    className="rounded border-gray-300 text-[#22c55e] focus:ring-[#22c55e]"
                   />
                   <span className="ml-2 text-sm text-gray-700">Featured Image</span>
                 </label>
@@ -1040,7 +1040,7 @@ const GalleryManagement = () => {
                 <button
                   onClick={handleSaveItem}
                   disabled={isUploading}
-                  className="px-4 py-2 bg-[#3f7670] text-white rounded-lg hover:bg-[#2d5550] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+                  className="px-4 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#15803d] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
                 >
                   {isUploading && (
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
