@@ -52,46 +52,8 @@ const router = createBrowserRouter([
     errorElement: <div className="flex items-center justify-center min-h-screen">Error loading tour details</div>,
   },
   {
-    path: '/old',
-    element: <MainLayout />,
-    children: [
-      {
-        index: true,
-        element: <LandingPage />,
-      },
-      {
-        path: 'about',
-        element: <AboutPage />,
-      },
-      {
-        path: 'contact',
-        element: <ContactPage />,
-      },
-      {
-        path: 'blog',
-        element: <BlogPage />,
-      },
-      {
-        path: 'gallery',
-        element: <GalleryPage />,
-      },
-      {
-        path: 'payment',
-        element: <PaymentPage />,
-      },
-      {
-        path: 'packages',
-        element: <PackagesPage />,
-      },
-      {
-        path: 'my-dashboard',
-        element: (
-          <ProtectedRoute requireAdmin={false}>
-            <UserDashboard />
-          </ProtectedRoute>
-        ),
-      },
-    ],
+    path: '/my-dashboard',
+    element: <UserDashboard />
   },
   {
     path: '/login',
