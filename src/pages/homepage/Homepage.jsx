@@ -371,7 +371,7 @@ function Homepage() {
             className="w-full h-full object-cover"
             style={{ pointerEvents: 'none', touchAction: 'pan-y' }}
           >
-            <source src="/Demo Travel.mp4" type="video/mp4" />
+            <source src="https://res.cloudinary.com/dfoetpdk9/video/upload/v1761721559/ybos0cfk9pfor4mzj4oz.mp4" type='video/mp4' />
             Your browser does not support the video tag.
           </video>
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/20 via-black/40 to-black/30 z-[1]"></div>
@@ -510,7 +510,7 @@ function Homepage() {
       <section ref={videoScrollRef} className="video-scroll-section w-full h-auto relative overflow-visible bg-transparent" style={{ overscrollBehavior: 'contain' }}>
         <div className="relative w-full h-auto overflow-visible">
           <video ref={secondVideoRef} className="w-full h-auto object-cover" autoPlay muted playsInline loop style={{ pointerEvents: 'none', touchAction: 'pan-y' }}>
-            <source src="/CEO.mp4" type="video/mp4" />
+            <source src="https://res.cloudinary.com/dfoetpdk9/video/upload/v1761721702/brtzvr2lxjnh49k74bhj.mp4" type='video/mp4' />
             Your browser does not support the video tag.
           </video>
         </div>
