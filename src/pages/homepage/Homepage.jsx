@@ -100,7 +100,7 @@ function Homepage() {
         } else if (!isHorizontalMode) {
           // Re-enter horizontal when scrolling up
           const y = window.scrollY
-          if (y <= videoTop + 50 && y >= contentTop -50) {
+          if (y <= videoTop + 50 && y >= contentTop - 50) {
             setIsHorizontalMode(true)
             setCurrentHorizontalSection(1)
           }
@@ -119,11 +119,11 @@ function Homepage() {
     const handleWheel = (e) => {
       // console.log('handleWheel', e)
       if (isTransitioning || transitioningRef.current) return
-      
+
       // Scrolling down (right) in horizontal mode
       if (isHorizontalMode && e.deltaY > 0) {
         e.preventDefault()
-        
+
         if (currentHorizontalSection === 0) {
           // Move to gallery section
           setCurrentHorizontalSection(1)
@@ -131,7 +131,7 @@ function Homepage() {
           const galleryContainer = galleryContainerRef.current
           if (galleryContainer) {
             const canScrollRight = galleryContainer.scrollLeft + galleryContainer.clientWidth < galleryContainer.scrollWidth
-            
+
             if (canScrollRight) {
               // Scroll gallery right smoothly with a guarded transition
               const remainingRight = galleryContainer.scrollWidth - (galleryContainer.scrollLeft + galleryContainer.clientWidth)
@@ -150,7 +150,7 @@ function Homepage() {
               setIsHorizontalMode(false)
               setCurrentHorizontalSection(0)
               setIsFirstHorizontalEntry(true)
-              
+
               const unlock = lockScrollTemporarily(500)
               requestAnimationFrame(() => {
                 const section = document.querySelector('.video-scroll-section')
@@ -171,12 +171,12 @@ function Homepage() {
       // Scrolling up (left) in horizontal mode
       else if (isHorizontalMode && e.deltaY < 0) {
         e.preventDefault()
-        
+
         if (currentHorizontalSection === 1) {
           const galleryContainer = galleryContainerRef.current
           if (galleryContainer) {
             const canScrollLeft = galleryContainer.scrollLeft > 0
-            
+
             if (canScrollLeft) {
               // Scroll gallery left smoothly with a guarded transition
               const step = Math.max(1, Math.min(galleryContainer.scrollLeft, Math.round(galleryContainer.clientWidth * 0.9)))
@@ -334,7 +334,18 @@ function Homepage() {
   //   return () => window.removeEventListener('keydown', onKeyDown)
   // }, [isHorizontalMode, currentHorizontalSection])
 
+  const repsonsive = `
+ 
+  @media (max-width: 500px) {
+   .horizontal-scroll-section{
+    display: none;
+  }
+  }`
+
   return (
+   
+    <>
+     <style>{repsonsive}</style>
     <div className="w-full font-sans">
       {/* Navigation Header */}
       <nav className="fixed top-0 left-0 right-0 z-[1000] p-4 sm:p-6 lg:p-8 px-4 sm:px-8 lg:px-12 flex items-center justify-between bg-transparent">
@@ -348,15 +359,15 @@ function Homepage() {
             <span className="hidden sm:inline">MENU</span>
           </button>
         </div>
-        
+
         <div className="absolute left-1/2 -translate-x-1/2 mt-2 sm:mt-3 lg:mt-4">
-          <img 
+          <img
             src="/Logo.webp"
             alt="Awasi Logo"
             className="mt-2 h-16 w-40 sm:mt-3 sm:h-20 sm:w-48 lg:mt-4 lg:h-24 lg:w-56"
           />
         </div>
-        
+
       </nav>
 
       {/* Hero Section */}
@@ -376,7 +387,7 @@ function Homepage() {
           </video>
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/20 via-black/40 to-black/30 z-[1]"></div>
         </div>
-        
+
         <div className="relative z-[2] text-center p-4 sm:p-6 lg:p-8">
           <h1 className="font-['Playfair_Display'] text-[clamp(2rem,8vw,4.5rem)] font-normal text-white tracking-tight leading-[1.1] shadow-[0_2px_20px_rgba(0,0,0,0.3)] px-4">
             <span className="!text-[#00c3a1]">The Journey Begins Here</span>
@@ -385,18 +396,20 @@ function Homepage() {
 
         <button className="absolute bottom-4 sm:bottom-6 lg:bottom-8 left-1/2 -translate-x-1/2 z-[3] bg-white/10 border border-white/20 rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-white cursor-pointer transition-all duration-300 backdrop-blur-[10px] hover:bg-white/20 hover:border-white/40 hover:scale-110" onClick={toggleMute}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5">
-            <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M19.07 4.93C20.9441 6.8041 21.9999 9.34784 21.9999 12C21.9999 14.6522 20.9441 17.1959 19.07 19.07" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M15.54 8.46C16.4774 9.39764 17.0039 10.6692 17.0039 12C17.0039 13.3308 16.4774 14.6024 15.54 15.54" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            {isMuted && <line x1="1" y1="1" x2="23" y2="23" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>}
+            <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M19.07 4.93C20.9441 6.8041 21.9999 9.34784 21.9999 12C21.9999 14.6522 20.9441 17.1959 19.07 19.07" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M15.54 8.46C16.4774 9.39764 17.0039 10.6692 17.0039 12C17.0039 13.3308 16.4774 14.6024 15.54 15.54" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            {isMuted && <line x1="1" y1="1" x2="23" y2="23" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />}
           </svg>
         </button>
       </section>
 
       {/* Content Section - This triggers horizontal scrolling */}
-      <section className="w-full h-screen overflow-hidden relative" ref={contentSectionRef}>
-        <div 
-          className="flex w-[200vw] h-full transition-transform duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" 
+      <section className="horizontal-scroll-section w-full h-screen overflow-hidden relative"
+        ref={contentSectionRef}>
+        <div
+          className="flex w-[200vw] h-full transition-transform duration-[400ms]
+           ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           ref={horizontalContainerRef}
           style={{ willChange: 'transform', backfaceVisibility: 'hidden', transform: 'translateZ(0)' }}
         >
@@ -405,16 +418,16 @@ function Homepage() {
             <div className="w-full max-w-[1400px] mx-auto flex  gap-0 min-h-screen">
               <div className="flex items-center justify-start p-8 sm:p-12 lg:p-16 lg:pl-24" style={{ backgroundColor: '#ffe020' }}>
                 <div className="max-w-[480px] text-left">
-                    <h2 className="font-['Playfair_Display'] text-[clamp(2rem,4vw,3rem)] font-normal text-black tracking-tight leading-[1.2] mb-8">
-                      Where Time and Space are Yours to Own
-                    </h2>
+                  <h2 className="font-['Playfair_Display'] text-[clamp(2rem,4vw,3rem)] font-normal text-black tracking-tight leading-[1.2] mb-8">
+                    Where Time and Space are Yours to Own
+                  </h2>
                   <p className="font-['Inter'] text-lg font-normal text-[#555] leading-[1.6] tracking-[0.01em]">
                     At Awasi, our lodges are designed to feel like the home of an old friend, guiding you through stunning landscapes, native flavors and hidden gems. It's a fusion of friendship, admiration for the place, and personal hospitality that creates a genuine connection with each guest.
                   </p>
                 </div>
               </div>
               <div className="flex-1 relative overflow-hidden">
-                <img 
+                <img
                   src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761722827/s3vzbvdng1okdyqee3os.jpg"
                   alt="Awasi Santa Catarina"
                   className="w-full h-full object-cover block"
@@ -426,33 +439,33 @@ function Homepage() {
           {/* Horizontal Section 2: Gallery */}
           <div className="w-screen h-full flex-shrink-0 relative">
             <div className="w-full h-full overflow-hidden relative flex items-center justify-center" style={{ backgroundColor: '#ffe020' }}>
-              <div 
-                className="w-full max-w-[1400px] h-[80%] overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide" 
+              <div
+                className="w-full max-w-[1400px] h-[80%] overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide"
                 ref={galleryContainerRef}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', willChange: 'scroll-position', backfaceVisibility: 'hidden', transform: 'translateZ(0)' }}
               >
                 <div className="flex h-[100vh] w-[500%] gap-4" style={{ willChange: 'transform', backfaceVisibility: 'hidden', transform: 'translateZ(0)' }}>
-                  {/* Single large image on the left */}
+                  {/* Single large image on the left
                   <div className="flex-[0_0_20%] h-full relative overflow-hidden snap-start">
                     <img 
                       src="/images/Patagonia (9).jpeg"
                       alt="Awasi Gallery 1"
                       className="w-full h-full object-cover block"
                     />
-                  </div>
-                  
+                  </div> */}
+
                   {/* Two images in one column */}
                   <div className="flex-[0_0_20%] h-full relative overflow-hidden snap-start">
                     <div className="h-full flex flex-col gap-2">
                       <div className="flex-1 relative overflow-hidden">
-                        <img 
-                          src="/images/Patagonia (10).jpg"
+                        <img
+                          src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761724771/dk0fqvngscin7fpvbz0b.jpg"
                           alt="Awasi Gallery 2"
                           className="w-full h-full object-cover block"
                         />
                       </div>
                       <div className="flex-1 relative overflow-hidden">
-                        <img 
+                        <img
                           src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761724712/axco7ftdtjlcjgs5tliv.jpg"
                           alt="Awasi Gallery 3"
                           className="w-full h-full object-cover block"
@@ -460,28 +473,28 @@ function Homepage() {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Another single large image */}
                   <div className="flex-[0_0_20%] h-full relative overflow-hidden snap-start">
-                    <img 
+                    <img
                       src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761724741/sww6q29og65cato6noy3.jpg"
                       alt="Awasi Mendoza"
                       className="w-full h-full object-cover block"
                     />
                   </div>
-                  
+
                   {/* Another two images in one column */}
                   <div className="flex-[0_0_20%] h-full relative overflow-hidden snap-start">
                     <div className="h-full flex flex-col gap-2">
                       <div className="flex-1 relative overflow-hidden">
-                        <img 
+                        <img
                           src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761724771/dk0fqvngscin7fpvbz0b.jpg"
                           alt="Awasi Gallery 4"
                           className="w-full h-full object-cover block"
                         />
                       </div>
                       <div className="flex-1 relative overflow-hidden">
-                        <img 
+                        <img
                           src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761724793/uayx5dok0ielwgeiiuhu.jpg"
                           alt="Awasi Gallery 5"
                           className="w-full h-full object-cover block"
@@ -489,10 +502,10 @@ function Homepage() {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Final single large image */}
                   <div className="flex-[0_0_20%] h-full relative overflow-hidden snap-start" ref={lastGalleryItemRef}>
-                    <img 
+                    <img
                       src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761724821/kljoyritil16oyufepjg.jpg"
                       alt="Awasi Gallery 6"
                       className="w-full h-full object-cover block"
@@ -514,13 +527,13 @@ function Homepage() {
             Your browser does not support the video tag.
           </video>
         </div>
-        
+
         <button className="absolute bottom-4 sm:bottom-6 lg:bottom-8 left-1/2 -translate-x-1/2 z-[3] bg-white/10 border border-white/20 rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-white cursor-pointer transition-all duration-300 backdrop-blur-[10px] hover:bg-white/20 hover:border-white/40 hover:scale-110" onClick={toggleSecondMute}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5">
-            <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M19.07 4.93C20.9441 6.8041 21.9999 9.34784 21.9999 12C21.9999 14.6522 20.9441 17.1959 19.07 19.07" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M15.54 8.46C16.4774 9.39764 17.0039 10.6692 17.0039 12C17.0039 13.3308 16.4774 14.6024 15.54 15.54" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            {isSecondMuted && <line x1="1" y1="1" x2="23" y2="23" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>}
+            <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M19.07 4.93C20.9441 6.8041 21.9999 9.34784 21.9999 12C21.9999 14.6522 20.9441 17.1959 19.07 19.07" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M15.54 8.46C16.4774 9.39764 17.0039 10.6692 17.0039 12C17.0039 13.3308 16.4774 14.6024 15.54 15.54" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            {isSecondMuted && <line x1="1" y1="1" x2="23" y2="23" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />}
           </svg>
         </button>
       </section>
@@ -557,14 +570,14 @@ function Homepage() {
               Experience the world's most extraordinary places with our carefully curated collection of luxury lodges
             </p>
           </div>
-          
+
           <div className="relative flex items-center gap-4 sm:gap-6 lg:gap-8">
             <button className="rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-300 text-black flex-shrink-0 z-10 hover:scale-105" aria-label="Previous destinations" style={{ backgroundColor: '#ffe020', borderColor: '#ffe020', borderWidth: '1px' }}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
-            
+
             <div className="flex gap-4 sm:gap-6 lg:gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide flex-1 px-2 sm:px-4">
               {toursLoading && (
                 <div className="flex-[0_0_280px] sm:flex-[0_0_320px] flex items-center justify-center text-[#666] font-['Inter']">
@@ -584,7 +597,7 @@ function Homepage() {
               {!toursLoading && !toursError && featuredTours.map((tour) => (
                 <div key={tour._id} className="flex-[0_0_280px] sm:flex-[0_0_320px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] transition-all duration-300 snap-start hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)]" style={{ backgroundColor: '#ffe020' }}>
                   <div className="relative h-60 overflow-hidden">
-                    <img 
+                    <img
                       src={tour.image || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop'}
                       alt={tour.title}
                       className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
@@ -609,10 +622,10 @@ function Homepage() {
                 </div>
               ))}
             </div>
-            
+
             <button className="rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-300 text-black flex-shrink-0 z-10 hover:scale-105" aria-label="Next destinations" style={{ backgroundColor: '#ffe020', borderColor: '#ffe020', borderWidth: '1px' }}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
           </div>
@@ -621,28 +634,28 @@ function Homepage() {
 
       {/* Travel Section */}
       <TravelSection />
-      
+
       {/* Sustainability Section */}
       <SustainabilitySection />
-      
+
       {/* Stories Section */}
       <StoriesSection />
-      
+
       {/* Instagram Section */}
       <InstagramSection />
-      
+
       {/* Footer */}
       <Footer />
-      
+
       {/* Section Indicators - Only show in horizontal mode */}
       {isHorizontalMode && (
         <div className="fixed right-8 top-1/2 -translate-y-1/2 z-[1000] flex flex-col gap-4">
-          <div 
-            className={`w-3 h-3 rounded-full bg-white/30 cursor-pointer transition-all duration-300 border-2 border-white/50 ${currentHorizontalSection === 0 ? 'bg-white scale-[1.2]' : 'hover:bg-white/60 hover:scale-110'}`} 
+          <div
+            className={`w-3 h-3 rounded-full bg-white/30 cursor-pointer transition-all duration-300 border-2 border-white/50 ${currentHorizontalSection === 0 ? 'bg-white scale-[1.2]' : 'hover:bg-white/60 hover:scale-110'}`}
             onClick={() => setCurrentHorizontalSection(0)}
           ></div>
-          <div 
-            className={`w-3 h-3 rounded-full bg-white/30 cursor-pointer transition-all duration-300 border-2 border-white/50 ${currentHorizontalSection === 1 ? 'bg-white scale-[1.2]' : 'hover:bg-white/60 hover:scale-110'}`} 
+          <div
+            className={`w-3 h-3 rounded-full bg-white/30 cursor-pointer transition-all duration-300 border-2 border-white/50 ${currentHorizontalSection === 1 ? 'bg-white scale-[1.2]' : 'hover:bg-white/60 hover:scale-110'}`}
             onClick={() => setCurrentHorizontalSection(1)}
           ></div>
         </div>
@@ -651,6 +664,7 @@ function Homepage() {
       {/* Menu Component */}
       <Menu isOpen={isMenuOpen} onClose={closeMenu} />
     </div>
+    </>
   )
 }
 
