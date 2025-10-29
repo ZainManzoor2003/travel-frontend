@@ -15,6 +15,7 @@ function Homepage() {
   const [showTestScroll, setShowTestScroll] = useState(true)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isFirstHorizontalEntry, setIsFirstHorizontalEntry] = useState(true)
   const [featuredTours, setFeaturedTours] = useState([])
   const [toursLoading, setToursLoading] = useState(true)
   const [toursError, setToursError] = useState(null)
@@ -81,28 +82,27 @@ function Homepage() {
         const videoTop = videoScrollRef.current ? videoScrollRef.current.getBoundingClientRect().top + window.scrollY : Number.POSITIVE_INFINITY
 
         if (shouldEnter && !isHorizontalMode) {
-          // Immediately enter horizontal mode and show first horizontal section
+          // Enter horizontal mode
           setIsHorizontalMode(true)
           setCurrentHorizontalSection(1)
-          // Snap the page so the content section is perfectly aligned
-          const y = contentTop
-          window.scrollTo({ top: Math.max(0, y), behavior: 'auto' })
-        } else if (!shouldEnter && isHorizontalMode) {
-          if (galleryContainerRef.current) {
-            galleryContainerRef.current.scrollTo({ left: 0, behavior: 'auto' })
+          // Only reset to left on first entry (scrolling down)
+          if (isFirstHorizontalEntry && galleryContainerRef.current) {
+            galleryContainerRef.current.scrollLeft = 0
+            setIsFirstHorizontalEntry(false)
           }
+          // Snap the page so the content section is perfectly aligned
+          window.scrollTo({ top: Math.max(0, contentTop), behavior: 'auto' })
+        } else if (!shouldEnter && isHorizontalMode) {
+          // Exit horizontal mode
           setIsHorizontalMode(false)
           setCurrentHorizontalSection(0)
+          setIsFirstHorizontalEntry(true)
         } else if (!isHorizontalMode) {
-          // Re-enter horizontal when scrolling up near the boundary between video section and horizontal track
+          // Re-enter horizontal when scrolling up
           const y = window.scrollY
-          // Wider hysteresis band to reliably re-enter horizontal when scrolling up
-          if (y <= videoTop + 260 && y >= contentTop - 260) {
+          if (y <= videoTop + 50 && y >= contentTop -50) {
             setIsHorizontalMode(true)
             setCurrentHorizontalSection(1)
-            if (galleryContainerRef.current) {
-              galleryContainerRef.current.scrollLeft = galleryContainerRef.current.scrollWidth
-            }
           }
         }
       }
@@ -113,76 +113,19 @@ function Homepage() {
       window.removeEventListener('scroll', handleScroll)
       if (rafId) cancelAnimationFrame(rafId)
     }
-  }, [isHorizontalMode])
+  }, [isHorizontalMode, isFirstHorizontalEntry, isTransitioning])
 
   useEffect(() => {
-    const handleReverseScroll = (e) => {
-      if (isTransitioning || transitioningRef.current) return
-      if (e.deltaY < 0 && isHorizontalMode) {
-        e.preventDefault()
-        
-        if (currentHorizontalSection === 1) {
-          const galleryContainer = galleryContainerRef.current
-          if (galleryContainer) {
-            const canScrollLeft = galleryContainer.scrollLeft > 0
-            
-            if (canScrollLeft) {
-              galleryContainer.scrollTo({
-                left: galleryContainer.scrollLeft - window.innerWidth,
-                behavior: 'smooth'
-              })
-            } else {
-              setCurrentHorizontalSection(0)
-            }
-          }
-        } else if (currentHorizontalSection === 0) {
-          setIsHorizontalMode(false)
-          setCurrentHorizontalSection(0)
-        }
-      } else if (e.deltaY < 0 && !isHorizontalMode) {
-        // From vertical back into horizontal section
-        const section = document.querySelector('.video-scroll-section')
-        const triggerY = section ? section.getBoundingClientRect().top + window.scrollY : 0
-        // If we're near the top area of the video section, pull user back into horizontal
-        if (window.scrollY <= triggerY + 220) {
-          e.preventDefault()
-          transitioningRef.current = true
-          setIsTransitioning(true)
-          const contentTop = contentSectionRef.current ? contentSectionRef.current.getBoundingClientRect().top + window.scrollY : 0
-          // Temporarily lock scroll and scroll to the start of horizontal container
-          const unlock = lockScrollTemporarily(500)
-          window.scrollTo({ top: Math.max(0, contentTop), behavior: 'auto' })
-          setTimeout(() => {
-            setIsHorizontalMode(true)
-            setCurrentHorizontalSection(1)
-            if (galleryContainerRef.current) {
-              const gc = galleryContainerRef.current
-              gc.scrollLeft = gc.scrollWidth // jump to end so user can scroll left back through
-            }
-            transitioningRef.current = false
-            setIsTransitioning(false)
-            unlock()
-          }, 400)
-        }
-      }
-    }
-
-    window.addEventListener('wheel', handleReverseScroll, { passive: false })
-    return () => window.removeEventListener('wheel', handleReverseScroll)
-  }, [isHorizontalMode, currentHorizontalSection])
-
-  useEffect(() => {
-    let rafId = null
     const handleWheel = (e) => {
+      // console.log('handleWheel', e)
       if (isTransitioning || transitioningRef.current) return
-      if (rafId) return
-      rafId = requestAnimationFrame(() => {
-        rafId = null
-      })
+      
+      // Scrolling down (right) in horizontal mode
       if (isHorizontalMode && e.deltaY > 0) {
         e.preventDefault()
         
         if (currentHorizontalSection === 0) {
+          // Move to gallery section
           setCurrentHorizontalSection(1)
         } else if (currentHorizontalSection === 1) {
           const galleryContainer = galleryContainerRef.current
@@ -190,14 +133,24 @@ function Homepage() {
             const canScrollRight = galleryContainer.scrollLeft + galleryContainer.clientWidth < galleryContainer.scrollWidth
             
             if (canScrollRight) {
-              galleryContainer.scrollLeft = galleryContainer.scrollLeft + window.innerWidth
+              // Scroll gallery right smoothly with a guarded transition
+              const remainingRight = galleryContainer.scrollWidth - (galleryContainer.scrollLeft + galleryContainer.clientWidth)
+              const step = Math.max(1, Math.min(remainingRight, Math.round(galleryContainer.clientWidth * 0.9)))
+              transitioningRef.current = true
+              setIsTransitioning(true)
+              galleryContainer.scrollBy({ left: step, behavior: 'smooth' })
+              setTimeout(() => {
+                transitioningRef.current = false
+                setIsTransitioning(false)
+              }, 450)
             } else {
-              // Smoothly transition to the next vertical section
+              // Gallery complete, exit horizontal mode
               transitioningRef.current = true
               setIsTransitioning(true)
               setIsHorizontalMode(false)
               setCurrentHorizontalSection(0)
-              // Temporarily lock scroll to avoid extra wheel events during animation
+              setIsFirstHorizontalEntry(true)
+              
               const unlock = lockScrollTemporarily(500)
               requestAnimationFrame(() => {
                 const section = document.querySelector('.video-scroll-section')
@@ -205,7 +158,6 @@ function Homepage() {
                   const y = section.getBoundingClientRect().top + window.scrollY
                   window.scrollTo({ top: y + 1, behavior: 'auto' })
                 }
-                // Unlock after the smooth scroll completes
                 setTimeout(() => {
                   unlock()
                   transitioningRef.current = false
@@ -216,26 +168,50 @@ function Homepage() {
           }
         }
       }
+      // Scrolling up (left) in horizontal mode
+      else if (isHorizontalMode && e.deltaY < 0) {
+        e.preventDefault()
+        
+        if (currentHorizontalSection === 1) {
+          const galleryContainer = galleryContainerRef.current
+          if (galleryContainer) {
+            const canScrollLeft = galleryContainer.scrollLeft > 0
+            
+            if (canScrollLeft) {
+              // Scroll gallery left smoothly with a guarded transition
+              const step = Math.max(1, Math.min(galleryContainer.scrollLeft, Math.round(galleryContainer.clientWidth * 0.9)))
+              transitioningRef.current = true
+              setIsTransitioning(true)
+              galleryContainer.scrollBy({ left: -step, behavior: 'smooth' })
+              setTimeout(() => {
+                transitioningRef.current = false
+                setIsTransitioning(false)
+              }, 450)
+            } else {
+              // Back to content section
+              setCurrentHorizontalSection(0)
+            }
+          }
+        } else if (currentHorizontalSection === 0) {
+          // Exit horizontal mode
+          setIsHorizontalMode(false)
+          setCurrentHorizontalSection(0)
+          setIsFirstHorizontalEntry(true)
+        }
+      }
     }
 
     window.addEventListener('wheel', handleWheel, { passive: false })
-    return () => {
-      window.removeEventListener('wheel', handleWheel)
-      if (rafId) cancelAnimationFrame(rafId)
-    }
-  }, [isHorizontalMode, currentHorizontalSection])
+    return () => window.removeEventListener('wheel', handleWheel)
+  }, [isHorizontalMode, currentHorizontalSection, isTransitioning, isFirstHorizontalEntry])
 
   useEffect(() => {
+    console.log('isHorizontalMode', isHorizontalMode)
     if (horizontalContainerRef.current && isHorizontalMode) {
       horizontalContainerRef.current.style.transform = `translate3d(-${currentHorizontalSection * 100}vw, 0, 0)`
     }
   }, [currentHorizontalSection, isHorizontalMode])
 
-  useEffect(() => {
-    if (isHorizontalMode && currentHorizontalSection === 1 && galleryContainerRef.current) {
-      galleryContainerRef.current.scrollTo({ left: 0, behavior: 'auto' })
-    }
-  }, [isHorizontalMode, currentHorizontalSection])
 
   useEffect(() => {
     // Keep default body scrolling behavior; only optimize transform usage
@@ -321,42 +297,42 @@ function Homepage() {
     }
   }, [isHorizontalMode, currentHorizontalSection])
 
-  useEffect(() => {
-    const onKeyDown = (e) => {
-      if (!isHorizontalMode) return
-      const forwardKeys = ['ArrowDown', 'PageDown', ' ', 'Spacebar']
-      const backKeys = ['ArrowUp', 'PageUp']
-      if (forwardKeys.includes(e.key)) {
-        e.preventDefault()
-        if (currentHorizontalSection === 0) {
-          setCurrentHorizontalSection(1)
-        } else if (currentHorizontalSection === 1 && galleryContainerRef.current) {
-          const gc = galleryContainerRef.current
-          const canScrollRight = gc.scrollLeft + gc.clientWidth < gc.scrollWidth
-          if (canScrollRight) {
-            gc.scrollTo({ left: gc.scrollLeft + window.innerWidth, behavior: 'smooth' })
-          } else {
-            setIsHorizontalMode(false)
-            setCurrentHorizontalSection(0)
-          }
-        }
-      } else if (backKeys.includes(e.key)) {
-        e.preventDefault()
-        if (currentHorizontalSection === 1 && galleryContainerRef.current) {
-          const gc = galleryContainerRef.current
-          if (gc.scrollLeft > 0) {
-            gc.scrollTo({ left: Math.max(0, gc.scrollLeft - window.innerWidth), behavior: 'smooth' })
-          } else {
-            setCurrentHorizontalSection(0)
-          }
-        } else if (currentHorizontalSection === 0) {
-          setIsHorizontalMode(false)
-        }
-      }
-    }
-    window.addEventListener('keydown', onKeyDown, { passive: false })
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [isHorizontalMode, currentHorizontalSection])
+  // useEffect(() => {
+  //   const onKeyDown = (e) => {
+  //     if (!isHorizontalMode) return
+  //     const forwardKeys = ['ArrowDown', 'PageDown', ' ', 'Spacebar']
+  //     const backKeys = ['ArrowUp', 'PageUp']
+  //     if (forwardKeys.includes(e.key)) {
+  //       e.preventDefault()
+  //       if (currentHorizontalSection === 0) {
+  //         setCurrentHorizontalSection(1)
+  //       } else if (currentHorizontalSection === 1 && galleryContainerRef.current) {
+  //         const gc = galleryContainerRef.current
+  //         const canScrollRight = gc.scrollLeft + gc.clientWidth < gc.scrollWidth
+  //         if (canScrollRight) {
+  //           gc.scrollTo({ left: gc.scrollLeft + window.innerWidth, behavior: 'smooth' })
+  //         } else {
+  //           setIsHorizontalMode(false)
+  //           setCurrentHorizontalSection(0)
+  //         }
+  //       }
+  //     } else if (backKeys.includes(e.key)) {
+  //       e.preventDefault()
+  //       if (currentHorizontalSection === 1 && galleryContainerRef.current) {
+  //         const gc = galleryContainerRef.current
+  //         if (gc.scrollLeft > 0) {
+  //           gc.scrollTo({ left: Math.max(0, gc.scrollLeft - window.innerWidth), behavior: 'smooth' })
+  //         } else {
+  //           setCurrentHorizontalSection(0)
+  //         }
+  //       } else if (currentHorizontalSection === 0) {
+  //         setIsHorizontalMode(false)
+  //       }
+  //     }
+  //   }
+  //   window.addEventListener('keydown', onKeyDown, { passive: false })
+  //   return () => window.removeEventListener('keydown', onKeyDown)
+  // }, [isHorizontalMode, currentHorizontalSection])
 
   return (
     <div className="w-full font-sans">
@@ -420,13 +396,13 @@ function Homepage() {
       {/* Content Section - This triggers horizontal scrolling */}
       <section className="w-full h-screen overflow-hidden relative" ref={contentSectionRef}>
         <div 
-          className="flex w-[200vw] h-screen transition-transform duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" 
+          className="flex w-[200vw] h-full transition-transform duration-[400ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" 
           ref={horizontalContainerRef}
           style={{ willChange: 'transform', backfaceVisibility: 'hidden', transform: 'translateZ(0)' }}
         >
           {/* Horizontal Section 1: Content */}
-          <div className="w-screen h-screen flex-shrink-0 relative">
-            <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-screen">
+          <div className="w-screen h-full flex-shrink-0 relative">
+            <div className="w-full max-w-[1400px] mx-auto flex  gap-0 min-h-screen">
               <div className="flex items-center justify-start p-8 sm:p-12 lg:p-16 lg:pl-24" style={{ backgroundColor: '#ffe020' }}>
                 <div className="max-w-[480px] text-left">
                     <h2 className="font-['Playfair_Display'] text-[clamp(2rem,4vw,3rem)] font-normal text-black tracking-tight leading-[1.2] mb-8">
@@ -437,7 +413,7 @@ function Homepage() {
                   </p>
                 </div>
               </div>
-              <div className="relative overflow-hidden">
+              <div className="flex-1 relative overflow-hidden">
                 <img 
                   src="/images/Patagonia (6).jpg"
                   alt="Awasi Santa Catarina"
@@ -448,14 +424,14 @@ function Homepage() {
           </div>
 
           {/* Horizontal Section 2: Gallery */}
-          <div className="w-screen h-screen flex-shrink-0 relative">
+          <div className="w-screen h-full flex-shrink-0 relative">
             <div className="w-full h-full overflow-hidden relative flex items-center justify-center" style={{ backgroundColor: '#ffe020' }}>
               <div 
-                className="w-full max-w-[1400px] h-[80vh] overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide" 
+                className="w-full max-w-[1400px] h-[80%] overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scrollbar-hide" 
                 ref={galleryContainerRef}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', willChange: 'scroll-position', backfaceVisibility: 'hidden', transform: 'translateZ(0)' }}
               >
-                <div className="flex h-full w-[500%] gap-4" style={{ willChange: 'transform', backfaceVisibility: 'hidden', transform: 'translateZ(0)' }}>
+                <div className="flex h-[100vh] w-[500%] gap-4" style={{ willChange: 'transform', backfaceVisibility: 'hidden', transform: 'translateZ(0)' }}>
                   {/* Single large image on the left */}
                   <div className="flex-[0_0_20%] h-full relative overflow-hidden snap-start">
                     <img 
