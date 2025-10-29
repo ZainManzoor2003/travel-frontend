@@ -81,15 +81,16 @@ const UserDashboard: React.FC = () => {
               return { ...booking, hasReview: false };
             }
             try {
-              const reviewResponse = await fetch(`${API_BASE}/reviews/can-review/${booking.tour._id}`, {
+              const reviewResponse = await fetch(`${API_BASE}/reviews/can-review/${booking._id}`, {
                 headers: {
                   'Authorization': `Bearer ${token}`
                 }
               });
               const reviewData = await reviewResponse.json();
+              console.log('reviewData',reviewData)
               return {
                 ...booking,
-                hasReview: reviewData.success ? !reviewData.data.canReview : false
+                hasReview: !reviewData.canReview
               };
             } catch (error) {
               console.error('Error checking review status:', error);
@@ -429,7 +430,7 @@ const UserDashboard: React.FC = () => {
                             Cancel
                           </button>
                         )}
-                        {booking.paymentStatus === 'paid' &&  (
+                        {booking.paymentStatus === 'paid' && !booking.hasReview &&  (
                           <button
                             onClick={() => handleLeaveReview(booking)}
                             className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center text-sm"
