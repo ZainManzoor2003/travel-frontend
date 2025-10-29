@@ -189,7 +189,7 @@ const Login = () => {
         {/* Background Image */}
         <div className="absolute inset-0 w-full h-full">
           <img 
-            src="/patagonia-bg.jpg" 
+            src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761725155/jv9whk3yedaxg53sx1wo.jpg" 
             alt="Background" 
             className="w-full h-full object-cover"
           />

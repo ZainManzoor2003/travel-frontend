@@ -98,7 +98,7 @@ const HomepageBlogPage = () => {
           {/* Image Section */}
           <div className="relative overflow-hidden md:w-full md:h-[60%] lg:w-[50%] lg:h-full">
             <img 
-              src="/images/PXL_20241111_192620770.RAW-01.COVER.jpg"
+              src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761725025/crl6xobnhficpscbj3an.jpg"
               alt="Nature exploration"
               className="w-full h-full object-cover block"
               onError={(e) => {

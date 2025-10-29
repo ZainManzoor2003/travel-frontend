@@ -103,7 +103,7 @@ const HomepagePackagesPage = () => {
           {/* Image Section */}
           <div className="relative overflow-hidden md:w-full md:h-[60%] lg:w-[50%] lg:h-full">
             <img 
-              src="images/Patagonia (38).jpg"
+              src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761724980/em92hg1426nvgibytt4p.jpg"
               alt="Packages"
               className="w-full h-full object-cover block"
             />

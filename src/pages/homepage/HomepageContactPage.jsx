@@ -63,7 +63,7 @@ const HomepageContactPage = () => {
         {/* Background Image */}
         <div className="absolute inset-0 w-full h-full">
           <img 
-            src="/images/Patagonia (6).jpg" 
+            src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761725078/znkqr4hip1hlabiehys8.jpg" 
             alt="Background" 
             className="w-full h-full object-cover"
           />

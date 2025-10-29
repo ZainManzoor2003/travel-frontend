@@ -199,7 +199,7 @@ const Signup = () => {
         {/* Background Image */}
         <div className="absolute inset-0 w-full h-full">
           <img 
-            src="/images/Torres del Paine (1).jpg" 
+            src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761725188/gqvfr7yaxnbxhe34dwcy.jpg" 
             alt="Background" 
             className="w-full h-full object-cover"
           />

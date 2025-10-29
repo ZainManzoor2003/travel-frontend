@@ -15,22 +15,14 @@ const InstagramSection = () => {
           
           <div className="relative flex-1 aspect-square overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02]">
             <img 
-              src="/images/Torres del Paine (1).jpg"
+              src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761722287/bt9wzoqasfw6fnob3eux.jpg"
               alt="Awasi Experience"
               className="w-full h-full object-cover block"
             />
           </div>
           <div className="relative flex-1 aspect-square overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02]">
             <img 
-              src="/images/Torres del Paine (2).jpeg"
-              alt="Awasi Experience"
-              className="w-full h-full object-cover block"
-            />
-          </div>
-          
-          <div className="relative flex-1 aspect-square overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02]">
-            <img 
-              src="/images/Torres del Paine (3).jpg"
+              src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761722386/qohrb67cnyvevyqhqc9a.jpg"
               alt="Awasi Experience"
               className="w-full h-full object-cover block"
             />
@@ -38,7 +30,15 @@ const InstagramSection = () => {
           
           <div className="relative flex-1 aspect-square overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02]">
             <img 
-              src="/images/DSC_2904.JPG"
+              src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761722424/njvnahiffqilq14gudpy.jpg"
+              alt="Awasi Experience"
+              className="w-full h-full object-cover block"
+            />
+          </div>
+          
+          <div className="relative flex-1 aspect-square overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.02]">
+            <img 
+              src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761722455/r6aecqhckkgpd9sarihn.jpg"
               alt="Awasi Experience"
               className="w-full h-full object-cover block"
             />

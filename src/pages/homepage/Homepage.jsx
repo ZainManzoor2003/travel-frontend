@@ -415,7 +415,7 @@ function Homepage() {
               </div>
               <div className="flex-1 relative overflow-hidden">
                 <img 
-                  src="/images/Patagonia (6).jpg"
+                  src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761722827/s3vzbvdng1okdyqee3os.jpg"
                   alt="Awasi Santa Catarina"
                   className="w-full h-full object-cover block"
                 />
@@ -453,7 +453,7 @@ function Homepage() {
                       </div>
                       <div className="flex-1 relative overflow-hidden">
                         <img 
-                          src="/images/Patagonia (15).jpg"
+                          src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761724712/axco7ftdtjlcjgs5tliv.jpg"
                           alt="Awasi Gallery 3"
                           className="w-full h-full object-cover block"
                         />
@@ -464,7 +464,7 @@ function Homepage() {
                   {/* Another single large image */}
                   <div className="flex-[0_0_20%] h-full relative overflow-hidden snap-start">
                     <img 
-                      src="/images/Patagonia (25).jpg"
+                      src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761724741/sww6q29og65cato6noy3.jpg"
                       alt="Awasi Mendoza"
                       className="w-full h-full object-cover block"
                     />
@@ -475,14 +475,14 @@ function Homepage() {
                     <div className="h-full flex flex-col gap-2">
                       <div className="flex-1 relative overflow-hidden">
                         <img 
-                          src="/images/Patagonia (34).jpeg"
+                          src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761724771/dk0fqvngscin7fpvbz0b.jpg"
                           alt="Awasi Gallery 4"
                           className="w-full h-full object-cover block"
                         />
                       </div>
                       <div className="flex-1 relative overflow-hidden">
                         <img 
-                          src="/images/Patagonia (38).jpg"
+                          src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761724793/uayx5dok0ielwgeiiuhu.jpg"
                           alt="Awasi Gallery 5"
                           className="w-full h-full object-cover block"
                         />
@@ -493,7 +493,7 @@ function Homepage() {
                   {/* Final single large image */}
                   <div className="flex-[0_0_20%] h-full relative overflow-hidden snap-start" ref={lastGalleryItemRef}>
                     <img 
-                      src="/images/DSC_2904.JPG"
+                      src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761724821/kljoyritil16oyufepjg.jpg"
                       alt="Awasi Gallery 6"
                       className="w-full h-full object-cover block"
                     />

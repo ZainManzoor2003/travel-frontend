@@ -48,7 +48,9 @@ export default function SustainabilitySection() {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         aria-hidden="true"
-        style={{ backgroundImage: "url('/images/Torres del Paine (1).jpg')" }}
+        style={{ 
+          backgroundImage: 
+          'url(https://res.cloudinary.com/dfoetpdk9/image/upload/v1761722535/xvfxycdxnp6kai6gmqki.jpg)' }}
       />
 
       <div className="relative z-[1] w-full h-full flex items-end pb-10">
