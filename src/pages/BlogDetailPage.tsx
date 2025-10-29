@@ -12,7 +12,7 @@ import {
   FiMenu
 } from 'react-icons/fi';
 import LoadingSpinner from '../components/LoadingSpinner';
-import Menu from './homepage/components/Menu';
+import Menu from '../components/homepage/Menu';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -189,7 +189,7 @@ const BlogDetailPage = () => {
         
         <div className="absolute left-1/2 -translate-x-1/2">
           <img 
-            src="/Logo.webp"
+            src="https://res.cloudinary.com/dfoetpdk9/image/upload/v1761734208/bokihocgfonmikokouz6.jpg"
             alt="Travel Beyond Logo"
             className="h-24 w-56"
           />

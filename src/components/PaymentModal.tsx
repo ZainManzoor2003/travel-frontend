@@ -159,7 +159,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ booking, clientSecret, onCl
             <button
               type="submit"
               disabled={processing || !stripe || !elements}
-              className="flex-1 px-4 py-3 bg-secondary-600 text-white rounded-lg hover:bg-secondary-700 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-secondary-700 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {processing ? 'Processing...' : `Pay $${booking.totalPrice}`}
             </button>

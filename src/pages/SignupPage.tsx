@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FiLogIn } from 'react-icons/fi';
 import Swal from 'sweetalert2';
 import { useAuth } from '../contexts/AuthContext';
-import Menu from './homepage/components/Menu.jsx';
+import Menu from '../components/homepage/Menu';
 
 const Signup = () => {
   const [email, setEmail] = useState('');

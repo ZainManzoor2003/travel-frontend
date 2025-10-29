@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import BlogCard from './components/BlogCard'
-import Menu from './components/Menu'
-import Footer from './components/Footer'
+import BlogCard from '../../components/homepage/BlogCard'
+import Menu from '../../components/homepage/Menu'
+import Footer from '../../components/homepage/Footer'
 import LoadingSpinner from '../../components/LoadingSpinner'
 import { Link } from 'react-router-dom'
 

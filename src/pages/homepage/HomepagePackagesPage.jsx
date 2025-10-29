@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import PackageCard from './components/PackageCard'
-import Menu from './components/Menu'
-import Footer from './components/Footer'
+import PackageCard from '../../components/homepage/PackageCard'
+import Menu from '../../components/homepage/Menu'
+import Footer from '../../components/homepage/Footer'
 import LoadingSpinner from '../../components/LoadingSpinner'
 import { Link } from 'react-router-dom'
 
@@ -86,12 +86,11 @@ const HomepagePackagesPage = () => {
           </button>
           <div className="w-px h-5 bg-white/30"></div>
         </div>
-        
         <div className="absolute left-1/2 -translate-x-1/2">
           <img 
-            src="/logo.webp"
+            src="/Logo.webp"
             alt="Awasi Logo"
-            className="h-24 w-56 brightness-0 invert"
+            className="mt-2 h-24 w-56"
           />
         </div>
         

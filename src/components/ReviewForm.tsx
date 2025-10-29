@@ -179,7 +179,9 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ tourId, tourTitle, bookingId, o
             <button
               type="submit"
               disabled={loading || !title.trim() || comment.length < 10}
-              className="flex-1 px-6 py-3 bg-gradient-to-r from-secondary-600 to-secondary-700 text-white rounded-lg font-semibold hover:from-secondary-700 hover:to-secondary-800 transition shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 
+              text-white rounded-lg font-semibold hover:from-red-700 hover:to-red-800 
+              transition shadow-md hover:shadow-lg disabled:opacity-100 disabled:cursor-not-allowed"
             >
               {loading ? 'Submitting...' : 'Submit Review'}
             </button>

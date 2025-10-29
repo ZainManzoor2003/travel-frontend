@@ -12,7 +12,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import BookingForm from '../components/BookingForm';
 import TourReviews from '../components/TourReviews';
 import LazyImage from '../components/LazyImage';
-import Menu from './homepage/components/Menu';
+import Menu from '../components/homepage/Menu'
 
 interface Tour {
   _id: string;

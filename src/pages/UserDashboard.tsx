@@ -57,10 +57,6 @@ const UserDashboard: React.FC = () => {
   const [reviewBooking, setReviewBooking] = useState<Booking | null>(null);
 
   useEffect(() => {
-    if (!user) {
-      navigate('/login');
-      return;
-    }
     fetchBookings();
   }, [user, navigate]);
 
@@ -103,6 +99,7 @@ const UserDashboard: React.FC = () => {
         );
         
         setBookings(bookingsWithReviewStatus);
+        console.log('bookingsWithReviewStatus', bookingsWithReviewStatus);
       } else {
         setError(data.message);
       }
@@ -218,7 +215,7 @@ const UserDashboard: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 mt-[100px]">
+    <div className="min-h-screen bg-gray-50 mt-[0px]">
       {/* Modern Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -308,16 +305,6 @@ const UserDashboard: React.FC = () => {
           </div>
         </div>
 
-        {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            <div className="flex items-center">
-              <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-              </svg>
-              <span className="text-sm">{error}</span>
-            </div>
-          </div>
-        )}
 
         {/* Bookings Section */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
@@ -442,7 +429,7 @@ const UserDashboard: React.FC = () => {
                             Cancel
                           </button>
                         )}
-                        {booking.paymentStatus === 'paid' && !booking.hasReview && (
+                        {booking.paymentStatus === 'paid' &&  (
                           <button
                             onClick={() => handleLeaveReview(booking)}
                             className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center text-sm"

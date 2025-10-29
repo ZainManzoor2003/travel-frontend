@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import TravelSection from './components/TravelSection'
-import SustainabilitySection from './components/SustainabilitySection'
-import StoriesSection from './components/StoriesSection'
-import InstagramSection from './components/InstagramSection'
-import Footer from './components/Footer'
-import Menu from './components/Menu'
+import TravelSection from '../../components/homepage/TravelSection'
+import SustainabilitySection from '../../components/homepage/SustainabilitySection'
+import StoriesSection from '../../components/homepage/StoriesSection'
+import InstagramSection from '../../components/homepage/InstagramSection'
+import Footer from '../../components/homepage/Footer'
+import Menu from '../../components/homepage/Menu'
 
 function Homepage() {
   const [isMuted, setIsMuted] = useState(true)

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import Menu from './components/Menu'
-import Footer from './components/Footer'
+import Menu from '../../components/homepage/Footer'
+import Footer from '../../components/homepage/Footer'
 import { Link } from 'react-router-dom'
 
 const HomepageGalleryPage = () => {

@@ -53,7 +53,41 @@ const router = createBrowserRouter([
   },
   {
     path: '/my-dashboard',
-    element: <UserDashboard />
+    element: (
+      <ProtectedRoute requireAdmin={false}>
+        <UserDashboard />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <LandingPage />,
+      },
+      {
+        path: 'about',
+        element: <AboutPage />,
+      },
+      {
+        path: 'contact',
+        element: <ContactPage />,
+      },
+      {
+        path: 'blog',
+        element: <BlogPage />,
+      },
+      {
+        path: 'gallery',
+        element: <GalleryPage />,
+      },
+      {
+        path: 'payment',
+        element: <PaymentPage />,
+      },
+      {
+        path: 'packages',
+        element: <PackagesPage />,
+      },
+    ],
   },
   {
     path: '/login',
