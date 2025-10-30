@@ -88,11 +88,11 @@ const ToursManagement = () => {
   const compressAndUploadImage = async (file: File): Promise<string> => {
     if (!token) throw new Error('No authentication token');
 
-    // Step 1: Send image to backend for compression
+    // Send image to backend to compress and upload to S3
     const formData = new FormData();
     formData.append('image', file);
 
-    const compressResponse = await fetch(`${API_BASE_URL}/upload/compress`, {
+    const response = await fetch(`${API_BASE_URL}/upload/s3`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -100,34 +100,11 @@ const ToursManagement = () => {
       body: formData
     });
 
-    const compressData = await compressResponse.json();
-    if (!compressData.success) {
-      throw new Error(compressData.message || 'Failed to compress image');
+    const data = await response.json();
+    if (!data.success || !data.url) {
+      throw new Error(data.message || 'Failed to upload image to S3');
     }
-
-    console.log(`📊 Compression stats: ${compressData.data.savings}% saved`);
-
-    // Step 2: Upload compressed image to Cloudinary
-    const compressedImageBase64 = compressData.data.compressedImage;
-    
-    const base64Response = await fetch(compressedImageBase64);
-    const blob = await base64Response.blob();
-    
-    const cloudinaryFormData = new FormData();
-    cloudinaryFormData.append('file', blob);
-    cloudinaryFormData.append('upload_preset', 'mehndi');
-
-    const cloudinaryResponse = await fetch('https://api.cloudinary.com/v1_1/dfoetpdk9/image/upload', {
-      method: 'POST',
-      body: cloudinaryFormData
-    });
-
-    if (!cloudinaryResponse.ok) {
-      throw new Error('Failed to upload to Cloudinary');
-    }
-
-    const cloudinaryData = await cloudinaryResponse.json();
-    return cloudinaryData.secure_url;
+    return data.url;
   };
 
   const createTour = async (tourData: Partial<Tour>) => {
@@ -436,7 +413,7 @@ const ToursManagement = () => {
                   <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#22c55e] mx-auto"></div>
                 </div>
                 <p class="text-sm text-gray-600">Compressing and uploading image ${uploadCount} of ${uploadedImages.length}...</p>
-                <p class="text-xs text-gray-500 mt-2">Step 1: Compressing → Step 2: Uploading to Cloudinary</p>
+                <p class="text-xs text-gray-500 mt-2">Step 1: Compressing → Step 2: Uploading to S3</p>
               </div>
             `,
             allowOutsideClick: false,
