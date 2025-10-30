@@ -1,12 +1,15 @@
 import AppRouter from './router';
 import { AuthProvider } from './contexts/AuthContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 import './App.css'
 
 function App() {
   return (
-    <AuthProvider>
-      <AppRouter />
-    </AuthProvider>
+    <LanguageProvider>
+      <AuthProvider>
+        <AppRouter />
+      </AuthProvider>
+    </LanguageProvider>
   );
 }
 

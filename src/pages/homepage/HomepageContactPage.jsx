@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react'
 import Menu from '../../components/homepage/Menu'
 import Footer from '../../components/homepage/Footer'
 import { Link } from 'react-router-dom'
+import LanguageSelector from '../../components/LanguageSelector'
+import { useLanguage } from '../../contexts/LanguageContext'
 
 const HomepageContactPage = () => {
+  const { t } = useLanguage()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -43,7 +46,7 @@ const HomepageContactPage = () => {
               <span className="w-[18px] h-[2px] bg-white transition-all duration-300"></span>
               <span className="w-[18px] h-[2px] bg-white transition-all duration-300"></span>
             </span>
-            MENU
+            {t('Menu')}
           </button>
           <div className="w-px h-5 bg-white/30"></div>
         </div>
@@ -56,6 +59,7 @@ const HomepageContactPage = () => {
           />
         </div>
         
+        <div className="flex items-center gap-4">{!isMenuOpen && <LanguageSelector />}</div>
       </nav>
 
       {/* Contact Hero Section */}
@@ -71,9 +75,7 @@ const HomepageContactPage = () => {
         
         <div className="absolute inset-0 bg-black/55"></div>
         <div className="relative z-10 w-full max-w-[1100px] bg-white rounded-[10px] shadow-[0_20px_60px_rgba(0,0,0,0.15)] p-12">
-          <h1 className="font-['Playfair_Display'] text-[clamp(2rem,4vw,3rem)] font-normal text-[#2c2c2c] text-center m-0 mb-8">
-            Contact Us
-          </h1>
+          <h1 className="font-['Playfair_Display'] text-[clamp(2rem,4vw,3rem)] font-normal text-[#2c2c2c] text-center m-0 mb-8">{t('Contact Us')}</h1>
           <form className="w-full" onSubmit={async (e) => {
             e.preventDefault()
             setSubmitMsg('')
@@ -122,24 +124,20 @@ const HomepageContactPage = () => {
           }}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-7">
               <div className="flex flex-col">
-                <label className="font-['Inter'] text-sm tracking-[0.06em] text-[#666] mb-2">
-                  First Name*
-                </label>
+                <label className="font-['Inter'] text-sm tracking-[0.06em] text-[#666] mb-2">{t('First Name*')}</label>
                 <input 
                   type="text" 
-                  placeholder="Maria" 
+                  placeholder={t('Maria')} 
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   className="border-none border-b border-[#ddd] py-[0.85rem] px-1 font-['Inter'] text-base bg-transparent outline-none focus:border-b-[#2c2c2c]"
                 />
               </div>
               <div className="flex flex-col">
-                <label className="font-['Inter'] text-sm tracking-[0.06em] text-[#666] mb-2">
-                  Last Name*
-                </label>
+                <label className="font-['Inter'] text-sm tracking-[0.06em] text-[#666] mb-2">{t('Last Name*')}</label>
                 <input 
                   type="text" 
-                  placeholder="Cruz" 
+                  placeholder={t('Cruz')} 
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   className="border-none border-b border-[#ddd] py-[0.85rem] px-1 font-['Inter'] text-base bg-transparent outline-none focus:border-b-[#2c2c2c]"
@@ -148,24 +146,20 @@ const HomepageContactPage = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-7">
               <div className="flex flex-col">
-                <label className="font-['Inter'] text-sm tracking-[0.06em] text-[#666] mb-2">
-                  Email*
-                </label>
+                <label className="font-['Inter'] text-sm tracking-[0.06em] text-[#666] mb-2">{t('Email*')}</label>
                 <input 
                   type="email" 
-                  placeholder="youremail@gmail.com" 
+                  placeholder={t('youremail@gmail.com')} 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="border-none border-b border-[#ddd] py-[0.85rem] px-1 font-['Inter'] text-base bg-transparent outline-none focus:border-b-[#2c2c2c]"
                 />
               </div>
               <div className="flex flex-col">
-                <label className="font-['Inter'] text-sm tracking-[0.06em] text-[#666] mb-2">
-                  Phone Number*
-                </label>
+                <label className="font-['Inter'] text-sm tracking-[0.06em] text-[#666] mb-2">{t('Phone Number*')}</label>
                 <input 
                   type="tel" 
-                  placeholder="+1 000 000 00" 
+                  placeholder={t('+1 000 000 00')} 
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   className="border-none border-b border-[#ddd] py-[0.85rem] px-1 font-['Inter'] text-base bg-transparent outline-none focus:border-b-[#2c2c2c]"
@@ -174,24 +168,20 @@ const HomepageContactPage = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-7">
               <div className="flex flex-col">
-                <label className="font-['Inter'] text-sm tracking-[0.06em] text-[#666] mb-2">
-                  Your Country*
-                </label>
+                <label className="font-['Inter'] text-sm tracking-[0.06em] text-[#666] mb-2">{t('Your Country*')}</label>
                 <input 
                   type="text" 
-                  placeholder="USA" 
+                  placeholder={t('USA')} 
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
                   className="border-none border-b border-[#ddd] py-[0.85rem] px-1 font-['Inter'] text-base bg-transparent outline-none focus:border-b-[#2c2c2c]"
                 />
               </div>
               <div className="flex flex-col">
-                <label className="font-['Inter'] text-sm tracking-[0.06em] text-[#666] mb-2">
-                  How did you hear about us?*
-                </label>
+                <label className="font-['Inter'] text-sm tracking-[0.06em] text-[#666] mb-2">{t('How did you hear about us?*')}</label>
                 <input 
                   type="text" 
-                  placeholder="Instagram" 
+                  placeholder={t('Instagram')} 
                   value={heardFrom}
                   onChange={(e) => setHeardFrom(e.target.value)}
                   className="border-none border-b border-[#ddd] py-[0.85rem] px-1 font-['Inter'] text-base bg-transparent outline-none focus:border-b-[#2c2c2c]"
@@ -200,12 +190,10 @@ const HomepageContactPage = () => {
             </div>
             <div className="grid grid-cols-1 gap-8 mb-7">
               <div className="flex flex-col">
-                <label className="font-['Inter'] text-sm tracking-[0.06em] text-[#666] mb-2">
-                  Message
-                </label>
+                <label className="font-['Inter'] text-sm tracking-[0.06em] text-[#666] mb-2">{t('Message')}</label>
                 <textarea 
                   rows={5} 
-                  placeholder="Tell us about your trip..."
+                  placeholder={t('Tell us about your trip...')}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   className="border-none border-b border-[#ddd] py-[0.85rem] px-1 font-['Inter'] text-base bg-transparent outline-none focus:border-b-[#2c2c2c] resize-none"
@@ -221,7 +209,7 @@ const HomepageContactPage = () => {
                 disabled={submitting}
                 className="bg-[#2c2c2c] text-white border-none py-[0.9rem] px-6 rounded cursor-pointer font-['Inter'] text-base hover:bg-[#1a1a1a] transition-colors duration-200 disabled:opacity-50"
               >
-                {submitting ? 'Sending...' : 'Send Message'}
+                {submitting ? t('Sending...') : t('Send Message')}
               </button>
             </div>
           </form>

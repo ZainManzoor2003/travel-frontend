@@ -1,4 +1,7 @@
+import { useLanguage } from '../../contexts/LanguageContext'
+
 const PackageCard = ({ pkg }) => {
+  const { t } = useLanguage()
   return (
     <article className="flex flex-col rounded-lg overflow-hidden transition-all duration-300 h-full hover:-translate-y-1 hover:shadow-[0_8px_25px_rgba(0,0,0,0.1)] w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(50%-1rem)] max-w-[400px]" style={{ backgroundColor: '#00c3a1' }}>
       <div className="relative w-full h-[200px] sm:h-[240px] lg:h-[280px] overflow-hidden">
@@ -27,7 +30,7 @@ const PackageCard = ({ pkg }) => {
           href={pkg.detailsLink} 
           className="self-start font-['Inter'] text-xs sm:text-sm font-semibold text-white no-underline uppercase tracking-wider border border-white py-2 px-3 sm:px-4 rounded transition-all duration-250 hover:bg-white hover:text-[#00c3a1]"
         >
-          DETAILS
+          {t('DETAILS')}
         </a>
       </div>
     </article>

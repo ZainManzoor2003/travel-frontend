@@ -4,8 +4,11 @@ import Menu from '../../components/homepage/Menu'
 import Footer from '../../components/homepage/Footer'
 import LoadingSpinner from '../../components/LoadingSpinner'
 import { Link } from 'react-router-dom'
+import LanguageSelector from '../../components/LanguageSelector'
+import { useLanguage } from '../../contexts/LanguageContext'
 
 const HomepagePackagesPage = () => {
+  const { t } = useLanguage()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const toggleMenu = () => {
@@ -82,9 +85,8 @@ const HomepagePackagesPage = () => {
               <span className="w-[18px] h-[2px] bg-white transition-all duration-300"></span>
               <span className="w-[18px] h-[2px] bg-white transition-all duration-300"></span>
             </span>
-            MENU
+            {t('Menu')}
           </button>
-          <div className="w-px h-5 bg-white/30"></div>
         </div>
         <div className="absolute left-1/2 -translate-x-1/2">
           <img 
@@ -94,6 +96,7 @@ const HomepagePackagesPage = () => {
           />
         </div>
         
+        <div className="flex items-center gap-4">{!isMenuOpen && <LanguageSelector />}</div>
       </nav>
 
       {/* Hero Section */}
@@ -112,10 +115,10 @@ const HomepagePackagesPage = () => {
           <div className="flex flex-col justify-center items-center p-8 sm:p-16 relative 
           md:w-full md:h-[40%] lg:w-[50%] lg:h-full" style={{ backgroundColor: '#000000' }}>
             <h1 className="font-['Playfair_Display'] text-[clamp(2.5rem,6vw,4rem)] font-normal text-[#F5F5DC] mb-6 tracking-tight leading-[1.1] text-center">
-              Travel Beyond Tours
+              {t('Travel Beyond Tours')}
             </h1>
             <p className="font-['Playfair_Display'] text-lg font-normal text-[#F5F5DC] leading-[1.6] max-w-[600px] opacity-90 text-center">
-              Hand-crafted stays including private guiding, full board, and immersive excursions.
+              {t('Homepage Packages Hero Sub')}
             </p>
           </div>
         </div>
@@ -124,10 +127,10 @@ const HomepagePackagesPage = () => {
       <div className="py-8 sm:py-12 lg:py-16" style={{ backgroundColor: '#ffe020' }}>
         <div className="text-center mb-8 sm:mb-12 lg:mb-16 px-4 sm:px-8">
           <h2 className="font-['Playfair_Display'] text-[clamp(2rem,4vw,3.5rem)] font-normal text-black mb-3 sm:mb-4 tracking-tight leading-[1.2]">
-            Choose Your Journey
+            {t('Choose Your Journey')}
           </h2>
           <p className="font-['Inter'] text-base sm:text-lg font-normal text-[#666] max-w-[600px] mx-auto leading-[1.6]">
-            Location, inclusions and nightly price at a glance
+            {t('Location, inclusions and nightly price at a glance')}
           </p>
         </div>
         

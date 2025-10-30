@@ -1,13 +1,15 @@
 
 import React from 'react';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const InstagramSection = () => {
+  const { t } = useLanguage();
   return (
     <section className="w-full bg-primary-50 p-0">
       <div className="max-w-full mx-auto p-0">
         <div className="bg-primary-50 py-12 text-center m-0">
           <h2 className="font-['Playfair_Display'] text-[clamp(1.8rem,3.5vw,2.5rem)] font-normal text-[#2c2c2c] tracking-tight leading-[1.2] m-0">
-            Follow us on Instagram @travelbeyondbrand
+            {t('Follow us on Instagram')} @travelbeyondbrand
           </h2>
         </div>
         

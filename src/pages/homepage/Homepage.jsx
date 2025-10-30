@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import LanguageSelector from '../../components/LanguageSelector'
+import { useLanguage } from '../../contexts/LanguageContext'
 import TravelSection from '../../components/homepage/TravelSection'
 import SustainabilitySection from '../../components/homepage/SustainabilitySection'
 import StoriesSection from '../../components/homepage/StoriesSection'
@@ -8,6 +10,7 @@ import Footer from '../../components/homepage/Footer'
 import Menu from '../../components/homepage/Menu'
 
 function Homepage() {
+  const { t } = useLanguage()
   const [isMuted, setIsMuted] = useState(true)
   const [currentHorizontalSection, setCurrentHorizontalSection] = useState(0)
   const [isHorizontalMode, setIsHorizontalMode] = useState(false)
@@ -356,7 +359,7 @@ function Homepage() {
               <span className="w-[16px] sm:w-[18px] h-[2px] bg-white transition-all duration-300"></span>
               <span className="w-[16px] sm:w-[18px] h-[2px] bg-white transition-all duration-300"></span>
             </span>
-            <span className="hidden sm:inline">MENU</span>
+            <span className="hidden sm:inline">{t('Menu')}</span>
           </button>
         </div>
 
@@ -366,6 +369,10 @@ function Homepage() {
             alt="Awasi Logo"
             className="mt-2 h-16 w-40 sm:mt-3 sm:h-20 sm:w-48 lg:mt-4 lg:h-24 lg:w-56"
           />
+        </div>
+
+        <div className="flex items-center gap-4">
+          {!isMenuOpen && <LanguageSelector />}
         </div>
 
       </nav>
@@ -390,7 +397,7 @@ function Homepage() {
 
         <div className="relative z-[2] text-center p-4 sm:p-6 lg:p-8">
           <h1 className="font-['Playfair_Display'] text-[clamp(2rem,8vw,4.5rem)] font-normal text-white tracking-tight leading-[1.1] shadow-[0_2px_20px_rgba(0,0,0,0.3)] px-4">
-            <span className="!text-[#00c3a1]">The Journey Begins Here</span>
+            <span className="!text-[#00c3a1]">{t('Hero Title')}</span>
           </h1>
         </div>
 
@@ -419,10 +426,10 @@ function Homepage() {
               <div className="flex items-center justify-start p-8 sm:p-12 lg:p-16 lg:pl-24" style={{ backgroundColor: '#ffe020' }}>
                 <div className="max-w-[480px] text-left">
                   <h2 className="font-['Playfair_Display'] text-[clamp(2rem,4vw,3rem)] font-normal text-black tracking-tight leading-[1.2] mb-8">
-                    Where Time and Space are Yours to Own
+                    {t('Where Time Title')}
                   </h2>
                   <p className="font-['Inter'] text-lg font-normal text-[#555] leading-[1.6] tracking-[0.01em]">
-                    At Awasi, our lodges are designed to feel like the home of an old friend, guiding you through stunning landscapes, native flavors and hidden gems. It's a fusion of friendship, admiration for the place, and personal hospitality that creates a genuine connection with each guest.
+                    {t('Where Time Paragraph')}
                   </p>
                 </div>
               </div>
@@ -544,15 +551,15 @@ function Homepage() {
           <div className="w-full max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 px-4 sm:px-8 lg:px-12">
             <div className="flex flex-col justify-center text-center lg:text-left">
               <h2 className="font-['Playfair_Display'] text-[clamp(2rem,5vw,4rem)] font-normal text-black tracking-tight leading-[1.1] m-0 mb-2">
-                A Meaningful Exploration
+                {t('A Meaningful Exploration')}
               </h2>
               <h2 className="font-['Playfair_Display'] text-[clamp(2rem,5vw,4rem)] font-normal text-black tracking-tight leading-[1.1] m-0">
-                Centered Around You
+                {t('Centered Around You')}
               </h2>
             </div>
             <div className="flex items-center justify-center lg:justify-start">
               <p className="font-['Inter'] text-base sm:text-lg font-normal text-[#555] leading-[1.6] tracking-[0.01em] m-0 max-w-[480px] text-center lg:text-left">
-                At Awasi, every stay is fully tailor-made. Each room is assigned a private guide and a 4x4 vehicle, allowing guests the freedom to explore at their own pace and according to their individual interests and rhythms. Our personalized approach ensures immersive, flexible experiences designed to connect you with the essence of each unique location.
+                {t('Centered Paragraph')}
               </p>
             </div>
           </div>
@@ -564,10 +571,10 @@ function Homepage() {
         <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12">
           <div className="text-center mb-8 sm:mb-10 lg:mb-12">
             <h2 className="font-['Playfair_Display'] text-[clamp(2rem,5vw,3.5rem)] font-normal text-black tracking-tight leading-[1.2] mb-4 px-4">
-              Discover Our Destinations
+              {t('Discover Our Destinations')}
             </h2>
             <p className="font-['Inter'] text-base sm:text-lg font-normal text-[#666] leading-[1.6] max-w-[600px] mx-auto px-4">
-              Experience the world's most extraordinary places with our carefully curated collection of luxury lodges
+              {t('Discover Paragraph')}
             </p>
           </div>
 
@@ -581,7 +588,7 @@ function Homepage() {
             <div className="flex gap-4 sm:gap-6 lg:gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide flex-1 px-2 sm:px-4">
               {toursLoading && (
                 <div className="flex-[0_0_280px] sm:flex-[0_0_320px] flex items-center justify-center text-[#666] font-['Inter']">
-                  Loading destinations...
+                  {t('Loading destinations...')}
                 </div>
               )}
               {toursError && (
@@ -591,7 +598,7 @@ function Homepage() {
               )}
               {!toursLoading && !toursError && featuredTours.length === 0 && (
                 <div className="flex-[0_0_280px] sm:flex-[0_0_320px] flex items-center justify-center text-[#666] font-['Inter']">
-                  No featured destinations available
+                  {t('No featured destinations available')}
                 </div>
               )}
               {!toursLoading && !toursError && featuredTours.map((tour) => (
@@ -612,10 +619,10 @@ function Homepage() {
                     </h3>
                     <div className="flex flex-col gap-3">
                       <Link to={`/tour/${tour._id}`} className="font-['Inter'] text-sm font-medium text-secondary-600 no-underline uppercase tracking-wider transition-colors duration-300 border-b border-transparent pb-[2px] inline-block w-fit hover:text-secondary-700 hover:border-secondary-700">
-                        VIEW TOUR DETAILS
+                        {t('VIEW TOUR DETAILS')}
                       </Link>
                       <Link to={`/tour/${tour._id}`} className="font-['Inter'] text-sm font-medium text-primary-600 no-underline uppercase tracking-wider transition-colors duration-300 border-b border-transparent pb-[2px] inline-block w-fit hover:text-primary-700 hover:border-primary-700">
-                        BOOK THIS TOUR
+                        {t('BOOK THIS TOUR')}
                       </Link>
                     </div>
                   </div>

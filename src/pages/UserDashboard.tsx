@@ -7,6 +7,8 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import PaymentModal from '../components/PaymentModal';
 import ReviewForm from '../components/ReviewForm';
 import LazyImage from '../components/LazyImage';
+import LanguageSelector from '../components/LanguageSelector';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const stripePromise = loadStripe('pk_test_51Rj1dnBOoulucdCvghV3vwtwYiAgrFek2IsnGS9WH0Sd1IQR3qdU0zGnpbWevLioQT3tKeOm4ifQBEQUxpMzrnm700Zw6YCpDl', {
   stripeLink: false
@@ -46,6 +48,7 @@ interface Booking {
 
 const UserDashboard: React.FC = () => {
   const { user, token } = useAuth();
+  const { t, language } = useLanguage();
   const navigate = useNavigate();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
@@ -148,7 +151,7 @@ const UserDashboard: React.FC = () => {
   };
 
   const handleCancelBooking = async (bookingId: string) => {
-    if (!confirm('Are you sure you want to cancel this booking?')) return;
+    if (!confirm(t('Are you sure you want to cancel this booking?'))) return;
 
     try {
       const response = await fetch(`${API_BASE}/bookings/${bookingId}`, {
@@ -228,10 +231,12 @@ const UserDashboard: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-                <p className="text-sm text-gray-500">Welcome back, {user?.username}</p>
+                <h1 className="text-2xl font-bold text-gray-900">{t('Dashboard')}</h1>
+                <p className="text-sm text-gray-500">{t('Welcome back,')} {user?.username}</p>
               </div>
             </div>
+            <div className="flex items-center gap-3">
+              <LanguageSelector theme="dark" />
             <button
               onClick={() => navigate('/packages')}
               className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors flex items-center space-x-2 shadow-sm hover:shadow-md"
@@ -239,8 +244,9 @@ const UserDashboard: React.FC = () => {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
-              <span>New Booking</span>
+              <span>{t('New Booking')}</span>
             </button>
+            </div>
           </div>
         </div>
       </div>
@@ -252,7 +258,7 @@ const UserDashboard: React.FC = () => {
           <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Total Bookings</p>
+                <p className="text-sm font-medium text-gray-600">{t('Total Bookings')}</p>
                 <p className="text-2xl font-bold text-gray-900 mt-1">{stats.total}</p>
               </div>
               <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
@@ -266,7 +272,7 @@ const UserDashboard: React.FC = () => {
           <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Pending Payment</p>
+                <p className="text-sm font-medium text-gray-600">{t('Pending Payment')}</p>
                 <p className="text-2xl font-bold text-gray-900 mt-1">{stats.pending}</p>
               </div>
               <div className="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center">
@@ -280,7 +286,7 @@ const UserDashboard: React.FC = () => {
           <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Confirmed</p>
+                <p className="text-sm font-medium text-gray-600">{t('Confirmed')}</p>
                 <p className="text-2xl font-bold text-gray-900 mt-1">{stats.confirmed}</p>
               </div>
               <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center">
@@ -294,7 +300,7 @@ const UserDashboard: React.FC = () => {
           <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Total Spent</p>
+                <p className="text-sm font-medium text-gray-600">{t('Total Spent')}</p>
                 <p className="text-2xl font-bold text-gray-900 mt-1">${stats.totalSpent}</p>
               </div>
               <div className="w-10 h-10 bg-teal-50 rounded-lg flex items-center justify-center">
@@ -314,7 +320,7 @@ const UserDashboard: React.FC = () => {
               <svg className="w-5 h-5 mr-2 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
               </svg>
-              My Bookings
+              {t('My Bookings')}
             </h2>
           </div>
 
@@ -326,13 +332,13 @@ const UserDashboard: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No bookings yet</h3>
-                <p className="text-gray-500 mb-6">Start your adventure by booking your first tour</p>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('No bookings yet')}</h3>
+                <p className="text-gray-500 mb-6">{t('Start your adventure by booking your first tour')}</p>
                 <button
                   onClick={() => navigate('/packages')}
                   className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors"
                 >
-                  Explore Tours
+                  {t('Explore Tours')}
                 </button>
               </div>
             </div>
@@ -389,19 +395,19 @@ const UserDashboard: React.FC = () => {
 
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 bg-gray-50 p-4 rounded-lg">
                         <div>
-                          <p className="text-xs text-gray-500 font-medium mb-1">Travel Date</p>
-                          <p className="text-sm font-semibold text-gray-900">{new Date(booking.travelDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+                          <p className="text-xs text-gray-500 font-medium mb-1">{t('Travel Date')}</p>
+                          <p className="text-sm font-semibold text-gray-900">{new Date(booking.travelDate).toLocaleDateString(language === 'es' ? 'es-ES' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
                         </div>
                         <div>
-                          <p className="text-xs text-gray-500 font-medium mb-1">Booked On</p>
-                          <p className="text-sm font-semibold text-gray-900">{new Date(booking.bookingDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+                          <p className="text-xs text-gray-500 font-medium mb-1">{t('Booked On')}</p>
+                          <p className="text-sm font-semibold text-gray-900">{new Date(booking.bookingDate).toLocaleDateString(language === 'es' ? 'es-ES' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
                         </div>
                         <div>
-                          <p className="text-xs text-gray-500 font-medium mb-1">Participants</p>
-                          <p className="text-sm font-semibold text-gray-900">{booking.participants} {booking.participants === 1 ? 'Person' : 'People'}</p>
+                          <p className="text-xs text-gray-500 font-medium mb-1">{t('Participants')}</p>
+                          <p className="text-sm font-semibold text-gray-900">{booking.participants} {booking.participants === 1 ? t('Person') : t('People')}</p>
                         </div>
                         <div>
-                          <p className="text-xs text-gray-500 font-medium mb-1">Total Price</p>
+                          <p className="text-xs text-gray-500 font-medium mb-1">{t('Total Price')}</p>
                           <p className="text-lg font-bold text-teal-600">${booking.totalPrice}</p>
                         </div>
                       </div>
@@ -416,7 +422,7 @@ const UserDashboard: React.FC = () => {
                             <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                             </svg>
-                            Pay Now
+                            {t('Pay Now')}
                           </button>
                         )}
                         {booking.status === 'pending' && booking.paymentStatus !== 'paid' && (
@@ -427,7 +433,7 @@ const UserDashboard: React.FC = () => {
                             <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                             </svg>
-                            Cancel
+                            {t('Cancel')}
                           </button>
                         )}
                         {booking.paymentStatus === 'paid' && !booking.hasReview &&  (
@@ -438,7 +444,7 @@ const UserDashboard: React.FC = () => {
                             <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                             </svg>
-                            Leave Review
+                            {t('Leave Review')}
                           </button>
                         )}
                         {booking.paymentStatus === 'paid' && booking.hasReview && (
@@ -446,7 +452,7 @@ const UserDashboard: React.FC = () => {
                             <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Review Submitted
+                            {t('Review Submitted')}
                           </div>
                         )}
                         <button
@@ -457,7 +463,7 @@ const UserDashboard: React.FC = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                           </svg>
-                          View Tour
+                          {t('View Tour')}
                         </button>
                       </div>
                     </div>

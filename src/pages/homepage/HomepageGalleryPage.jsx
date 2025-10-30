@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react'
 import Menu from '../../components/homepage/Menu'
 import Footer from '../../components/homepage/Footer'
 import { Link } from 'react-router-dom'
+import LanguageSelector from '../../components/LanguageSelector'
+import { useLanguage } from '../../contexts/LanguageContext'
 
 const HomepageGalleryPage = () => {
+  const { t } = useLanguage()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [galleryItems, setGalleryItems] = useState([])
   const [loading, setLoading] = useState(true)
@@ -68,7 +71,7 @@ const HomepageGalleryPage = () => {
               <span className="w-[18px] h-[2px] bg-white" />
               <span className="w-[18px] h-[2px] bg-white" />
             </span>
-            MENU
+            {t('Menu')}
           </button>
           <div className="w-px h-5 bg-white/30" />
         </div>
@@ -79,6 +82,7 @@ const HomepageGalleryPage = () => {
             className="mt-2 h-24 w-56"
           />
         </div>
+        <div className="flex items-center gap-4">{!isMenuOpen && <LanguageSelector />}</div>
       </nav>
 
       {/* Full Width Hero Image with overlay text - gallery[0] */}
@@ -91,7 +95,7 @@ const HomepageGalleryPage = () => {
           />
           <div className="relative z-[2] text-center p-8 max-w-[800px]">
             <h1 className="font-['Playfair_Display'] text-[clamp(2rem,5vw,4rem)] font-normal text-white leading-[1.2] drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)] m-0">
-              Discover Timeless Landscapes
+              {t('Discover Timeless Landscapes')}
             </h1>
           </div>
         </section>
@@ -160,7 +164,7 @@ const HomepageGalleryPage = () => {
       <section className="w-full py-16" style={{ backgroundColor: '#ffe020' }}>
         <div className="max-w-[1400px] mx-auto grid grid-cols-3 gap-8 px-12">
           {loading && (
-            <div className="col-span-3 text-center font-['Inter'] text-sm text-[#666]">Loading gallery...</div>
+            <div className="col-span-3 text-center font-['Inter'] text-sm text-[#666]">{t('Loading gallery...')}</div>
           )}
           {error && (
             <div className="col-span-3 text-center font-['Inter'] text-sm text-red-600">{error}</div>

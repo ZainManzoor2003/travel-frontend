@@ -2,17 +2,17 @@ import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { useAuth } from '../../contexts/AuthContext'
+import { useLanguage } from '../../contexts/LanguageContext'
 
 const Menu = ({ isOpen, onClose }) => {
   const { user, isLoggedIn } = useAuth()
+  const { t } = useLanguage()
   const menuOverlayRef = useRef(null)
   const menuContainerRef = useRef(null)
   const leftPanelRef = useRef(null)
   const rightPanelRef = useRef(null)
   const menuItemsRef = useRef([])
   const topNavRef = useRef(null)
-  const bottomSectionRef = useRef(null)
-  const ctaButtonRef = useRef(null)
 
   useEffect(() => {
     if (isOpen) {
@@ -59,19 +59,7 @@ const Menu = ({ isOpen, onClose }) => {
         '-=0.3'
       )
       
-      tl.fromTo(
-        bottomSectionRef.current,
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
-        '-=0.4'
-      )
-      
-      tl.fromTo(
-        ctaButtonRef.current,
-        { scale: 0.8, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.7)' },
-        '-=0.3'
-      )
+      // Bottom section removed
     }
   }, [isOpen])
 
@@ -111,7 +99,7 @@ const Menu = ({ isOpen, onClose }) => {
           {/* Top Navigation */}
           <div className="flex items-center gap-5 mb-20" ref={topNavRef}>
             <button className="flex items-center gap-[15px] bg-none border-none cursor-pointer font-['Arial'] text-sm font-normal text-[#333] transition-opacity duration-300 hover:opacity-70" onClick={handleClose}>
-              <span className="text-sm tracking-[1px]">CLOSE</span>
+              <span className="text-sm tracking-[1px]">{t('CLOSE')}</span>
               <div className="flex flex-col gap-[3px] w-5 h-4">
                 <span className="w-full h-[2px] bg-[#333] transition-all duration-300 rotate-45 translate-x-[6px] translate-y-[6px]"></span>
                 <span className="w-full h-[2px] bg-[#333] transition-all duration-300 -rotate-45 translate-x-[6px] -translate-y-[6px]"></span>
@@ -130,7 +118,7 @@ const Menu = ({ isOpen, onClose }) => {
                     <path d="M9 22V12H15V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <span>Home</span>
+                <span>{t('Home')}</span>
               </Link>
               <Link to="/packages" className="font-['Arial'] text-2xl font-medium text-[#333] no-underline leading-[1.2] transition-all duration-300 relative flex items-center gap-[15px] py-[5px] hover:text-secondary-600 hover:translate-x-[10px] after:content-[''] after:absolute after:bottom-[5px] after:left-0 after:w-0 after:h-[2px] after:bg-secondary-600 after:transition-all after:duration-300 hover:after:w-full" onClick={handleClose} ref={(el) => (menuItemsRef.current[1] = el)}>
                 <div className="flex items-center justify-center w-6 h-6 flex-shrink-0">
@@ -139,7 +127,7 @@ const Menu = ({ isOpen, onClose }) => {
                     <path d="M1 10H23" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <span>Packages</span>
+                <span>{t('Packages')}</span>
               </Link>
               <Link to="/gallery" className="font-['Arial'] text-2xl font-medium text-[#333] no-underline leading-[1.2] transition-all duration-300 relative flex items-center gap-[15px] py-[5px] hover:text-secondary-600 hover:translate-x-[10px] after:content-[''] after:absolute after:bottom-[5px] after:left-0 after:w-0 after:h-[2px] after:bg-secondary-600 after:transition-all after:duration-300 hover:after:w-full" onClick={handleClose} ref={(el) => (menuItemsRef.current[2] = el)}>
                 <div className="flex items-center justify-center w-6 h-6 flex-shrink-0">
@@ -149,7 +137,7 @@ const Menu = ({ isOpen, onClose }) => {
                     <polyline points="21,15 16,10 5,21" stroke="currentColor" strokeWidth="2"/>
                   </svg>
                 </div>
-                <span>Gallery</span>
+                <span>{t('Gallery')}</span>
               </Link>
               <Link to="/blog" className="font-['Arial'] text-2xl font-medium text-secondary-600 no-underline leading-[1.2] transition-all duration-300 relative flex items-center gap-[15px] py-[5px] hover:text-secondary-700 hover:translate-x-[10px] after:content-[''] after:absolute after:bottom-[5px] after:left-0 after:w-0 after:h-[2px] after:bg-secondary-600 after:transition-all after:duration-300 hover:after:w-full" onClick={handleClose} ref={(el) => (menuItemsRef.current[3] = el)}>
                 <div className="flex items-center justify-center w-6 h-6 flex-shrink-0">
@@ -159,7 +147,7 @@ const Menu = ({ isOpen, onClose }) => {
                     <line x1="12" y1="17" x2="12" y2="21" stroke="currentColor" strokeWidth="2"/>
                   </svg>
                 </div>
-                <span>Blog</span>
+                <span>{t('Blog')}</span>
               </Link>
               <Link to="/contact" className="font-['Arial'] text-2xl font-medium text-[#333] no-underline leading-[1.2] transition-all duration-300 relative flex items-center gap-[15px] py-[5px] hover:text-secondary-600 hover:translate-x-[10px] after:content-[''] after:absolute after:bottom-[5px] after:left-0 after:w-0 after:h-[2px] after:bg-secondary-600 after:transition-all after:duration-300 hover:after:w-full" onClick={handleClose} ref={(el) => (menuItemsRef.current[4] = el)}>
                 <div className="flex items-center justify-center w-6 h-6 flex-shrink-0">
@@ -168,7 +156,7 @@ const Menu = ({ isOpen, onClose }) => {
                     <polyline points="22,6 12,13 2,6" stroke="currentColor" strokeWidth="2"/>
                   </svg>
                 </div>
-                <span>Contact</span>
+                <span>{t('Contact')}</span>
               </Link>
               {isLoggedIn && (
                 <Link to={user?.role === 'admin' ? '/dashboard' : '/my-dashboard'} className="font-['Arial'] text-2xl font-medium text-[#333] no-underline leading-[1.2] transition-all duration-300 relative flex items-center gap-[15px] py-[5px] hover:text-secondary-600 hover:translate-x-[10px] after:content-[''] after:absolute after:bottom-[5px] after:left-0 after:w-0 after:h-[2px] after:bg-secondary-600 after:transition-all after:duration-300 hover:after:w-full" onClick={handleClose} ref={(el) => (menuItemsRef.current[6] = el)}>
@@ -180,7 +168,7 @@ const Menu = ({ isOpen, onClose }) => {
                       <rect x="3" y="14" width="7" height="7" stroke="currentColor" strokeWidth="2"/>
                     </svg>
                   </div>
-                  <span>Dashboard</span>
+                  <span>{t('Dashboard')}</span>
                 </Link>
               )}
               <Link to="/login" className="font-['Arial'] text-2xl font-medium text-[#333] no-underline leading-[1.2] transition-all duration-300 relative flex items-center gap-[15px] py-[5px] hover:text-secondary-600 hover:translate-x-[10px] after:content-[''] after:absolute after:bottom-[5px] after:left-0 after:w-0 after:h-[2px] after:bg-secondary-600 after:transition-all after:duration-300 hover:after:w-full" onClick={handleClose} ref={(el) => (menuItemsRef.current[isLoggedIn ? 7 : 5] = el)}>
@@ -191,7 +179,7 @@ const Menu = ({ isOpen, onClose }) => {
                     <line x1="15" y1="12" x2="3" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <span>Login</span>
+                <span>{t('Login')}</span>
               </Link>
             </div>
             
@@ -199,52 +187,7 @@ const Menu = ({ isOpen, onClose }) => {
             </div>
           </div>
 
-          {/* Bottom Section */}
-          <div className="flex justify-between items-end mt-[60px]" ref={bottomSectionRef}>
-            <div className="flex-1">
-              <div className="flex items-center gap-[15px]">
-                <div className="text-[#333]">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L8 6L12 10L16 6L12 2Z" fill="currentColor"/>
-                    <path d="M12 10L8 14L12 18L16 14L12 10Z" fill="currentColor"/>
-                    <path d="M12 18L8 22L12 24L16 22L12 18Z" fill="currentColor"/>
-                  </svg>
-                </div>
-                <div className="flex flex-col leading-none">
-                  <span className="font-['Arial'] text-sm font-semibold text-[#333] tracking-[1px]">RELAIS</span>
-                  <span className="font-['Arial'] text-xs font-normal text-[#666] tracking-[1px]">& CHATEAUX</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex-1 text-right">
-              <h3 className="font-['Arial'] text-sm font-semibold text-[#333] mb-[15px] tracking-[1px]">Travel Beyond BRAND</h3>
-              <p className="font-['Arial'] text-sm text-[#666] mb-[5px] tracking-[0.5px]">INFO@Travel Beyond.COM</p>
-              <p className="font-['Arial'] text-sm text-[#666] mb-5 tracking-[0.5px]">+(56-2) 2233-9641</p>
-              
-              <div className="flex gap-[15px] justify-end">
-                <a href="#" className="text-[#666] transition-colors duration-300 hover:text-[#333]" aria-label="Instagram">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" strokeWidth="2"/>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke="currentColor" strokeWidth="2"/>
-                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  </svg>
-                </a>
-                <a href="#" className="text-[#666] transition-colors duration-300 hover:text-[#333]" aria-label="LinkedIn">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" strokeWidth="2"/>
-                    <rect x="2" y="9" width="4" height="12" stroke="currentColor" strokeWidth="2"/>
-                    <circle cx="4" cy="4" r="2" stroke="currentColor" strokeWidth="2"/>
-                  </svg>
-                </a>
-                <a href="#" className="text-[#666] transition-colors duration-300 hover:text-[#333]" aria-label="Spotify">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 14.36c-.2.32-.63.42-.95.22-2.58-1.58-5.83-1.93-9.64-1.06-.38.08-.76-.18-.84-.56-.08-.38.18-.76.56-.84 4.2-.95 7.8-.55 10.7 1.23.33.2.43.63.22.95z" fill="currentColor"/>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
+          {/* Bottom Section removed */}
         </div>
 
         {/* Right Panel - Scenic Image */}
