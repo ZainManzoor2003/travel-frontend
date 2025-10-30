@@ -8,11 +8,15 @@ import Swal from 'sweetalert2';
 interface Tour {
   _id: string;
   title: string;
+  title_es?: string;
   description: string;
+  description_es?: string;
   price: number;
   duration: string;
   location: string;
+  location_es?: string;
   category: string;
+  category_es?: string;
   rating: number;
   image: string;
   images?: string[];
@@ -24,9 +28,13 @@ interface Tour {
   updatedAt: string;
   // Optional UI-only fields (no backend/schema required)
   highlights?: string[];
+  highlights_es?: string[];
   included?: string[];
+  included_es?: string[];
   notIncluded?: string[];
+  notIncluded_es?: string[];
   itinerary?: Array<{ title: string; description: string; points: string[] }>;
+  itinerary_es?: Array<{ title_es?: string; description_es?: string; points_es?: string[] }>;  
 }
 
 const ToursManagement = () => {
@@ -50,12 +58,20 @@ const ToursManagement = () => {
 
   // Local inputs for bullet sections (UI only)
   const [newHighlight, setNewHighlight] = useState('');
+  const [newHighlightEs, setNewHighlightEs] = useState('');
   const [newIncluded, setNewIncluded] = useState('');
+  const [newIncludedEs, setNewIncludedEs] = useState('');
   const [newNotIncluded, setNewNotIncluded] = useState('');
+  const [newNotIncludedEs, setNewNotIncludedEs] = useState('');
   const [newItineraryDayTitle, setNewItineraryDayTitle] = useState('');
   const [newItineraryDayDesc, setNewItineraryDayDesc] = useState('');
   const [newItineraryPoint, setNewItineraryPoint] = useState('');
   const [draftItineraryPoints, setDraftItineraryPoints] = useState<string[]>([]);
+  // Spanish itinerary state
+  const [newItineraryDayTitleEs, setNewItineraryDayTitleEs] = useState('');
+  const [newItineraryDayDescEs, setNewItineraryDayDescEs] = useState('');
+  const [newItineraryPointEs, setNewItineraryPointEs] = useState('');
+  const [draftItineraryPointsEs, setDraftItineraryPointsEs] = useState<string[]>([]);
 
   const API_BASE_URL = (import.meta as any).env?.VITE_API_BASE_URL || 'https://travel-backend-psi.vercel.app';
 
@@ -217,11 +233,15 @@ const ToursManagement = () => {
     setSelectedTour(null);
     setFormData({
       title: '',
+      title_es: '',
       description: '',
+      description_es: '',
       price: 0,
       duration: '',
       location: '',
+      location_es: '',
       category: 'adventure',
+      category_es: '',
       rating: 0,
       image: '',
       images: [],
@@ -230,8 +250,11 @@ const ToursManagement = () => {
       maxParticipants: 10,
       difficulty: 'easy',
       highlights: [],
+      highlights_es: [],
       included: [],
+      included_es: [],
       notIncluded: [],
+      notIncluded_es: [],
       itinerary: []
     });
     setUploadedImages([]);
@@ -296,6 +319,37 @@ const ToursManagement = () => {
     const next = [...(formData.itinerary || [])];
     next.splice(idx, 1);
     setFormData({ ...formData, itinerary: next });
+  };
+
+  // Spanish itinerary helpers
+  const addItineraryPointToDraftEs = () => {
+    if (!newItineraryPointEs.trim()) return;
+    setDraftItineraryPointsEs([...draftItineraryPointsEs, newItineraryPointEs.trim()]);
+    setNewItineraryPointEs('');
+  };
+
+  const removeItineraryPointFromDraftEs = (value: string) => {
+    setDraftItineraryPointsEs(draftItineraryPointsEs.filter((p) => p !== value));
+  };
+
+  const addItineraryDayEs = () => {
+    if (!newItineraryDayTitleEs.trim()) return;
+    const newDayEs = {
+      title_es: newItineraryDayTitleEs.trim(),
+      description_es: newItineraryDayDescEs.trim(),
+      points_es: draftItineraryPointsEs,
+    };
+    setFormData({ ...formData, itinerary_es: [...(formData.itinerary_es || []), newDayEs] });
+    setNewItineraryDayTitleEs('');
+    setNewItineraryDayDescEs('');
+    setDraftItineraryPointsEs([]);
+    setNewItineraryPointEs('');
+  };
+
+  const removeItineraryDayEs = (idx: number) => {
+    const next = [...(formData.itinerary_es || [])];
+    next.splice(idx, 1);
+    setFormData({ ...formData, itinerary_es: next });
   };
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -444,11 +498,15 @@ const ToursManagement = () => {
 
     const payload = {
       title: formData.title,
+      title_es: formData.title_es,
       description: formData.description,
+      description_es: formData.description_es,
       price: formData.price,
       duration: formData.duration,
       location: formData.location,
+      location_es: formData.location_es,
       category: formData.category,
+      category_es: formData.category_es,
       rating: formData.rating || 0,
       image: mainImage,
       images: allImages,
@@ -457,9 +515,13 @@ const ToursManagement = () => {
       maxParticipants: formData.maxParticipants || 10,
       difficulty: (formData.difficulty as Tour['difficulty']) || 'easy',
       highlights: formData.highlights || [],
+      highlights_es: formData.highlights_es || [],
       included: formData.included || [],
+      included_es: formData.included_es || [],
       notIncluded: formData.notIncluded || [],
-      itinerary: formData.itinerary || []
+      notIncluded_es: formData.notIncluded_es || [],
+      itinerary: formData.itinerary || [],
+      itinerary_es: formData.itinerary_es || []
     };
 
     try {
@@ -735,6 +797,15 @@ const ToursManagement = () => {
                   />
                 </div>
                 <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Title (Spanish)</label>
+                  <input
+                    type="text"
+                    value={formData.title_es || ''}
+                    onChange={(e) => setFormData({ ...formData, title_es: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                  />
+                </div>
+                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Price</label>
                   <input
                     type="number"
@@ -762,6 +833,15 @@ const ToursManagement = () => {
                   />
                 </div>
                 <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Location (Spanish)</label>
+                  <input
+                    type="text"
+                    value={formData.location_es || ''}
+                    onChange={(e) => setFormData({ ...formData, location_es: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                  />
+                </div>
+                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
                   <select
                     value={formData.category || 'adventure'}
@@ -773,6 +853,15 @@ const ToursManagement = () => {
                     <option value="relaxation">Relaxation</option>
                     <option value="nature">Nature</option>
                   </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Category (Spanish)</label>
+                  <input
+                    type="text"
+                    value={formData.category_es || ''}
+                    onChange={(e) => setFormData({ ...formData, category_es: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Difficulty</label>
@@ -818,6 +907,15 @@ const ToursManagement = () => {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                 />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Description (Spanish)</label>
+                <textarea
+                  value={formData.description_es || ''}
+                  onChange={(e) => setFormData({ ...formData, description_es: e.target.value })}
+                  rows={4}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                />
+              </div>
 
               {/* Tour Highlights */}
               <div className="space-y-3">
@@ -840,6 +938,26 @@ const ToursManagement = () => {
                     onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addHighlight())}
                   />
                   <button onClick={addHighlight} className="px-4 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#15803d]">Add</button>
+                </div>
+                {/* Spanish Highlights */}
+                <div className="flex flex-wrap gap-2">
+                  {(formData.highlights_es || []).map((h, idx) => (
+                    <span key={idx} className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-secondary-50 text-[#15803d]">
+                      {h}
+                      <button onClick={() => setFormData({ ...formData, highlights_es: (formData.highlights_es || []).filter(x => x !== h) })} className="ml-1 text-[#22c55e] hover:text-[#15803d]">×</button>
+                    </span>
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={newHighlightEs}
+                    onChange={(e) => setNewHighlightEs(e.target.value)}
+                    placeholder="Add Spanish highlight"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                    onKeyDown={(e) => { if (e.key === 'Enter' && newHighlightEs.trim()) { e.preventDefault(); setFormData({ ...formData, highlights_es: [...(formData.highlights_es || []), newHighlightEs.trim()] }); setNewHighlightEs(''); } }}
+                  />
+                  <button onClick={() => { if (newHighlightEs.trim()) { setFormData({ ...formData, highlights_es: [...(formData.highlights_es || []), newHighlightEs.trim()] }); setNewHighlightEs(''); } }} className="px-4 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#15803d]">Add ES</button>
                 </div>
               </div>
 
@@ -866,6 +984,26 @@ const ToursManagement = () => {
                     />
                     <button onClick={addIncluded} className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Add</button>
                   </div>
+                  {/* Spanish Included */}
+                  <div className="flex flex-wrap gap-2">
+                    {(formData.included_es || []).map((i, idx) => (
+                      <span key={idx} className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">
+                        {i}
+                        <button onClick={() => setFormData({ ...formData, included_es: (formData.included_es || []).filter(x => x !== i) })} className="ml-1 text-green-600 hover:text-green-800">×</button>
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={newIncludedEs}
+                      onChange={(e) => setNewIncludedEs(e.target.value)}
+                      placeholder="Add included (Spanish)"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                      onKeyDown={(e) => { if (e.key === 'Enter' && newIncludedEs.trim()) { e.preventDefault(); setFormData({ ...formData, included_es: [...(formData.included_es || []), newIncludedEs.trim()] }); setNewIncludedEs(''); } }}
+                    />
+                    <button onClick={() => { if (newIncludedEs.trim()) { setFormData({ ...formData, included_es: [...(formData.included_es || []), newIncludedEs.trim()] }); setNewIncludedEs(''); } }} className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Add ES</button>
+                  </div>
                 </div>
 
                 <div className="space-y-3">
@@ -888,6 +1026,26 @@ const ToursManagement = () => {
                       onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addNotIncluded())}
                     />
                     <button onClick={addNotIncluded} className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Add</button>
+                  </div>
+                  {/* Spanish Not Included */}
+                  <div className="flex flex-wrap gap-2">
+                    {(formData.notIncluded_es || []).map((i, idx) => (
+                      <span key={idx} className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-red-100 text-red-800">
+                        {i}
+                        <button onClick={() => setFormData({ ...formData, notIncluded_es: (formData.notIncluded_es || []).filter(x => x !== i) })} className="ml-1 text-red-600 hover:text-red-800">×</button>
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={newNotIncludedEs}
+                      onChange={(e) => setNewNotIncludedEs(e.target.value)}
+                      placeholder="Add not-included (Spanish)"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                      onKeyDown={(e) => { if (e.key === 'Enter' && newNotIncludedEs.trim()) { e.preventDefault(); setFormData({ ...formData, notIncluded_es: [...(formData.notIncluded_es || []), newNotIncludedEs.trim()] }); setNewNotIncludedEs(''); } }}
+                    />
+                    <button onClick={() => { if (newNotIncludedEs.trim()) { setFormData({ ...formData, notIncluded_es: [...(formData.notIncluded_es || []), newNotIncludedEs.trim()] }); setNewNotIncludedEs(''); } }} className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Add ES</button>
                   </div>
                 </div>
               </div>
@@ -972,6 +1130,90 @@ const ToursManagement = () => {
                     )}
                     <div className="pt-2">
                       <button onClick={addItineraryDay} className="px-4 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#15803d]">Add Day</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Daily Itinerary (Spanish) */}
+              <div className="space-y-4">
+                <h4 className="text-md font-semibold text-gray-900">Daily Itinerary (Spanish)</h4>
+                {(formData.itinerary_es || []).length > 0 && (
+                  <div className="space-y-3">
+                    {(formData.itinerary_es || []).map((day: any, idx: number) => (
+                      <div key={idx} className="border border-gray-200 rounded-lg p-4">
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <div className="flex items-center gap-2 text-[#22c55e] font-semibold">
+                              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-secondary-50">{idx + 1}</span>
+                              <span>{day.title_es}</span>
+                            </div>
+                            {day.description_es && (
+                              <p className="text-sm text-gray-600 mt-1">{day.description_es}</p>
+                            )}
+                          </div>
+                          <button onClick={() => removeItineraryDayEs(idx)} className="text-red-600 hover:text-red-800 text-sm">Remove</button>
+                        </div>
+                        {day.points_es?.length > 0 && (
+                          <ul className="list-disc pl-6 mt-2 text-sm text-gray-700 space-y-1">
+                            {day.points_es.map((p: string, i: number) => (<li key={i}>{p}</li>))}
+                          </ul>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Draft new day composer ES */}
+                <div className="border border-dashed border-gray-300 rounded-lg p-4 space-y-3">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Day Title (ES)</label>
+                      <input
+                        type="text"
+                        value={newItineraryDayTitleEs}
+                        onChange={(e) => setNewItineraryDayTitleEs(e.target.value)}
+                        placeholder="e.g., Llegada a destino"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Short Description (ES)</label>
+                      <input
+                        type="text"
+                        value={newItineraryDayDescEs}
+                        onChange={(e) => setNewItineraryDayDescEs(e.target.value)}
+                        placeholder="e.g., Cena de bienvenida"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">Points for this day (ES)</label>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={newItineraryPointEs}
+                        onChange={(e) => setNewItineraryPointEs(e.target.value)}
+                        placeholder="e.g., Recogida en aeropuerto"
+                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                        onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addItineraryPointToDraftEs())}
+                      />
+                      <button onClick={addItineraryPointToDraftEs} className="px-4 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#15803d]">Add Point ES</button>
+                    </div>
+                    {draftItineraryPointsEs.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {draftItineraryPointsEs.map((p, i) => (
+                          <span key={i} className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-secondary-50 text-[#15803d]">
+                            {p}
+                            <button onClick={() => removeItineraryPointFromDraftEs(p)} className="ml-1 text-[#22c55e] hover:text-[#15803d]">×</button>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    <div className="pt-2">
+                      <button onClick={addItineraryDayEs} className="px-4 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#15803d]">Add Day ES</button>
                     </div>
                   </div>
                 </div>

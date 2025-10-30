@@ -8,11 +8,16 @@ import { useAuth } from '../../contexts/AuthContext';
 interface BlogPost {
   _id: string;
   title: string;
+  title_es?: string;
   excerpt: string;
+  excerpt_es?: string;
   content: string;
+  content_es?: string;
   author: string;
+  author_es?: string;
   category: string;
   tags: string[];
+  tags_es?: string[];
   isFeatured: boolean;
   status: 'published' | 'draft' | 'archived';
   publishedAt: string | null;
@@ -22,6 +27,7 @@ interface BlogPost {
   featuredImage: string;
   readTime: string;
   slug: string;
+  slug_es?: string;
 }
 
 const BlogManagement = () => {
@@ -39,6 +45,7 @@ const BlogManagement = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [formData, setFormData] = useState<Partial<BlogPost>>({});
   const [newTag, setNewTag] = useState('');
+  const [newTagEs, setNewTagEs] = useState('');
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -289,11 +296,16 @@ const BlogManagement = () => {
     setSelectedPost(null);
     setFormData({
       title: '',
+      title_es: '',
       excerpt: '',
+      excerpt_es: '',
       content: '',
+      content_es: '',
       author: 'Admin',
+      author_es: '',
       category: 'destinations',
       tags: [],
+      tags_es: [],
       isFeatured: false,
       status: 'draft',
       readTime: '5 min read',
@@ -816,11 +828,29 @@ const BlogManagement = () => {
                   />
                 </div>
                 <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Title (Spanish)</label>
+                  <input
+                    type="text"
+                    value={formData.title_es || ''}
+                    onChange={(e) => setFormData({ ...formData, title_es: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                  />
+                </div>
+                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Author</label>
                   <input
                     type="text"
                     value={formData.author || ''}
                     onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Author (Spanish)</label>
+                  <input
+                    type="text"
+                    value={formData.author_es || ''}
+                    onChange={(e) => setFormData({ ...formData, author_es: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                   />
                 </div>
@@ -949,12 +979,30 @@ const BlogManagement = () => {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                 />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Excerpt (Spanish)</label>
+                <textarea
+                  value={formData.excerpt_es || ''}
+                  onChange={(e) => setFormData({ ...formData, excerpt_es: e.target.value })}
+                  rows={3}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                />
+              </div>
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Content</label>
                 <textarea
                   value={formData.content || ''}
                   onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                  rows={8}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Content (Spanish)</label>
+                <textarea
+                  value={formData.content_es || ''}
+                  onChange={(e) => setFormData({ ...formData, content_es: e.target.value })}
                   rows={8}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                 />
@@ -994,6 +1042,46 @@ const BlogManagement = () => {
                     Add
                   </button>
                 </div>
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Tags (Spanish)</label>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {formData.tags_es?.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-secondary-50 text-[#15803d]"
+                    >
+                      {tag}
+                      <button
+                        onClick={() => setFormData({ ...formData, tags_es: (formData.tags_es || []).filter(t => t !== tag) })}
+                        className="ml-1 text-[#22c55e] hover:text-[#15803d]"
+                      >
+                        ×
+                      </button>
+                    </span>
+                  ))}
+                </div>
+                <div className="flex space-x-2">
+                  <input
+                    type="text"
+                    value={newTagEs}
+                    onChange={(e) => setNewTagEs(e.target.value)}
+                    placeholder="Add a Spanish tag"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter' && newTagEs.trim()) {
+                        setFormData({ ...formData, tags_es: [...(formData.tags_es || []), newTagEs.trim()] });
+                        setNewTagEs('');
+                      }
+                    }}
+                  />
+                  <button
+                    onClick={() => { if (newTagEs.trim()) { setFormData({ ...formData, tags_es: [...(formData.tags_es || []), newTagEs.trim()] }); setNewTagEs(''); } }}
+                    className="px-4 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#15803d] transition-colors duration-200"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
               </div>
               
               <div className="flex items-center space-x-4">

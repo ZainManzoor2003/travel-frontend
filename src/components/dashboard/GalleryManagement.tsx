@@ -8,15 +8,20 @@ import Swal from 'sweetalert2';
 interface GalleryItem {
   _id: string;
   title: string;
+  title_es?: string;
   description: string;
+  description_es?: string;
   imageUrl: string;
   category: string;
   tags: string[];
+  tags_es?: string[];
   featured: boolean;
   status: 'active' | 'inactive';
   uploadedAt: string;
   uploadedBy: string;
+  uploadedBy_es?: string;
   alt: string;
+  alt_es?: string;
   viewCount: number;
   createdAt: string;
   updatedAt: string;
@@ -37,6 +42,7 @@ const GalleryManagement = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [formData, setFormData] = useState<Partial<GalleryItem>>({});
   const [newTag, setNewTag] = useState('');
+  const [newTagEs, setNewTagEs] = useState('');
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -262,14 +268,19 @@ const GalleryManagement = () => {
     setSelectedItem(null);
     const initialFormData: Partial<GalleryItem> = {
       title: '',
+      title_es: '',
       description: '',
+      description_es: '',
       imageUrl: '',
       category: 'nature',
       tags: [],
+      tags_es: [],
       featured: false,
       status: 'active' as GalleryItem['status'],
       uploadedBy: 'Admin',
-      alt: ''
+      uploadedBy_es: '',
+      alt: '',
+      alt_es: ''
     };
     console.log('Initializing form data:', initialFormData);
     setFormData(initialFormData);
@@ -464,14 +475,19 @@ const GalleryManagement = () => {
 
         const galleryData = {
           title: formData.title,
+          title_es: formData.title_es,
           description: formData.description,
+          description_es: formData.description_es,
           imageUrl: imageUrl,
           category: formData.category,
           tags: formData.tags || [],
+          tags_es: formData.tags_es || [],
           featured: formData.featured || false,
           status: formData.status || 'active',
           uploadedBy: formData.uploadedBy || 'Admin',
-          alt: formData.alt
+          uploadedBy_es: formData.uploadedBy_es,
+          alt: formData.alt,
+          alt_es: formData.alt_es
         };
 
         console.log('Sending gallery data:', galleryData);
@@ -826,6 +842,15 @@ const GalleryManagement = () => {
                   />
                 </div>
                 <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Title (Spanish)</label>
+                  <input
+                    type="text"
+                    value={formData.title_es || ''}
+                    onChange={(e) => setFormData({ ...formData, title_es: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                  />
+                </div>
+                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
                   <select
                     value={formData.category || 'nature'}
@@ -931,6 +956,15 @@ const GalleryManagement = () => {
                   />
                 </div>
                 <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Alt Text (Spanish)</label>
+                  <input
+                    type="text"
+                    value={formData.alt_es || ''}
+                    onChange={(e) => setFormData({ ...formData, alt_es: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                  />
+                </div>
+                <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
                   <select
                     value={formData.status || 'inactive'}
@@ -951,6 +985,15 @@ const GalleryManagement = () => {
                     console.log('Description changed:', e.target.value);
                     setFormData({ ...formData, description: e.target.value });
                   }}
+                  rows={3}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Description (Spanish)</label>
+                <textarea
+                  value={formData.description_es || ''}
+                  onChange={(e) => setFormData({ ...formData, description_es: e.target.value })}
                   rows={3}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
                 />
@@ -990,6 +1033,42 @@ const GalleryManagement = () => {
                     Add
                   </button>
                 </div>
+              {/* Spanish Tags */}
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Tags (Spanish)</label>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {formData.tags_es?.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-secondary-50 text-[#15803d]"
+                    >
+                      {tag}
+                      <button
+                        onClick={() => setFormData({ ...formData, tags_es: (formData.tags_es || []).filter(t => t !== tag) })}
+                        className="ml-1 text-[#22c55e] hover:text-[#15803d]"
+                      >
+                        ×
+                      </button>
+                    </span>
+                  ))}
+                </div>
+                <div className="flex space-x-2">
+                  <input
+                    type="text"
+                    value={newTagEs}
+                    onChange={(e) => setNewTagEs(e.target.value)}
+                    placeholder="Add a Spanish tag"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22c55e] focus:border-[#22c55e]"
+                    onKeyPress={(e) => { if (e.key === 'Enter' && newTagEs.trim()) { setFormData({ ...formData, tags_es: [...(formData.tags_es || []), newTagEs.trim()] }); setNewTagEs(''); } }}
+                  />
+                  <button
+                    onClick={() => { if (newTagEs.trim()) { setFormData({ ...formData, tags_es: [...(formData.tags_es || []), newTagEs.trim()] }); setNewTagEs(''); } }}
+                    className="px-4 py-2 bg-[#22c55e] text-white rounded-lg hover:bg-[#15803d] transition-colors duration-200"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
               </div>
               
               <div className="flex items-center space-x-4">
