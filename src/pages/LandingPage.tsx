@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import SEO from '../components/SEO';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import LazyImage from '../components/LazyImage';
@@ -346,6 +347,35 @@ const LandingPage = () => {
 
   return (
     <div  className="min-h-screen">
+      <SEO
+        title="Travel Beyond Tours – Discover Your Next Adventure"
+        description="Explore breathtaking destinations, curated tours, and unforgettable experiences. Book your next adventure with Travel Beyond Tours."
+        url={typeof window !== 'undefined' ? window.location.href : undefined}
+        image="/Logo.webp"
+        type="website"
+        canonical={typeof window !== 'undefined' ? window.location.origin + '/' : undefined}
+        locale="en_US"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Travel Beyond Tours",
+            "url": typeof window !== 'undefined' ? window.location.origin : undefined,
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": typeof window !== 'undefined' ? window.location.origin + '/packages?search={search_term_string}' : undefined,
+              "query-input": "required name=search_term_string"
+            }
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Travel Beyond Tours",
+            "url": typeof window !== 'undefined' ? window.location.origin : undefined,
+            "logo": "/Logo.webp"
+          }
+        ]}
+      />
       {/* Hero Section */}
 
 

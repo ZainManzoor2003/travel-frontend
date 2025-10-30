@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import SEO from '../components/SEO';
 import GalleryItem from '../components/GalleryItem';
 import Modal from '../components/Modal';
 import CountUp from 'react-countup';
@@ -233,6 +234,28 @@ const GalleryPage = () => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#ffe020' }}>
+      <SEO
+        title="Travel Gallery – Travel Beyond Tours"
+        description="Explore our curated travel gallery featuring stunning destinations and moments from our tours."
+        url={typeof window !== 'undefined' ? window.location.href : undefined}
+        image="/Logo.webp"
+        type="CollectionPage"
+        canonical={typeof window !== 'undefined' ? window.location.href : undefined}
+        locale="en_US"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "Travel Gallery",
+          "url": typeof window !== 'undefined' ? window.location.href : undefined,
+          "hasPart": (filteredImages || []).slice(0, 12).map((img) => ({
+            "@type": "ImageObject",
+            "contentUrl": img.src,
+            "name": img.title || img.alt,
+            "thumbnail": img.src,
+            "caption": img.alt
+          }))
+        }}
+      />
       {/* Hero Section */}
       <section id="yy"
         ref={sectionRefs.hero}
