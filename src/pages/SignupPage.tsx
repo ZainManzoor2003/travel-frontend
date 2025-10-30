@@ -4,8 +4,11 @@ import { FiLogIn } from 'react-icons/fi';
 import Swal from 'sweetalert2';
 import { useAuth } from '../contexts/AuthContext';
 import Menu from '../components/homepage/Menu';
+import LanguageSelector from '../components/LanguageSelector';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Signup = () => {
+  const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
@@ -181,9 +184,10 @@ const Signup = () => {
               <span className="w-[18px] h-[2px] bg-white" />
               <span className="w-[18px] h-[2px] bg-white" />
             </span>
-            MENU
+            {t('Menu')}
           </button>
           <div className="w-px h-5 bg-white/30" />
+          <LanguageSelector />
         </div>
         <div className="absolute left-1/2 -translate-x-1/2">
           <img 
@@ -207,8 +211,8 @@ const Signup = () => {
         
         <div className="absolute inset-0 bg-black/55"></div>
         <div className="relative z-10 w-full max-w-[520px] mx-auto bg-white rounded-[10px] shadow-[0_20px_60px_rgba(0,0,0,0.15)] p-6 sm:p-9 mt-16">
-          <h1 className="font-['Playfair_Display'] text-[clamp(1.75rem,4vw,2.25rem)] font-normal text-[#2c2c2c] text-center mb-4">Create Account</h1>
-          <p className="font-['Inter'] text-sm text-[#666] text-center mb-6">Start crafting your fully tailor‑made experience</p>
+          <h1 className="font-['Playfair_Display'] text-[clamp(1.75rem,4vw,2.25rem)] font-normal text-[#2c2c2c] text-center mb-4">{t('Create Account')}</h1>
+          <p className="font-['Inter'] text-sm text-[#666] text-center mb-6">{t('Start crafting your fully tailor‑made experience')}</p>
 
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             {error && (
@@ -217,35 +221,35 @@ const Signup = () => {
               </div>
             )}
             <div className="flex flex-col">
-              <label className="font-['Inter'] text-[0.85rem] text-[#666] tracking-[0.06em] mb-1">Username (Optional)</label>
+              <label className="font-['Inter'] text-[0.85rem] text-[#666] tracking-[0.06em] mb-1">{t('Username (Optional)')}</label>
               <input 
                 type="text"
                 value={username}
                 onChange={(e) => handleUsernameChange(e.target.value)}
-                placeholder="Enter your username (optional)"
+                placeholder={t('Enter your username (optional)')}
                 className="border-none border-b border-[#ddd] py-3 px-1 font-['Inter'] text-base outline-none bg-transparent focus:border-b-[#2c2c2c]"
               />
             </div>
 
             <div className="flex flex-col">
-              <label className="font-['Inter'] text-[0.85rem] text-[#666] tracking-[0.06em] mb-1">Email address</label>
+              <label className="font-['Inter'] text-[0.85rem] text-[#666] tracking-[0.06em] mb-1">{t('Email address')}</label>
               <input 
                 type="email"
                 value={email}
                 onChange={(e) => handleEmailChange(e.target.value)}
-                placeholder="Enter your email address"
+                placeholder={t('Enter your email address')}
                 className="border-none border-b border-[#ddd] py-3 px-1 font-['Inter'] text-base outline-none bg-transparent focus:border-b-[#2c2c2c]"
                 required
               />
             </div>
 
             <div className="flex flex-col">
-              <label className="font-['Inter'] text-[0.85rem] text-[#666] tracking-[0.06em] mb-1">Password</label>
+              <label className="font-['Inter'] text-[0.85rem] text-[#666] tracking-[0.06em] mb-1">{t('Password')}</label>
               <input 
                 type="password"
                 value={password}
                 onChange={(e) => handlePasswordChange(e.target.value)}
-                placeholder="Enter your password (min 6 characters)"
+                placeholder={t('Enter your password (min 6 characters)')}
                 className="border-none border-b border-[#ddd] py-3 px-1 font-['Inter'] text-base outline-none bg-transparent focus:border-b-[#2c2c2c]"
                 required
               />
@@ -260,12 +264,12 @@ const Signup = () => {
                 <span className="absolute left-0 inset-y-0 flex items-center pl-4">
                   <FiLogIn className="h-5 w-5 text-white/80" />
                 </span>
-                {loading ? 'Creating your account...' : 'Create your account'}
+                {loading ? t('Creating your account...') : t('Create your account')}
               </button>
             </div>
             
             <div className="text-center mt-6">
-              <span className="px-4 text-[#666] text-sm">Already have an account?</span>
+              <span className="px-4 text-[#666] text-sm">{t('Already have an account?')}</span>
               
               <div className="mt-4">
                 <Link 
@@ -275,7 +279,7 @@ const Signup = () => {
                   <svg className="w-4 h-4 mr-2 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span className="transition-colors group-hover:text-white">Sign in to your account</span>
+                  <span className="transition-colors group-hover:text-white">{t('Sign in to your account')}</span>
                   <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
                   </svg>

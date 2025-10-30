@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import TourCard from '../components/TourCard';
+import { useLanguage } from '../contexts/LanguageContext';
 import SearchBar from '../components/SearchBar';
 
 // Register ScrollTrigger plugin
@@ -32,12 +33,13 @@ type UITour = {
 };
 
 const PackagesPage = () => {
+  const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [allTours, setAllTours] = useState<UITour[]>([]);
   const [filteredTours, setFilteredTours] = useState<UITour[]>([]);
   const [categories, setCategories] = useState<{ value: string; label: string }[]>([
-    { value: 'all', label: 'All Tours' }
+    { value: 'all', label: t('All Tours') }
   ]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -88,7 +90,7 @@ const PackagesPage = () => {
         setFilteredTours(uiTours);
         const unique = Array.from(new Set(uiTours.map(t => t.category))).filter(Boolean);
         setCategories([
-          { value: 'all', label: 'All Tours' },
+          { value: 'all', label: t('All Tours') },
           ...unique.map(c => ({ value: c, label: c.charAt(0).toUpperCase() + c.slice(1) }))
         ]);
       } catch (e: any) {
@@ -242,11 +244,11 @@ const PackagesPage = () => {
   }, [searchQuery, selectedFilter, sortBy, allTours]);
 
   const sortOptions = [
-    { value: 'popular', label: 'Most Popular' },
-    { value: 'price-low', label: 'Price: Low to High' },
-    { value: 'price-high', label: 'Price: High to Low' },
-    { value: 'rating', label: 'Highest Rated' },
-    { value: 'duration', label: 'Shortest Duration' }
+    { value: 'popular', label: t('Most Popular') },
+    { value: 'price-low', label: t('Price: Low to High') },
+    { value: 'price-high', label: t('Price: High to Low') },
+    { value: 'rating', label: t('Highest Rated') },
+    { value: 'duration', label: t('Shortest Duration') }
   ];
 
   return (
@@ -271,10 +273,10 @@ const PackagesPage = () => {
             {/* Hero Text Below Image */}
             <div className="text-center text-white">
               <h1 className="animate-on-scroll text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
-                Travel Beyond Tours
+                {t('Travel Beyond Tours')}
               </h1>
               <p className="animate-on-scroll text-base sm:text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed px-4">
-                Discover our carefully curated selection of travel experiences around the world
+                {t('Packages Hero Blurb')}
               </p>
             </div>
           </div>
@@ -289,7 +291,7 @@ const PackagesPage = () => {
             <div className="max-w-2xl mx-auto">
               <SearchBar
                 onSearch={setSearchQuery}
-                placeholder="Search destinations, activities, or tours..."
+                placeholder={t('Search destinations, activities, or tours...')}
               />
             </div>
 
@@ -315,7 +317,7 @@ const PackagesPage = () => {
               {/* Sort Dropdown */}
               <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full lg:w-auto">
                 <label htmlFor="sort" className="text-xs sm:text-sm font-medium text-gray-700 whitespace-nowrap">
-                  Sort by:
+                  {t('Sort by:')}
                 </label>
                 <select
                   id="sort"
@@ -344,11 +346,11 @@ const PackagesPage = () => {
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
               </svg>
-              <p className="text-gray-600 text-sm sm:text-base">Loading tours...</p>
+              <p className="text-gray-600 text-sm sm:text-base">{t('Loading tours...')}</p>
             </div>
           ) : error ? (
             <div className="text-center py-12 sm:py-16 px-4">
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">Unable to load tours</h3>
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">{t('Unable to load tours')}</h3>
               <p className="text-gray-600 text-sm sm:text-base">{error}</p>
             </div>
           ) : filteredTours.length === 0 ? (
@@ -356,17 +358,17 @@ const PackagesPage = () => {
               <svg className="w-12 h-12 sm:w-16 sm:h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.709M15 6.291A7.962 7.962 0 0012 5c-2.34 0-4.29 1.009-5.824 2.709" />
               </svg>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">No tours found</h3>
-              <p className="text-gray-600 text-sm sm:text-base">Try adjusting your search or filter criteria</p>
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">{t('No tours found')}</h3>
+              <p className="text-gray-600 text-sm sm:text-base">{t('Try adjusting your search or filter criteria')}</p>
             </div>
           ) : (
             <>
               <div className="text-center mb-12 sm:mb-14 lg:mb-16">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 px-4">
-                  {searchQuery ? `Search Results (${filteredTours.length})` : 'Available Tours'}
+                  {searchQuery ? `${t('Search Results')} (${filteredTours.length})` : t('Available Tours')}
                 </h2>
                 {searchQuery && (
-                  <p className="text-gray-600 text-base sm:text-lg px-4">Showing results for "{searchQuery}"</p>
+                  <p className="text-gray-600 text-base sm:text-lg px-4">{t('Showing results for')} "{searchQuery}"</p>
                 )}
               </div>
               
@@ -396,22 +398,22 @@ const PackagesPage = () => {
       {/* CTA Section */}
       <section className="py-16 sm:py-18 lg:py-20" style={{ backgroundColor: '#00c3a1' }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6">Can't Find What You're Looking For?</h2>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6">{t("Can't Find What You're Looking For?")}</h2>
           <p className="text-lg sm:text-xl text-white mb-6 sm:mb-8 leading-relaxed px-4">
-            We can create a custom travel package tailored to your specific needs and preferences
+            {t('We can create a custom travel package tailored to your specific needs and preferences')}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center max-w-md sm:max-w-none mx-auto">
             <a
               href="/contact"
               className="bg-white text-[#00c3a1] px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg text-center"
             >
-              Contact Us
+              {t('Contact Us')}
             </a>
             <a
               href="/about"
               className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:bg-white hover:text-[#00c3a1] transition-all duration-300 transform hover:scale-105 text-center"
             >
-              Learn More
+              {t('Learn More')}
             </a>
           </div>
         </div>

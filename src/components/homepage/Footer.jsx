@@ -1,5 +1,7 @@
+import { useLanguage } from '../../contexts/LanguageContext'
 
 const Footer = () => {
+  const { t } = useLanguage()
   return (
     <footer className="w-full text-white py-8 sm:py-12 px-0 pb-6 sm:pb-8" style={{ backgroundColor: '#000000' }}>
       <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12">
@@ -7,7 +9,7 @@ const Footer = () => {
         <div className="flex flex-col lg:flex-row justify-between items-center gap-6 lg:gap-0 mb-8 sm:mb-12 pb-6 sm:pb-8 border-b border-[rgba(245,245,240,0.2)]">
           <div className="flex-1 w-full lg:w-auto">
             <div className="flex items-center justify-center lg:justify-start gap-2 cursor-pointer transition-opacity duration-300 hover:opacity-80">
-              <span className="font-['Playfair_Display'] text-lg sm:text-xl font-normal text-white">Destinations</span>
+              <span className="font-['Playfair_Display'] text-lg sm:text-xl font-normal text-white">{t('Destinations')}</span>
               <div className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center bg-white/10 rounded-full transition-all duration-300 hover:bg-white/20">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="sm:w-4 sm:h-4">
                   <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -19,10 +21,10 @@ const Footer = () => {
           <div className="flex-1 w-full lg:w-auto flex justify-center">
             <div className="flex flex-col sm:flex-row lg:flex-col gap-2 sm:gap-4 lg:gap-2">
               <a href="#" className="font-['Inter'] text-xs sm:text-sm font-medium text-white no-underline tracking-wider transition-opacity duration-300 hover:opacity-80 text-center lg:text-center">
-                CONTACT US
+                {t('CONTACT US')}
               </a>
               <a href="#" className="font-['Inter'] text-xs sm:text-sm font-medium text-white no-underline tracking-wider transition-opacity duration-300 hover:opacity-80 text-center lg:text-center">
-                CAREERS
+                {t('CAREERS')}
               </a>
             </div>
           </div>
@@ -31,7 +33,7 @@ const Footer = () => {
             <div className="relative flex items-center w-full max-w-[280px] lg:max-w-none">
               <input 
                 type="text" 
-                placeholder="LET'S STAY IN TOUCH" 
+                placeholder={t("LET'S STAY IN TOUCH")} 
                 className="bg-transparent border border-[#f5f5f0] text-[#f5f5f0] py-2 sm:py-3 px-3 sm:px-4 pr-10 sm:pr-12 font-['Inter'] text-xs sm:text-sm font-normal tracking-wider w-full min-w-[180px] sm:min-w-[200px] outline-none transition-colors duration-300 placeholder:text-[#f5f5f0] placeholder:opacity-80 focus:border-[rgba(245,245,240,0.6)]"
               />
               <div className="absolute right-2 sm:right-3 w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center bg-white/10 rounded cursor-pointer transition-all duration-300 hover:bg-white/20">
@@ -47,7 +49,7 @@ const Footer = () => {
         <div className="flex flex-col lg:flex-row justify-between items-center lg:items-end gap-8 lg:gap-8">
           <div className="flex-1 w-full lg:w-auto">
             <div className="flex flex-col gap-3 sm:gap-4 text-center lg:text-left">
-              <h3 className="font-['Inter'] text-xs sm:text-sm font-semibold text-white tracking-[0.1em] m-0">Travel Beyond BRAND</h3>
+              <h3 className="font-['Inter'] text-xs sm:text-sm font-semibold text-white tracking-[0.1em] m-0">{t('Travel Beyond BRAND')}</h3>
               
               <div className="flex flex-col gap-1">
                 <p className="font-['Inter'] text-xs sm:text-sm font-normal text-white m-0">INFO@Travel Beyond.COM</p>
@@ -83,9 +85,9 @@ const Footer = () => {
           </div>
           
           <div className="flex-1 w-full lg:w-auto flex justify-center items-center order-first lg:order-none mb-4 lg:mb-0">
-            <div className="text-center">
+              <div className="text-center">
               <span className="font-['Playfair_Display'] text-3xl sm:text-4xl lg:text-5xl font-normal text-white tracking-tight leading-none">
-                Travel Beyond
+                {t('Travel Beyond')}
               </span>
             </div>
           </div>

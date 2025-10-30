@@ -4,8 +4,11 @@ import { FiLogIn } from 'react-icons/fi';
 import Swal from 'sweetalert2';
 import { useAuth } from '../contexts/AuthContext';
 import Menu from '../components/homepage/Menu';
+import LanguageSelector from '../components/LanguageSelector';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Login = () => {
+  const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -171,9 +174,10 @@ const Login = () => {
               <span className="w-[18px] h-[2px] bg-white" />
               <span className="w-[18px] h-[2px] bg-white" />
             </span>
-            MENU
+            {t('Menu')}
           </button>
           <div className="w-px h-5 bg-white/30" />
+          <LanguageSelector />
         </div>
         <div className="absolute left-1/2 -translate-x-1/2">
           <img 
@@ -197,8 +201,8 @@ const Login = () => {
         
         <div className="absolute inset-0 bg-black/55"></div>
         <div className="relative z-10 w-full max-w-[520px] mx-auto bg-white rounded-[10px] shadow-[0_20px_60px_rgba(0,0,0,0.15)] p-6 sm:p-9 mt-16">
-          <h1 className="font-['Playfair_Display'] text-[clamp(1.75rem,4vw,2.25rem)] font-normal text-[#2c2c2c] text-center mb-4">Welcome Back</h1>
-          <p className="font-['Inter'] text-sm text-[#666] text-center mb-6">Log in to manage your tailor-made journeys</p>
+          <h1 className="font-['Playfair_Display'] text-[clamp(1.75rem,4vw,2.25rem)] font-normal text-[#2c2c2c] text-center mb-4">{t('Welcome Back')}</h1>
+          <p className="font-['Inter'] text-sm text-[#666] text-center mb-6">{t('Log in to manage your tailor-made journeys')}</p>
 
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             {error && (
@@ -206,31 +210,31 @@ const Login = () => {
             )}
 
             <div className="flex flex-col">
-              <label className="font-['Inter'] text-[0.85rem] text-[#666] tracking-[0.06em] mb-1">Email</label>
+              <label className="font-['Inter'] text-[0.85rem] text-[#666] tracking-[0.06em] mb-1">{t('Email')}</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => handleEmailChange(e.target.value)}
-                placeholder="you@example.com"
+                placeholder={t('you@example.com')}
                 className="border-none border-b border-[#ddd] py-3 px-1 font-['Inter'] text-base outline-none bg-transparent focus:border-b-[#2c2c2c]"
                 required
               />
             </div>
 
             <div className="flex flex-col">
-              <label className="font-['Inter'] text-[0.85rem] text-[#666] tracking-[0.06em] mb-1">Password</label>
+              <label className="font-['Inter'] text-[0.85rem] text-[#666] tracking-[0.06em] mb-1">{t('Password')}</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => handlePasswordChange(e.target.value)}
-                placeholder="••••••••"
+                placeholder={t('••••••••')}
                 className="border-none border-b border-[#ddd] py-3 px-1 font-['Inter'] text-base outline-none bg-transparent focus:border-b-[#2c2c2c]"
                 required
               />
             </div>
 
             <div className="mt-2 text-right">
-              <a href="#" className="font-['Inter'] text-sm text-[#2c2c2c] hover:opacity-80">Forgot password?</a>
+              <a href="#" className="font-['Inter'] text-sm text-[#2c2c2c] hover:opacity-80">{t('Forgot password?')}</a>
             </div>
 
             <div className="mt-6">
@@ -242,15 +246,15 @@ const Login = () => {
                 <span className="absolute left-0 inset-y-0 flex items-center pl-4">
                   <FiLogIn className="h-5 w-5 text-white/80" />
                 </span>
-                {loading ? 'Signing in...' : 'Login'}
+                {loading ? t('Signing in...') : t('Login')}
               </button>
             </div>
 
             <div className="text-center mt-6">
-              <span className="px-4 text-[#666] text-sm">New here?</span>
+              <span className="px-4 text-[#666] text-sm">{t('New here?')}</span>
               <div className="mt-3">
                 <Link to="/signup" className="group inline-flex items-center px-6 py-3 border border-[#2c2c2c] rounded-lg text-[#2c2c2c] hover:bg-[#2c2c2c] hover:text-white transition-colors duration-200">
-                  <span className="transition-colors group-hover:text-white">Create account</span>
+                  <span className="transition-colors group-hover:text-white">{t('Create account')}</span>
                 </Link>
               </div>
             </div>

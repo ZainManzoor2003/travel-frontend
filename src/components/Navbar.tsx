@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
+import LanguageSelector from './LanguageSelector';
 import {
   FiHome,
   FiInfo,
@@ -102,13 +104,15 @@ const Navbar = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const { t } = useLanguage();
+
   const navItems = [
-    { name: 'Home', path: '/', icon: <FiHome className="mr-2" /> },
-    { name: 'About', path: '/about', icon: <FiInfo className="mr-2" /> },
-    { name: 'Packages', path: '/packages', icon: <FiPackage className="mr-2" /> },
-    { name: 'Gallery', path: '/gallery', icon: <FiImage className="mr-2" /> },
-    { name: 'Blog', path: '/blog', icon: <FiBook className="mr-2" /> },
-    { name: 'Contact', path: '/contact', icon: <FiMail className="mr-2" /> },
+    { name: t('Home'), path: '/', icon: <FiHome className="mr-2" /> },
+    { name: t('About'), path: '/about', icon: <FiInfo className="mr-2" /> },
+    { name: t('Packages'), path: '/packages', icon: <FiPackage className="mr-2" /> },
+    { name: t('Gallery'), path: '/gallery', icon: <FiImage className="mr-2" /> },
+    { name: t('Blog'), path: '/blog', icon: <FiBook className="mr-2" /> },
+    { name: t('Contact'), path: '/contact', icon: <FiMail className="mr-2" /> },
   ];
 
   const handleLogout = () => {
@@ -163,6 +167,11 @@ const Navbar = () => {
                 );
               })}
 
+              {/* Language selector */}
+              <div className="pl-4 ml-2 border-l border-white/20">
+                <LanguageSelector />
+              </div>
+
               {/* User authentication section */}
               {isLoggedIn ? (
                 <div className="relative" ref={dropdownRef}>
@@ -184,7 +193,7 @@ const Navbar = () => {
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           onClick={() => setShowDropdown(false)}
                         >
-                          Admin Dashboard
+                          {t('Admin Dashboard')}
                         </Link>
                       ) : (
                         <Link
@@ -192,7 +201,7 @@ const Navbar = () => {
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           onClick={() => setShowDropdown(false)}
                         >
-                          My Dashboard
+                          {t('My Dashboard')}
                         </Link>
                       )}
                       <button
@@ -200,7 +209,7 @@ const Navbar = () => {
                         className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
                         <FiLogOut className="mr-2" />
-                        Logout
+                        {t('Logout')}
                       </button>
                     </div>
                   )}
@@ -211,15 +220,16 @@ const Navbar = () => {
                     to="/login"
                     className="bg-primary-500 text-black px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-600 focus:ring-2 focus:ring-primary-300 transition-colors duration-200"
                   >
-                    Login
+                    {t('Login')}
                   </Link>
                 </div>
               )}
             </div>
 
 
-            {/* Mobile menu button - Only visible on smaller screens */}
-            <div className="lg:hidden">
+            {/* Mobile actions: language + hamburger */}
+            <div className="lg:hidden flex items-center gap-3">
+              <LanguageSelector />
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="p-2 rounded-md transition-colors duration-200 text-white"

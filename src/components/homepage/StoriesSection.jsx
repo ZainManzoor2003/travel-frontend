@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
+import { useLanguage } from "../../contexts/LanguageContext"
 
 export default function StoriesSection() {
+  const { t } = useLanguage()
   const [featuredBlogs, setFeaturedBlogs] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -35,13 +37,13 @@ export default function StoriesSection() {
     <section className="w-full py-16 pb-20" style={{ backgroundColor: '#ffe020' }}>
       <div className="max-w-[1400px] mx-auto px-12">
         <h2 className="font-['Playfair_Display'] font-normal text-[clamp(2.25rem,4.5vw,3.75rem)] text-black mb-8">
-          Explore more Awasi stories
+          {t('Explore more stories')}
         </h2>
 
         <ul className="list-none m-0 mb-10 p-0 border-t border-[#cfcfcf]">
           {loading && (
             <li className="py-7 text-center text-[#666] font-['Inter']">
-              Loading stories...
+              {t('Loading stories...')}
             </li>
           )}
           {error && (
@@ -51,7 +53,7 @@ export default function StoriesSection() {
           )}
           {!loading && !error && featuredBlogs.length === 0 && (
             <li className="py-7 text-center text-[#666] font-['Inter']">
-              No featured stories available
+              {t('No featured stories available')}
             </li>
           )}
           {!loading && !error && featuredBlogs.map((blog) => (
@@ -73,7 +75,7 @@ export default function StoriesSection() {
           ))}
         </ul>
           <Link to="/blog" className="mt-10 bg-black text-white border border-black rounded-lg py-[0.9rem] px-[1.2rem] font-['Inter'] font-semibold tracking-wider cursor-pointer transition-all duration-[250ms] hover:bg-[#00c3a1] hover:border-[#00c3a1]">
-            SEE OUR BLOG
+            {t('SEE OUR BLOG')}
           </Link>
       </div>
     </section>

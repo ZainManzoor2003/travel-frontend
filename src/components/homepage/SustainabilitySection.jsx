@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLanguage } from '../../contexts/LanguageContext'
 
 const slides = [
   {
@@ -40,8 +41,17 @@ const slides = [
 ]
 
 export default function SustainabilitySection() {
+  const { language } = useLanguage()
   const [active, setActive] = useState(4)
-  const current = slides[active - 1]
+  const slidesLocalized = language === 'es' ? [
+    { id: 1, titleLines: ['17 objetivos de la ONU para', 'el Desarrollo', 'Sostenible'], description: 'Los Objetivos de Desarrollo Sostenible de la ONU son una hoja de ruta para un futuro mejor y más sostenible. Educación, oportunidades, igualdad e inclusión aplicadas a la hospitalidad.' },
+    { id: 2, titleLines: ['Protegiendo', 'la biodiversidad local'], description: 'Preservamos la flora y fauna nativas mediante planificación de rutas, educación a los huéspedes y alianzas de conservación.' },
+    { id: 3, titleLines: ['Uso responsable', 'del agua'], description: 'Sistemas eficientes y monitoreo constante reducen el consumo sin comprometer la comodidad ni la seguridad.' },
+    { id: 4, titleLines: ['Comunidad y', 'patrimonio cultural'], description: 'Colaboramos con comunidades locales, priorizamos empleo justo y celebramos las tradiciones con respeto.' },
+    { id: 5, titleLines: ['Prácticas', 'circulares de residuos'], description: 'Desde la compra hasta el reciclaje, minimizamos residuos y promovemos la reutilización.' },
+    { id: 6, titleLines: ['Exploración', 'de bajo impacto'], description: 'Las excursiones privadas protegen ecosistemas frágiles y ofrecen experiencias significativas y educativas.' },
+  ] : slides
+  const current = slidesLocalized[active - 1]
 
   return (
     <section className="relative w-full h-screen overflow-hidden">
@@ -63,7 +73,7 @@ export default function SustainabilitySection() {
           <p className="font-['Inter'] text-base leading-[1.7] text-[#e0ddd9] mb-7">{current.description}</p>
 
           <div className="flex items-center gap-3" role="tablist" aria-label="Sustainability topics">
-            {slides.map((s) => (
+            {slidesLocalized.map((s) => (
               <button
                 key={s.id}
                 className={`w-[34px] h-[34px] rounded-md bg-transparent border border-white/30 text-white font-['Inter'] text-sm cursor-pointer transition-all duration-[250ms] ease-out hover:-translate-y-px ${
