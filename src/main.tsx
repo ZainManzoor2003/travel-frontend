@@ -1,7 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
-import { HelmetProvider } from 'react-helmet-async'
 import './index.css'
 
 // Warm-up ping for backend after initial paint (low priority)
@@ -22,9 +21,7 @@ if (window.requestIdleCallback) {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <HelmetProvider>
       <App />
-    </HelmetProvider>
   </StrictMode>,
 )
 
