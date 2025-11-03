@@ -60,26 +60,26 @@ const HomepageGalleryPage = () => {
       {/** Indices mapping: 0 hero, 1 waterfall, 2-3 first split, 4-5 second split, 6-8 three-row, 9 repeat, 10-11 final split */}
       {/** Using inline ternaries for src/alt picks */}
       {/* Navigation Header */}
-      <nav className="fixed top-0 left-0 right-0 z-[1000] p-8 px-12 flex items-center justify-between bg-transparent">
+      <nav className="fixed top-0 left-0 right-0 z-[1000] py-6 md:py-8 lg:py-10 px-6 md:px-12 lg:px-16 flex items-center justify-between" style={{ backgroundColor: '#ffe020' }}>
         <div className="flex items-center gap-6">
           <button 
-            className="flex items-center gap-3 bg-none border-none text-white font-sans text-sm tracking-wider cursor-pointer transition-opacity duration-300 hover:opacity-80"
+            className="flex items-center gap-3 bg-none border-none text-black font-sans text-sm tracking-wider cursor-pointer transition-opacity duration-300 hover:opacity-80"
             onClick={toggleMenu}
           >
             <span className="flex flex-col gap-[3px]">
-              <span className="w-[18px] h-[2px] bg-white" />
-              <span className="w-[18px] h-[2px] bg-white" />
-              <span className="w-[18px] h-[2px] bg-white" />
+              <span className="w-[18px] h-[2px] bg-black" />
+              <span className="w-[18px] h-[2px] bg-black" />
+              <span className="w-[18px] h-[2px] bg-black" />
             </span>
             {t('Menu')}
           </button>
-          <div className="w-px h-5 bg-white/30" />
+          <div className="w-px h-5 bg-black/30" />
         </div>
         <div className="absolute left-1/2 -translate-x-1/2">
           <img 
             src="/Logo.webp"
             alt="Awasi Logo"
-            className="mt-2 h-24 w-56"
+            className="mt-1 h-11 w-auto sm:h-14 md:h-18 lg:h-22"
           />
         </div>
         <div className="flex items-center gap-4">{!isMenuOpen && <LanguageSelector />}</div>

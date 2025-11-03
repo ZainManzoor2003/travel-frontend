@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import BlogCard from '../components/BlogCard';
 import SearchBar from '../components/SearchBar';
+import LoadingOverlay from '../components/LoadingOverlay';
 import { useLanguage } from '../contexts/LanguageContext';
 import { API_BASE } from '../config/api';
 
@@ -280,6 +281,7 @@ const BlogPage = () => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#ffe020' }}>
+      <LoadingOverlay show={loading} label={'Loading blogs...'} />
       {/* Hero Section */}
       <section id="yy"
         ref={sectionRefs.hero}

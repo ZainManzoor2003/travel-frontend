@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import LanguageSelector from '../../components/LanguageSelector'
 import { useLanguage } from '../../contexts/LanguageContext'
 import { API_BASE } from '../../config/api'
+import LoadingOverlay from '../../components/LoadingOverlay'
 
 const HomepagePackagesPage = () => {
   const { t, language } = useLanguage()
@@ -90,18 +91,19 @@ const HomepagePackagesPage = () => {
   }, [language])
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#ffe020' }}>
+    <div className="min-h-screen relative" style={{ backgroundColor: '#ffe020' }}>
+      <LoadingOverlay show={loading} label={t('Loading blogs...')} />
       {/* Navigation Header */}
-      <nav className="fixed top-0 left-0 right-0 z-[1000] p-8 px-12 flex items-center justify-between bg-transparent">
+      <nav className="fixed top-0 left-0 right-0 z-[1000] py-6 md:py-8 lg:py-10 px-6 md:px-12 lg:px-16 flex items-center justify-between" style={{ backgroundColor: '#ffe020' }}>
         <div className="flex items-center gap-6">
           <button 
-            className="flex items-center gap-3 bg-none border-none text-white font-sans text-sm font-normal tracking-wider cursor-pointer transition-opacity duration-300 hover:opacity-80" 
+            className="flex items-center gap-3 bg-none border-none text-black font-sans text-sm font-normal tracking-wider cursor-pointer transition-opacity duration-300 hover:opacity-80" 
             onClick={toggleMenu}
           >
             <span className="flex flex-col gap-[3px]">
-              <span className="w-[18px] h-[2px] bg-white transition-all duration-300"></span>
-              <span className="w-[18px] h-[2px] bg-white transition-all duration-300"></span>
-              <span className="w-[18px] h-[2px] bg-white transition-all duration-300"></span>
+              <span className="w-[18px] h-[2px] bg-black transition-all duration-300"></span>
+              <span className="w-[18px] h-[2px] bg-black transition-all duration-300"></span>
+              <span className="w-[18px] h-[2px] bg-black transition-all duration-300"></span>
             </span>
             {t('Menu')}
           </button>
@@ -110,7 +112,7 @@ const HomepagePackagesPage = () => {
           <img 
             src="/Logo.webp"
             alt="Awasi Logo"
-            className="mt-2 h-24 w-56"
+            className="mt-1 h-11 w-auto sm:h-14 md:h-18 lg:h-22"
           />
         </div>
         

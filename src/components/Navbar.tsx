@@ -125,6 +125,8 @@ const Navbar = () => {
     setShowDropdown(!showDropdown);
   };
 
+  const isYellowRoute = ['/packages', '/gallery', '/blog'].some((p) => location.pathname === p || location.pathname.startsWith(p + '/'));
+
   return (
     <>
       <nav
@@ -133,7 +135,7 @@ const Navbar = () => {
           ? 'shadow-lg backdrop-blur-md'
           : ''
           }`}
-        style={{ backgroundColor: '#000000' }}
+        style={{ backgroundColor: isYellowRoute ? '#ffe020' : '#000000' }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20 py-4">
@@ -155,8 +157,8 @@ const Navbar = () => {
                   key={item.name}
                   to={item.path}
                   className={`flex items-center text-sm font-medium transition-colors duration-200 ${isActive
-                    ? 'text-primary-300'
-                    : 'text-white hover:text-primary-300'
+                    ? (isYellowRoute ? 'text-primary-700' : 'text-primary-300')
+                    : (isYellowRoute ? 'text-black hover:text-primary-700' : 'text-white hover:text-primary-300')
                     }`}
                   onMouseEnter={item.path === '/packages' ? prefetchTours : undefined}
                   onFocus={item.path === '/packages' ? prefetchTours : undefined}
@@ -168,7 +170,7 @@ const Navbar = () => {
               })}
 
               {/* Language selector */}
-              <div className="pl-4 ml-2 border-l border-white/20">
+              <div className={`pl-4 ml-2 border-l ${isYellowRoute ? 'border-black/20' : 'border-white/20'}`}>
                 <LanguageSelector />
               </div>
 
@@ -232,7 +234,7 @@ const Navbar = () => {
               <LanguageSelector />
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="p-2 rounded-md transition-colors duration-200 text-white"
+                className={`p-2 rounded-md transition-colors duration-200 ${isYellowRoute ? 'text-black' : 'text-white'}`}
                 aria-label="Toggle menu"
               >
                 {isMenuOpen ? <FiX className="h-6 w-6" /> : <FiMenu className="h-6 w-6" />}

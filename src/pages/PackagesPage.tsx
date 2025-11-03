@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import TourCard from '../components/TourCard';
 import { useLanguage } from '../contexts/LanguageContext';
 import SearchBar from '../components/SearchBar';
+import LoadingOverlay from '../components/LoadingOverlay';
 import { API_BASE } from '../config/api';
 
 // Register ScrollTrigger plugin
@@ -259,6 +260,7 @@ const PackagesPage = () => {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#ffe020' }}>
+      <LoadingOverlay show={loading} label={t('Loading tours...')} />
       {/* Hero Section */}
       <section 
         ref={sectionRefs.hero}

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import {
   FiHome,
   FiUsers,
@@ -81,20 +80,9 @@ const DashboardLayout = ({ children, activeSection, onSectionChange }: Dashboard
       {/* Top Navigation Bar */}
       <nav className="shadow-sm" style={{ backgroundColor: '#22c55e' }}>
         <div className="px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20 py-4">
-            {/* Logo */}
-            <div className="flex items-center">
-              <Link to="/" className="flex items-center">
-                <img 
-                  src="/logo.webp" 
-                  alt="Travel Beyond Tours Logo" 
-                  className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain"
-                />
-              </Link>
-            </div>
-
+          <div className="flex justify-end items-center h-20 py-4">
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex! items-center space-x-1">
+            <div className="hidden lg:flex! items-center space-x-1 ml-auto">
               {menuItems.map((item) => (
                 <button
                   key={item.id}
