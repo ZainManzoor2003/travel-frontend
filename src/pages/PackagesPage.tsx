@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import TourCard from '../components/TourCard';
 import { useLanguage } from '../contexts/LanguageContext';
 import SearchBar from '../components/SearchBar';
+import { API_BASE } from '../config/api';
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -33,7 +34,7 @@ type UITour = {
 };
 
 const PackagesPage = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [allTours, setAllTours] = useState<UITour[]>([]);
@@ -63,17 +64,22 @@ const PackagesPage = () => {
     }
   }, []);
 
-  // Fetch tours from backend
+  // Fetch tours from backend - refetch when language changes
   useEffect(() => {
     const controller = new AbortController();
     const load = async () => {
       try {
         setLoading(true);
         setError(null);
-        const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || 'https://travel-backend-psi.vercel.app';
-        const res = await fetch(`${API_BASE}/tours`, { signal: controller.signal });
+        const url = `${API_BASE}/tours?lang=${language}`;
+        console.log('🌐 Fetching tours with URL:', url, 'Current language:', language);
+        const res = await fetch(url, { signal: controller.signal });
         if (!res.ok) throw new Error(`Failed to load tours (${res.status})`);
         const json = await res.json();
+        console.log('📥 Received tours data:', json?.data?.tours?.length, 'tours');
+        if (json?.data?.tours?.length > 0) {
+          console.log('📋 First tour title:', json.data.tours[0].title);
+        }
         const list: BackendTour[] = json?.data?.tours || [];
         const uiTours: UITour[] = list.map(t => ({
           id: t._id,
@@ -102,7 +108,7 @@ const PackagesPage = () => {
     };
     load();
     return () => controller.abort();
-  }, []);
+  }, [language, t]);
 
   // Enhanced animation for tour cards with ScrollTrigger
   useEffect(() => {

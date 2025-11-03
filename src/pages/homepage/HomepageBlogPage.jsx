@@ -6,9 +6,10 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 import { Link } from 'react-router-dom'
 import LanguageSelector from '../../components/LanguageSelector'
 import { useLanguage } from '../../contexts/LanguageContext'
+import { API_BASE } from '../../config/api'
 
 const HomepageBlogPage = () => {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const toggleMenu = () => {
@@ -41,8 +42,7 @@ const HomepageBlogPage = () => {
       try {
         setLoading(true)
         setError(null)
-        const API_BASE = (import.meta && import.meta.env && import.meta.env.VITE_API_BASE_URL) || 'https://travel-backend-psi.vercel.app'
-        const blogsRes = await fetch(`${API_BASE}/blogs?status=published`, { signal: controller.signal })
+        const blogsRes = await fetch(`${API_BASE}/blogs?status=published&lang=${language}`, { signal: controller.signal })
         if (!blogsRes.ok) throw new Error(`Failed to load blogs (${blogsRes.status})`)
         const blogsJson = await blogsRes.json()
         const blogsList = (blogsJson && blogsJson.data && blogsJson.data.blogs) || []
@@ -65,7 +65,7 @@ const HomepageBlogPage = () => {
     }
     load()
     return () => controller.abort()
-  }, [])
+  }, [language])
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#ffe020' }}>

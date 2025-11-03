@@ -3,6 +3,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import BlogCard from '../components/BlogCard';
 import SearchBar from '../components/SearchBar';
+import { useLanguage } from '../contexts/LanguageContext';
+import { API_BASE } from '../config/api';
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -36,6 +38,7 @@ type UIBlog = {
 };
 
 const BlogPage = () => {
+  const { language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [allBlogs, setAllBlogs] = useState<UIBlog[]>([]);
@@ -65,17 +68,16 @@ const BlogPage = () => {
     }
   }, []);
 
-  // Fetch blogs and categories from backend
+  // Fetch blogs and categories from backend - refetch when language changes
   useEffect(() => {
     const controller = new AbortController();
     const load = async () => {
       try {
         setLoading(true);
         setError(null);
-        const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || 'https://travel-backend-psi.vercel.app';
         
-        // Fetch blogs
-        const blogsRes = await fetch(`${API_BASE}/blogs?status=published`, { signal: controller.signal });
+        // Fetch blogs with language parameter
+        const blogsRes = await fetch(`${API_BASE}/blogs?status=published&lang=${language}`, { signal: controller.signal });
         if (!blogsRes.ok) throw new Error(`Failed to load blogs (${blogsRes.status})`);
         const blogsJson = await blogsRes.json();
         const blogsList: BackendBlog[] = blogsJson?.data?.blogs || [];
@@ -122,9 +124,9 @@ const BlogPage = () => {
         setLoading(false);
       }
     };
-    load();
-    return () => controller.abort();
-  }, []);
+        load();
+        return () => controller.abort();
+      }, [language]);
 
   // Enhanced animation for blog cards with ScrollTrigger
   useEffect(() => {

@@ -5,6 +5,8 @@ import { gsap } from 'gsap';
 import LazyImage from '../components/LazyImage';
 import CountUp from 'react-countup';
 import TourCard from '../components/TourCard';
+import { useLanguage } from '../contexts/LanguageContext';
+import { API_BASE } from '../config/api';
 
 // Interface for Tour data structure
 interface Tour {
@@ -30,6 +32,7 @@ interface Tour {
 // }
 
 const LandingPage = () => {
+  const { language } = useLanguage();
   const heroRef = useRef<HTMLDivElement>(null);
   const fetchControllerRef = useRef<AbortController | null>(null);
   const statsRef = useRef<HTMLDivElement>(null);
@@ -82,8 +85,6 @@ const LandingPage = () => {
     });
   }, []);
 
-  const API_BASE_URL = (import.meta as any).env?.VITE_API_BASE_URL || 'https://travel-backend-psi.vercel.app';
-
   // Function to fetch featured tours from backend
   const fetchFeaturedTours = async () => {
     // Abort any in-flight request before starting a new one
@@ -96,8 +97,8 @@ const LandingPage = () => {
       setLoading(true);
       setError(null);
       
-      // Fetch tours with featured=true
-      const response = await fetch(`${API_BASE_URL}/tours?featured=true`, { signal: controller.signal });
+      // Fetch tours with featured=true and language parameter
+      const response = await fetch(`${API_BASE}/tours?featured=true&lang=${language}`, { signal: controller.signal });
       const data = await response.json();
       
       if (data.success) {
@@ -135,7 +136,7 @@ const LandingPage = () => {
   // };
 
   useEffect(() => {
-    // Fetch featured tours on component mount
+    // Fetch featured tours on component mount and when language changes
     fetchFeaturedTours();
     // Cleanup: abort in-flight request on unmount or route change
     return () => {
@@ -144,7 +145,7 @@ const LandingPage = () => {
       }
     };
     // fetchGalleryPreview(); // Commented out as gallery preview is not currently used
-  }, []);
+  }, [language]);
 
 
   // Eyes follow cursor effect

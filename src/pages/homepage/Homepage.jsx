@@ -8,9 +8,10 @@ import StoriesSection from '../../components/homepage/StoriesSection'
 import InstagramSection from '../../components/homepage/InstagramSection'
 import Footer from '../../components/homepage/Footer'
 import Menu from '../../components/homepage/Menu'
+import { API_BASE } from '../../config/api'
 
 function Homepage() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const [isMuted, setIsMuted] = useState(true)
   const [currentHorizontalSection, setCurrentHorizontalSection] = useState(0)
   const [isHorizontalMode, setIsHorizontalMode] = useState(false)
@@ -234,15 +235,14 @@ function Homepage() {
     }
   }, [isMenuOpen])
 
-  // Fetch all tours and filter for featured ones
+  // Fetch all tours and filter for featured ones - refetch when language changes
   useEffect(() => {
     const controller = new AbortController()
     const fetchFeaturedTours = async () => {
       try {
         setToursLoading(true)
         setToursError(null)
-        const API_BASE = (import.meta && import.meta.env && import.meta.env.VITE_API_BASE_URL) || 'https://travel-backend-psi.vercel.app'
-        const res = await fetch(`${API_BASE}/tours`, { signal: controller.signal })
+        const res = await fetch(`${API_BASE}/tours?lang=${language}`, { signal: controller.signal })
         if (!res.ok) throw new Error(`Failed to load tours (${res.status})`)
         const json = await res.json()
         const allTours = (json && json.data && json.data.tours) || []
@@ -258,7 +258,7 @@ function Homepage() {
     }
     fetchFeaturedTours()
     return () => controller.abort()
-  }, [])
+  }, [language])
 
   useEffect(() => {
     const el = contentSectionRef.current

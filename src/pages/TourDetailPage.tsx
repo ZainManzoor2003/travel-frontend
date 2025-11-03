@@ -12,7 +12,9 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import BookingForm from '../components/BookingForm';
 import TourReviews from '../components/TourReviews';
 import LazyImage from '../components/LazyImage';
-import Menu from '../components/homepage/Menu'
+import Menu from '../components/homepage/Menu';
+import { useLanguage } from '../contexts/LanguageContext';
+import { API_BASE } from '../config/api';
 
 interface Tour {
   _id: string;
@@ -40,6 +42,7 @@ interface Tour {
 const TourDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [tour, setTour] = useState<Tour | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -56,7 +59,7 @@ const TourDetailPage = () => {
     itinerary: useRef<HTMLDivElement>(null),
   };
 
-  // Fetch tour data
+  // Fetch tour data - refetch when language changes
   useEffect(() => {
     const controller = new AbortController();
     const fetchTour = async () => {
@@ -67,8 +70,9 @@ const TourDetailPage = () => {
       }
 
       try {
-        const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || 'https://travel-backend-psi.vercel.app';
-        const response = await fetch(`${API_BASE}/tours/${id}`, { signal: controller.signal });
+        setLoading(true);
+        setError(null);
+        const response = await fetch(`${API_BASE}/tours/${id}?lang=${language}`, { signal: controller.signal });
         
         if (response.status === 404) {
           setError('Tour not found');
@@ -105,7 +109,7 @@ const TourDetailPage = () => {
 
     fetchTour();
     return () => controller.abort();
-  }, [id]);
+  }, [id, language]);
 
   useEffect(() => {
     if (!tour) return;

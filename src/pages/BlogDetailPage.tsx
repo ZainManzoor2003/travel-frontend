@@ -13,6 +13,8 @@ import {
 } from 'react-icons/fi';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Menu from '../components/homepage/Menu';
+import { useLanguage } from '../contexts/LanguageContext';
+import { API_BASE } from '../config/api';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,6 +39,7 @@ interface Blog {
 const BlogDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [blog, setBlog] = useState<Blog | null>(null);
   const [relatedBlogs, setRelatedBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
@@ -52,8 +55,7 @@ const BlogDetailPage = () => {
     const fetchBlog = async () => {
       try {
         setLoading(true);
-        const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || 'https://travel-backend-psi.vercel.app';
-        const response = await fetch(`${API_BASE}/blogs/${id}`, { signal: controller.signal });
+        const response = await fetch(`${API_BASE}/blogs/${id}?lang=${language}`, { signal: controller.signal });
         
         if (!response.ok) {
           throw new Error('Blog not found');
@@ -64,7 +66,7 @@ const BlogDetailPage = () => {
 
         // Fetch related blogs
         if (data.data.category) {
-          const relatedResponse = await fetch(`${API_BASE}/blogs?category=${data.data.category}&limit=3`, { signal: controller.signal });
+          const relatedResponse = await fetch(`${API_BASE}/blogs?category=${data.data.category}&lang=${language}&limit=3`, { signal: controller.signal });
           if (relatedResponse.ok) {
             const relatedData = await relatedResponse.json();
             const filtered = relatedData.data.blogs.filter((b: Blog) => b._id !== id).slice(0, 3);
@@ -83,7 +85,7 @@ const BlogDetailPage = () => {
       fetchBlog();
     }
     return () => controller.abort();
-  }, [id]);
+  }, [id, language]);
 
   useEffect(() => {
     if (!loading && blog) {

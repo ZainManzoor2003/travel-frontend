@@ -1,22 +1,22 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { useLanguage } from "../../contexts/LanguageContext"
+import { API_BASE } from "../../config/api"
 
 export default function StoriesSection() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const [featuredBlogs, setFeaturedBlogs] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // Fetch all blogs and filter for featured ones
+  // Fetch all blogs and filter for featured ones - refetch when language changes
   useEffect(() => {
     const controller = new AbortController()
     const fetchFeaturedBlogs = async () => {
       try {
         setLoading(true)
         setError(null)
-        const API_BASE = (import.meta && import.meta.env && import.meta.env.VITE_API_BASE_URL) || 'https://travel-backend-psi.vercel.app'
-        const res = await fetch(`${API_BASE}/blogs?status=published`, { signal: controller.signal })
+        const res = await fetch(`${API_BASE}/blogs?status=published&lang=${language}`, { signal: controller.signal })
         if (!res.ok) throw new Error(`Failed to load blogs (${res.status})`)
         const json = await res.json()
         const allBlogs = (json && json.data && json.data.blogs) || []
@@ -32,7 +32,7 @@ export default function StoriesSection() {
     }
     fetchFeaturedBlogs()
     return () => controller.abort()
-  }, [])
+  }, [language])
   return (
     <section className="w-full py-16 pb-20" style={{ backgroundColor: '#ffe020' }}>
       <div className="max-w-[1400px] mx-auto px-12">

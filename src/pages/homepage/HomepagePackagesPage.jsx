@@ -6,10 +6,16 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 import { Link } from 'react-router-dom'
 import LanguageSelector from '../../components/LanguageSelector'
 import { useLanguage } from '../../contexts/LanguageContext'
+import { API_BASE } from '../../config/api'
 
 const HomepagePackagesPage = () => {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  
+  // Debug: Log language changes
+  useEffect(() => {
+    console.log('🔵 [HomepagePackagesPage] Language changed to:', language)
+  }, [language])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -35,17 +41,29 @@ const HomepagePackagesPage = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // Fetch tours using same logic as PackagesPage.tsx
+  // Fetch tours using same logic as PackagesPage.tsx - refetch when language changes
   useEffect(() => {
     const controller = new AbortController()
     const load = async () => {
       try {
         setLoading(true)
         setError(null)
-        const API_BASE = (import.meta && import.meta.env && import.meta.env.VITE_API_BASE_URL) || 'https://travel-backend-psi.vercel.app'
-        const res = await fetch(`${API_BASE}/tours`, { signal: controller.signal })
+        const url = `${API_BASE}/tours?lang=${language}`
+        console.log('🌐 [HomepagePackagesPage] Fetching tours with URL:', url, 'Current language:', language)
+        const res = await fetch(url, { signal: controller.signal })
         if (!res.ok) throw new Error(`Failed to load tours (${res.status})`)
         const json = await res.json()
+        console.log('📥 [HomepagePackagesPage] Received tours data:', json?.data?.tours?.length, 'tours')
+        if (json?.data?.tours?.length > 0) {
+          const firstTour = json.data.tours[0]
+          console.log('📋 [HomepagePackagesPage] First tour FULL DATA:', JSON.stringify(firstTour, null, 2))
+          console.log('📋 [HomepagePackagesPage] First tour title:', firstTour.title)
+          console.log('📋 [HomepagePackagesPage] First tour description:', firstTour.description?.substring(0, 50))
+          // Check if Spanish fields are still in the response (should be removed by backend)
+          if (firstTour.title_es) {
+            console.log('⚠️ [HomepagePackagesPage] WARNING: title_es still present in response! Backend not transforming.')
+          }
+        }
         const list = (json && json.data && json.data.tours) || []
         const ui = list.map(t => ({
           id: t._id,
@@ -69,7 +87,7 @@ const HomepagePackagesPage = () => {
     }
     load()
     return () => controller.abort()
-  }, [])
+  }, [language])
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#ffe020' }}>
