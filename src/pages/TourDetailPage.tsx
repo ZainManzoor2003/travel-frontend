@@ -285,11 +285,11 @@ const TourDetailPage = () => {
           <div className="w-px h-5 bg-black/20"></div>
         </div>
         
-        <div className="absolute left-1/2 -translate-x-1/2 pointer-events-none">
+        <div className="absolute left-1/2 -translate-x-1/2 pointer-events-none hidden md:block">
           <img 
             src="/Logo.webp"
             alt="Travel Beyond Logo"
-            className="mt-1 h-10 w-auto sm:h-12 md:h-14"
+            className="mt-1 h-12 w-auto md:h-14"
           />
         </div>
         

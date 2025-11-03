@@ -177,14 +177,17 @@ const Login = () => {
             {t('Menu')}
           </button>
           <div className="w-px h-5 bg-white/30" />
-          <LanguageSelector />
         </div>
-        <div className="absolute left-1/2 -translate-x-1/2">
+        {/* Centered logo overlay */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-40">
           <img 
             src="/Logo.webp"
             alt="Awasi Logo"
-            className="h-24 w-56"
+            className="h-10 w-auto sm:h-12 md:h-16 lg:h-20 mt-2 sm:mt-3 md:mt-4"
           />
+        </div>
+        <div className="flex items-center gap-4 ml-auto z-50">
+          <LanguageSelector />
         </div>
       </nav>
 

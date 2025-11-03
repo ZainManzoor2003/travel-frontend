@@ -75,11 +75,11 @@ const HomepageGalleryPage = () => {
           </button>
           <div className="w-px h-5 bg-black/30" />
         </div>
-        <div className="absolute left-1/2 -translate-x-1/2">
+        <div className="absolute left-1/2 -translate-x-1/2 hidden sm:block">
           <img 
             src="/Logo.webp"
             alt="Awasi Logo"
-            className="mt-1 h-11 w-auto sm:h-14 md:h-18 lg:h-22"
+            className="mt-1 h-12 w-auto sm:h-14 md:h-18 lg:h-22"
           />
         </div>
         <div className="flex items-center gap-4">{!isMenuOpen && <LanguageSelector />}</div>

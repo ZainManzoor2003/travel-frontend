@@ -139,11 +139,11 @@ const Navbar = () => {
         style={{ backgroundColor: isYellowRoute ? '#ffe020' : '#000000' }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20 py-4">
-            {/* Logo */}
-            <Link to="/" className="flex items-center z-50 pt-2">
-              <img  src="/Logo.webp" alt="Travel Beyond Tours Logo" className={`mt-2 w-auto object-contain ${isTourDetail ? 'h-10 sm:h-12 md:h-14 lg:h-16' : 'h-12 sm:h-14 md:h-16 lg:h-20'}`} />
-            </Link>
+          <div className="relative flex items-center h-20 py-4">
+            {/* Center Logo (always visible, non-interactive to avoid blocking clicks) */}
+            <div className="absolute inset-0 flex items-center justify-center z-50 pointer-events-none">
+              <img src="/Logo.webp" alt="Travel Beyond Tours Logo" className={`block w-auto object-contain mt-2 sm:mt-3 md:mt-4 ${isTourDetail ? 'h-10 sm:h-12 md:h-14 lg:h-16' : 'h-12 sm:h-14 md:h-16 lg:h-20'}`} />
+            </div>
 
             {/* Desktop Navigation - This should be visible on larger screens */}
 
@@ -170,10 +170,7 @@ const Navbar = () => {
                 );
               })}
 
-              {/* Language selector */}
-              <div className={`pl-4 ml-2 border-l ${isYellowRoute ? 'border-black/20' : 'border-white/20'}`}>
-                <LanguageSelector />
-              </div>
+              {/* Language selector moved to absolute right */}
 
               {/* User authentication section */}
               {isLoggedIn ? (
@@ -230,8 +227,13 @@ const Navbar = () => {
             </div>
 
 
+            {/* Right absolute language selector for desktop */}
+            <div className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 z-40">
+              <LanguageSelector />
+            </div>
+
             {/* Mobile actions: language + hamburger */}
-            <div className="lg:hidden flex items-center gap-3">
+            <div className="lg:hidden flex items-center gap-3 ml-auto">
               <LanguageSelector />
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
