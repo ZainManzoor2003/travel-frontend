@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,6 +18,7 @@ interface BookingFormProps {
 
 const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) => {
   const { user, token } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -90,11 +92,11 @@ const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) =
   const minDateStr = minDate.toISOString().split('T')[0];
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-      <div className="bg-white rounded-lg max-w-2xl w-full p-6 my-8">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-hidden">
+      <div className="bg-white rounded-lg max-w-2xl w-full p-6 mt-20 mb-8 max-h-[90vh] overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' as any }}>
         <div className="flex justify-between items-start mb-6">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Book This Tour</h2>
+            <h2 className="text-2xl font-bold text-gray-900">{t('Book This Tour')}</h2>
             <p className="text-gray-600 mt-1">{tour.title}</p>
           </div>
           <button
@@ -118,9 +120,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) =
           <div className="space-y-4">
             {/* Number of Participants */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Number of Participants *
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('Number of Participants *')}</label>
               <input
                 type="number"
                 name="participants"
@@ -136,9 +136,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) =
 
             {/* Travel Date */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Travel Date *
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('Travel Date *')}</label>
               <input
                 type="date"
                 name="travelDate"
@@ -152,9 +150,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) =
 
             {/* Customer Name */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Full Name *
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('Full Name *')}</label>
               <input
                 type="text"
                 name="customerName"
@@ -167,9 +163,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) =
 
             {/* Customer Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address *
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('Email Address *')}</label>
               <input
                 type="email"
                 name="customerEmail"
@@ -182,9 +176,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) =
 
             {/* Customer Phone */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Phone Number (Optional)
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('Phone Number (Optional)')}</label>
               <input
                 type="tel"
                 name="customerPhone"
@@ -196,9 +188,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) =
 
             {/* Notes */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Special Requests (Optional)
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">{t('Special Requests (Optional)')}</label>
               <textarea
                 name="notes"
                 value={formData.notes}
@@ -213,16 +203,16 @@ const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) =
           {/* Price Summary */}
           <div className="mt-6 bg-secondary-50 p-4 rounded-lg">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-gray-700">Price per person:</span>
+              <span className="text-gray-700">{t('Price per person:')}</span>
               <span className="font-semibold text-secondary-600">${tour.price}</span>
             </div>
             <div className="flex justify-between items-center mb-2">
-              <span className="text-gray-700">Number of participants:</span>
+              <span className="text-gray-700">{t('Number of participants:')}</span>
               <span className="font-semibold text-secondary-600">{formData.participants}</span>
             </div>
             <div className="border-t border-secondary-200 pt-2 mt-2">
               <div className="flex justify-between items-center">
-                <span className="text-lg font-bold text-gray-900">Total Price:</span>
+                <span className="text-lg font-bold text-gray-900">{t('Total Price')}:</span>
                 <span className="text-2xl font-bold text-secondary-600">${totalPrice}</span>
               </div>
             </div>
@@ -236,14 +226,14 @@ const BookingForm: React.FC<BookingFormProps> = ({ tour, onClose, onSuccess }) =
               disabled={loading}
               className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium disabled:opacity-50"
             >
-              Cancel
+              {t('Cancel')}
             </button>
             <button
               type="submit"
               disabled={loading}
               className="flex-1 px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-secondary-700 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Processing...' : 'Confirm Booking'}
+              {loading ? 'Processing...' : t('Confirm Booking')}
             </button>
           </div>
 

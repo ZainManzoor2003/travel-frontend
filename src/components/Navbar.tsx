@@ -125,7 +125,8 @@ const Navbar = () => {
     setShowDropdown(!showDropdown);
   };
 
-  const isYellowRoute = ['/packages', '/gallery', '/blog'].some((p) => location.pathname === p || location.pathname.startsWith(p + '/'));
+  const isTourDetail = location.pathname.startsWith('/tour/');
+  const isYellowRoute = ['/packages', '/gallery', '/blog'].some((p) => location.pathname === p || location.pathname.startsWith(p + '/')) || isTourDetail;
 
   return (
     <>
@@ -141,7 +142,7 @@ const Navbar = () => {
           <div className="flex justify-between items-center h-20 py-4">
             {/* Logo */}
             <Link to="/" className="flex items-center z-50 pt-2">
-              <img  src="/Logo.webp" alt="Travel Beyond Tours Logo" className="mt-2 h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain" />
+              <img  src="/Logo.webp" alt="Travel Beyond Tours Logo" className={`mt-2 w-auto object-contain ${isTourDetail ? 'h-10 sm:h-12 md:h-14 lg:h-16' : 'h-12 sm:h-14 md:h-16 lg:h-20'}`} />
             </Link>
 
             {/* Desktop Navigation - This should be visible on larger screens */}

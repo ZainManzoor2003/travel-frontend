@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface Booking {
   _id: string;
@@ -25,6 +26,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ booking, clientSecret, onCl
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+  const { t } = useLanguage();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -154,14 +156,14 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ booking, clientSecret, onCl
               disabled={processing}
               className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium disabled:opacity-50"
             >
-              Cancel
+              {t('Cancel')}
             </button>
             <button
               type="submit"
               disabled={processing || !stripe || !elements}
               className="flex-1 px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-secondary-700 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {processing ? 'Processing...' : `Pay $${booking.totalPrice}`}
+              {processing ? 'Processing...' : `${t('Pay Now')} $${booking.totalPrice}`}
             </button>
           </div>
         </form>

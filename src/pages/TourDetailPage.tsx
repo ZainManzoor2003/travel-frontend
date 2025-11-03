@@ -272,35 +272,28 @@ const TourDetailPage = () => {
   return (
     <div className="w-full font-sans min-h-screen" style={{ backgroundColor: '#ffe020' }}>
       {/* Navigation Header */}
-      <nav className="fixed top-0 left-0 right-0 z-[1000] p-8 px-12 flex items-center justify-between bg-transparent">
+      <nav className="fixed top-0 left-0 right-0 z-[1000] py-4 px-6 sm:py-6 sm:px-10 flex items-center justify-between" style={{ backgroundColor: '#ffe020' }}>
         <div className="flex items-center gap-6">
-          <button className="flex items-center gap-3 bg-none border-none text-white font-sans text-sm font-normal tracking-wider cursor-pointer transition-opacity duration-300 hover:opacity-80" onClick={toggleMenu}>
+          <button className="flex items-center gap-3 bg-none border-none text-black font-sans text-sm font-normal tracking-wider cursor-pointer transition-opacity duration-300 hover:opacity-80" onClick={toggleMenu}>
             <span className="flex flex-col gap-[3px]">
-              <span className="w-[18px] h-[2px] bg-white transition-all duration-300"></span>
-              <span className="w-[18px] h-[2px] bg-white transition-all duration-300"></span>
-              <span className="w-[18px] h-[2px] bg-white transition-all duration-300"></span>
+              <span className="w-[18px] h-[2px] bg-black transition-all duration-300"></span>
+              <span className="w-[18px] h-[2px] bg-black transition-all duration-300"></span>
+              <span className="w-[18px] h-[2px] bg-black transition-all duration-300"></span>
             </span>
-            MENU
+            {useLanguage().t('Menu')}
           </button>
-          <div className="w-px h-5 bg-white/30"></div>
+          <div className="w-px h-5 bg-black/20"></div>
         </div>
         
-        <div className="absolute left-1/2 -translate-x-1/2">
+        <div className="absolute left-1/2 -translate-x-1/2 pointer-events-none">
           <img 
             src="/Logo.webp"
             alt="Travel Beyond Logo"
-            className="mt-2 h-24 w-56"
+            className="mt-1 h-10 w-auto sm:h-12 md:h-14"
           />
         </div>
         
-        <div className="flex items-center">
-          <button 
-            onClick={() => navigate('/packages')}
-            className="bg-white/10 border border-white/30 text-white font-sans text-sm font-normal tracking-wider py-3 px-6 cursor-pointer transition-all duration-300 backdrop-blur-[10px] hover:bg-white/20 hover:border-white/50"
-          >
-            BACK TO TOURS
-          </button>
-        </div>
+        {/* Back button removed as requested */}
       </nav>
 
       {/* Hero Section */}

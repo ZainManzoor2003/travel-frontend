@@ -48,7 +48,7 @@ interface Booking {
 
 const UserDashboard: React.FC = () => {
   const { user, token } = useAuth();
-  const { t, language } = useLanguage();
+  const { language, t } = useLanguage();
   const navigate = useNavigate();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
@@ -477,7 +477,7 @@ const UserDashboard: React.FC = () => {
 
       {/* Payment Modal */}
       {showPaymentModal && clientSecret && selectedBooking && (
-        <Elements stripe={stripePromise} options={{ clientSecret }}>
+        <Elements stripe={stripePromise} options={{ clientSecret, locale: language }}>
           <PaymentModal
             booking={selectedBooking}
             clientSecret={clientSecret}

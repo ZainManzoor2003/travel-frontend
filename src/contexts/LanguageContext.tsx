@@ -98,6 +98,19 @@ const TRANSLATIONS: Translations = {
 	'USA': { en: 'USA', es: 'EE. UU.' },
 	'Instagram': { en: 'Instagram', es: 'Instagram' },
 
+	// Booking form & tour details
+	'Book This Tour': { en: 'Book This Tour', es: 'Reservar este tour' },
+	'Number of Participants *': { en: 'Number of Participants *', es: 'Número de participantes *' },
+	'Travel Date *': { en: 'Travel Date *', es: 'Fecha de viaje *' },
+	'Full Name *': { en: 'Full Name *', es: 'Nombre completo *' },
+	'Email Address *': { en: 'Email Address *', es: 'Correo electrónico *' },
+	'Phone Number (Optional)': { en: 'Phone Number (Optional)', es: 'Teléfono (opcional)' },
+	'Special Requests (Optional)': { en: 'Special Requests (Optional)', es: 'Peticiones especiales (opcional)' },
+	'Confirm Booking': { en: 'Confirm Booking', es: 'Confirmar reserva' },
+	'Price per person:': { en: 'Price per person:', es: 'Precio por persona:' },
+	'Number of participants:': { en: 'Number of participants:', es: 'Número de participantes:' },
+	'Back to All Tours': { en: 'Back to All Tours', es: 'Volver a todos los tours' },
+
 	// Login page
 	'Welcome Back': { en: 'Welcome Back', es: 'Bienvenido de nuevo' },
 	'Log in to manage your tailor-made journeys': { en: 'Log in to manage your tailor-made journeys', es: 'Inicia sesión para gestionar tus viajes a medida' },
